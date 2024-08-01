@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface IDatabase 
 {
-     Long executeUpdate(String query,String...params);
-    Map<Long,Map<String,String>> executeQuery(String query,String...params);
+    int executeUpdate(String query,String...params);
+    Map<Integer,Map<String,String>> executeQuery(String query,String...params);
 }

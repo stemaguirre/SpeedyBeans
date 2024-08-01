@@ -60,7 +60,7 @@ public class Database implements IDatabase
     }
 
     @Override
-    public Long executeUpdate(String query, String... params) {
+    public int executeUpdate(String query, String... params) {
        openConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -73,21 +73,21 @@ public class Database implements IDatabase
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             if(rs.next()){
-                return rs.getLong(1);
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return -1L;
+            return -1;
         }finally{
             closeConnection();
         }
-        return 1L;
+        return 1;
     }
 
     @Override
-    public Map<Long, Map<String, String>> executeQuery(String query, String... params) {
+    public Map<Integer, Map<String, String>> executeQuery(String query, String... params) {
         openConnection();
-        Map<Long, Map<String,String>> righe = new HashMap<>();
+        Map<Integer, Map<String,String>> righe = new HashMap<>();
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -109,7 +109,7 @@ public class Database implements IDatabase
                                         rs.getString(i));
 
                 }
-                righe.put(rs.getLong("id"), mappaProprietà);
+                righe.put(rs.getInt("id"), mappaProprietà);
             }
 
             ps.close();
