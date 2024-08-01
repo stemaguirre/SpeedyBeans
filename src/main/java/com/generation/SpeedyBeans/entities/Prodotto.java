@@ -1,16 +1,14 @@
 package com.generation.SpeedyBeans.entities;
 
-import lombok.Data;
-import lombok.ToString;
+import java.util.List;
 
-@Data
-@ToString(callSuper = true)
-public abstract class Prodotto 
+public abstract class Prodotto extends GenericEntity
 {
-    String id_EAN;
+    String idEAN;
     String genere;
     String brand;
     double prezzo;
     int disponibilita;
     double peso;
+    List<Ordine> ordini;
 }

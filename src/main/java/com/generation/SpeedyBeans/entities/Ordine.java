@@ -1,10 +1,14 @@
 package com.generation.SpeedyBeans.entities;
 
-public class Ordine 
-{
+import java.util.List;
+
+import lombok.Data;
+
+@Data
+public class Ordine extends GenericEntity{
     int idOrdine;
     double quantita;
-    int iva;
+    boolean iva;
     double totale;
-    //Da implementare una lista di prodotti come variabile
+    List<Prodotto> prodotti;
 }
