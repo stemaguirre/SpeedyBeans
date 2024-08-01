@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public class Utente extends Persone 
+public class Utente extends Persona 
 {
     String ragioneSociale;
     String partitaIva;

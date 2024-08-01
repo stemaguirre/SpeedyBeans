@@ -1,6 +1,11 @@
 package com.generation.SpeedyBeans.entities;
 
-public abstract class Prodotti 
+import lombok.Data;
+import lombok.ToString;
+
+@Data
+@ToString(callSuper = true)
+public abstract class Prodotto 
 {
     String id_EAN;
     String genere;

@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public class Macchinetta extends Prodotti
+public class Macchinetta extends Prodotto
 {
     String utilizzo;
     String colore;
