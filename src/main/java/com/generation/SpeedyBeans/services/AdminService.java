@@ -1,3 +1,4 @@
+package com.generation.SpeedyBeans.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,21 +22,21 @@ public class AdminService extends GenericService<Admin, AdminDAO> {
     @Autowired
     private UtenteDAO utenteDAO;
 
-    public void approvaRegistrazioneUtente(Long utenteId) {
-        Utente utente = utenteDAO.readById(utenteId);
-        if (utente != null) {
-            utente.setStato("APPROVATO");
-            utenteDAO.update(utente);
-        }
-    }
+    // public void approvaRegistrazioneUtente(Long utenteId) {
+    //     Utente utente = utenteDAO.readById(utenteId);
+    //     if (utente != null) {
+    //         utente.setStato("APPROVATO");
+    //         utenteDAO.update(utente);
+    //     }
+    // }
 
-    public void rifiutaRegistrazioneUtente(Long utenteId) {
-        Utente utente = utenteDAO.readById(utenteId);
-        if (utente != null) {
-            utente.setStato("RIFIUTATO");
-            utenteDAO.update(utente);
-        }
-    }
+    // public void rifiutaRegistrazioneUtente(Long utenteId) {
+    //     Utente utente = utenteDAO.readById(utenteId);
+    //     if (utente != null) {
+    //         utente.setStato("RIFIUTATO");
+    //         utenteDAO.update(utente);
+    //     }
+    // }
 
    
 }
