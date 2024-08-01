@@ -7,9 +7,9 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Utente extends Persone 
 {
-    String ragione_sociale;
-    String partita_iva;
-    String codice_sdi;
+    String ragioneSociale;
+    String partitaIva;
+    String codiceSdi;
     String indirizzo;
     int cap;
     String citta;

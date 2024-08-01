@@ -7,10 +7,9 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
-
-import lombok.Value;
 
 @Service
 @ConditionalOnProperty(name = "database", havingValue = "mysql")

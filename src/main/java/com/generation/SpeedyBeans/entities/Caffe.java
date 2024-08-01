@@ -10,7 +10,7 @@ import lombok.ToString;
 public class Caffe extends Prodotti
 {
     String tipologia;
-    Date data_produzione;
-    Date data_scadenza;
+    Date dataProduzione;
+    Date dataScadenza;
     String formato;
 }

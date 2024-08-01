@@ -43,4 +43,5 @@ public class PersonaController {
         }
         session.invalidate();
         return "redirect:/loginpage";
+    }
 }
