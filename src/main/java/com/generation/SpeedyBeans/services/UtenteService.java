@@ -1,13 +1,16 @@
 package com.generation.SpeedyBeans.services;
 
-import com.generation.scuola.dao.OrdineDAO;
-import com.generation.scuola.dao.ProdottoDAO;
-import com.generation.scuola.dao.UtenteDAO;
-import com.generation.scuola.entities.Ordine;
-import com.generation.scuola.entities.Prodotto;
-import com.generation.scuola.entities.Utente;
+import com.generation.SpeedyBeans.entities.Prodotto;
+import com.generation.SpeedyBeans.dao.OrdineDAO;
+import com.generation.SpeedyBeans.dao.ProdottoDAO;
+import com.generation.SpeedyBeans.dao.UtenteDAO;
+import com.generation.SpeedyBeans.entities.Entity;
+import com.generation.SpeedyBeans.entities.Ordine;
+import com.generation.SpeedyBeans.entities.Prodotto;
+import com.generation.SpeedyBeans.entities.Utente;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;

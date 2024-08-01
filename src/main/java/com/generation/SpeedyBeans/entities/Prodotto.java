@@ -1,6 +1,6 @@
 package com.generation.SpeedyBeans.entities;
 
-public abstract class Prodotti 
+public abstract class Prodotto 
 {
     String id_EAN;
     String genere;
