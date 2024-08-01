@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.dao.UserDAO;
 import com.generation.SpeedyBeans.entities.Admin;
+import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Utente;
-import com.generation.SpeedyBeans.entities.Persone;
 
 @Service
 public class LoginService {
@@ -19,8 +19,8 @@ public class LoginService {
     @Autowired
     private AdminService adminService;
 
-    public Persone login(String username, String password) {
-        Long id = userDAO.readByUsernameAndPassword(username, password);
+    public Persona login(String username, String password) {
+        int id = userDAO.readByUsernameAndPassword(username, password);
         if (id > 0) {
             Utente utente = utenteService.readById(id);
             if (utente != null) {

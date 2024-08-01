@@ -22,8 +22,8 @@ public class UtenteDAO implements IDAO<Utente> {
     private final String insertPersona = "insert into persone (nome, cognome, username, password) values (?, ?, ?, ?)";
     private final String insertUtente = "insert into utenti (idPersona, ragioneSociale, partitaIva, codiceSdi, indirizzo, cap, citta, provincia, nazione, telefono, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String readAllUtenti = "select * from utenti u join persone p on u.idPersona = p.idPersona";
-    private final String updateUtente = "update utenti set ragioneSociale = ?, partitaIva = ?, codiceSdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where idPersona = ?";
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where idPersona = ?";
+    private final String updateUtente = "update utenti set ragioneSociale = ?, partitaIva = ?, codiceSdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where idPersona = ?";
     private final String deletePersona = "delete from persone where idPersona = ?";
 
     @Override
