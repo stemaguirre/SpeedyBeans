@@ -3,11 +3,11 @@ package com.generation.SpeedyBeans.entities;
 import lombok.Data;
 
 @Data
-public abstract class Persone extends Entity
+public abstract class Persona extends Entity
 {
-    int id_persona;
+    int idPersona;
     String nome;
     String cognome;
-    String nome_utente;
+    String nomeUtente;
     String password;
 }
