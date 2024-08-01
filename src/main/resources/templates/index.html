@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Speedy Beans</title>
-    <link rel="stylesheet" href="js/index.css">
-    <script src="js/index.js"></script>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SPEEDY·BEANS</title>
+    <meta name="description" content="Rifornisci il tuo negozio di caffè con SPEEDY·BEANS: l'e-commerce che garantisce spedizioni veloci e affidabili. Scopri di più!">
+    <meta name="keywords" content="caffè, rifornimento caffè, spedizione veloce, negozio caffè, e-commerce caffè">
+    
+    <!-- Favicons -->
+    <link href="/src/main/resources/static/img/favicon-speedybeans.png" rel="icon">
+    <link href="/src/main/resources/static/img/apple-touch-icon-speedbeans.png" rel="apple-touch-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+
+     <!-- Main CSS File -->
+  <link href="resources/static/css/main.css" rel="stylesheet">
+  
+
 </head>
-<body>
-    <h2>Benvenuto su <em>Speedy Beans</em></h2>
+<body class="index-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="index.html" class="logo d-flex align-items-center me-auto">
+                <img src="/src/main/resources/static/img/logo-speedybeans.png">
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#caffe" class="">Caffè</a></li>
+                    <li><a href="#macchinette" class="">Macchine</a></li>
+                    <li><a href="#contatti" class="">Contatti</a></li>
+                    <a class="cta-btn d-none d-sm-block" href="#login">LOGIN</a>
+                </ul>
+            </nav>
+
+        </div>
+    
+    
+
+    <section id="login" class="login-popup">
     <button th:attr="onlick=|openLoginModal()|">
         Accedi
     </button>
@@ -18,8 +52,18 @@
             <input type="password" name="password" id="password">
             <input type="submit" value="Accedi">
         </form>
-        
-
     </div>
+
+
+
+
+
+
+
+
+
+
+ <!-- Main JS File -->
+ <script src="js/main.js"></script>
 </body>
 </html>
