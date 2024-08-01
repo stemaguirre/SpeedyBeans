@@ -10,7 +10,7 @@ public abstract class Persona extends GenericEntity
     int idPersona;
     String nome;
     String cognome;
-    String nomeUtente;
+    String username;
     String password;
     List<Ordine> ordini;
 }
