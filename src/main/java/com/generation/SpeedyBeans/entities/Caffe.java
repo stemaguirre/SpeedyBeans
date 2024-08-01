@@ -8,6 +8,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 public class Caffe extends Prodotto
+
 {
     String tipologia;
     Date dataProduzione;
