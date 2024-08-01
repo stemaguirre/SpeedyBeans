@@ -1,6 +1,6 @@
 package com.generation.SpeedyBeans.entities;
 
-public abstract class Prodotto
+public abstract class Prodotto extends GenericEntity
 {
     String idEAN;
     String genere;
