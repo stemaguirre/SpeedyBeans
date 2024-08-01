@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Speedy Beans</title>
+    <link rel="stylesheet" href="js/index.css">
+    <script src="js/index.js"></script>
+</head>
+<body>
+    <h2>Benvenuto su <em>Speedy Beans</em></h2>
+    <button th:attr="onlick=|openLoginModal()|">
+        Accedi
+    </button>
+    <div id="login-modal" class="modal-form" hidden>
+        <form action="/login" method="post">
+            <label for="username">Username</label>
+            <input type="text"  name="username" id="username">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+            <input type="submit" value="Accedi">
+        </form>
+        
+
+    </div>
+</body>
+</html>
