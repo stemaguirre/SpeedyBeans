@@ -10,5 +10,11 @@ public class Ordine extends GenericEntity{
     double quantita;
     boolean iva;
     double totale;
+<<<<<<< HEAD
     List<Prodotto> prodotti;
+=======
+    Persona persona;
+    List<Macchinetta> macchine;  // Modificato per riflettere una lista di Macchinetta
+    List<Caffe> caffe;
+>>>>>>> sergio
 }

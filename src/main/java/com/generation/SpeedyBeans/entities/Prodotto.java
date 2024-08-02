@@ -3,6 +3,7 @@ package com.generation.SpeedyBeans.entities;
 import java.util.List;
 
 import lombok.Data;
+<<<<<<< HEAD
 
 @Data
 public abstract class Prodotto extends GenericEntity
@@ -14,4 +15,16 @@ public abstract class Prodotto extends GenericEntity
     int disponibilita;
     double peso;
     List<Ordine> ordini;
+=======
+@Data
+public abstract class Prodotto extends GenericEntity
+{
+    private String idEAN;
+    private String genere;
+    private String brand;
+    private double prezzo;
+    private int disponibilita;
+    private double peso;
+    private List<Ordine> ordini;
+>>>>>>> sergio
 }

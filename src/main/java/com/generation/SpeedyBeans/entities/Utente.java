@@ -17,4 +17,5 @@ public class Utente extends Persona
     String nazione;
     int telefono;
     String email;
+    String stato;
 }

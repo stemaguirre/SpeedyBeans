@@ -1,7 +1,13 @@
 package com.generation.SpeedyBeans.services;
 
 import com.generation.SpeedyBeans.entities.Prodotto;
+<<<<<<< HEAD
 import com.generation.SpeedyBeans.dao.UtenteDAO;
+=======
+import com.generation.SpeedyBeans.dao.OrdineDAO;
+import com.generation.SpeedyBeans.dao.UtenteDAO;
+import com.generation.SpeedyBeans.entities.GenericEntity;
+>>>>>>> sergio
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
@@ -17,6 +23,7 @@ import org.springframework.stereotype.Service;
 @Service // Segna questa classe come un componente di servizio di Spring
 public class UtenteService extends GenericService<Utente, UtenteDAO> {
 
+<<<<<<< HEAD
 
     // Recupera una lista di entità Ordine associate a un ID Utente specifico
     public List<Utente> getUtentiByUsername(String username) {
@@ -25,4 +32,7 @@ public class UtenteService extends GenericService<Utente, UtenteDAO> {
         return ris;
     }
 
+=======
+   
+>>>>>>> sergio
 }
