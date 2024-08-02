@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public  class Admin extends Persone
+public  class Admin extends Persona
 {
 
 }
