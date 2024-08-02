@@ -8,7 +8,7 @@ public interface IDAO <E extends GenericEntity>
 {
     public int create(E e);
 
-    public Map<Long, Entity> readAll();
+    public Map<Long, GenericEntity> readAll();
 
     public void update(E e);
 
