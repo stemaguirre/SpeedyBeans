@@ -1,15 +1,18 @@
 /* Font */
+@import url(https://db.onlinewebfonts.com/c/066ce24dae3730ed6c648b09efaea93a?family=Acumin+Variable+Concept);
+
 @font-face {
-    font-family: "Acumin Variable Concept";
-    src: url("font/Acumin-Variable-Concept.ttf") format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Acumin Variable Concept";
+  src: url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.eot");
+  src: url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.eot?#iefix")format("embedded-opentype"),
+  url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.woff2")format("woff2"),
+  url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.woff")format("woff"),
+  url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.ttf")format("truetype"),
+  url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.svg#Acumin Variable Concept")format("svg");
 }
 
-
-
 :root{
-    --default-font: "Acumin Variable Concept", system-ui, -apple-system, sans-serif;
+    --default-font: "Acumin Variable Concept";
     --heading-font: "Acumin Variable Concept";
     --nav-font:"Acumin Variable Concept";
     --foot-font:"Acumin Variable Concept";
@@ -26,9 +29,88 @@
 
 /*Nav Menu Color*/
 :root {
+    --nav-bg-color:#D4AB73;
     --nav-color: #94652E;  /* The default color of the main navmenu links */
     --nav-hover-color: #904E00; /* Applied to main navmenu links when they are hovered over or active */
+    --nav-default-color: #332311;
 }
+
+
+@media (max-width: 1200px) {
+  .navbar {
+    text-align: right;
+  }
+  
+  .navbar-links {
+    float: none;
+  }
+  
+  .navbar-links ul {
+    display: inline-block;
+  }
+  
+  .navbar-links li {
+    display: block;
+    margin: 10px 0;
+  }
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--default-font), sans-serif;
+}
+
+/*.header {
+  --background-color: rgba(0, 0, 0, 0);
+  --heading-color: #ffffff;
+  color: var(--default-color);
+  background-color: var(--background-color);
+  padding: 20px 0;
+  transition: all 0.5s;
+  z-index: 997;
+}*/
+
+.navbar {
+  display: block;
+  background-color: var(--nav-bg-color);
+  padding: 10px 10px;
+}
+
+.navbar-links {
+  display: inline;
+  text-align: right;
+  vertical-align: text-top;
+}
+
+.navbar-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--nav-default-color);
+  font: var(--default-font);
+}
+
+.navbar-links a:hover {
+  color: var(--interact-color);
+}
+
+
+
 
 
 /*
@@ -63,14 +145,6 @@
     }
 
 
-*/
-
-
-
-
-
-
-
 .modal-form{
     position: fixed;
     top: 50%;
@@ -81,4 +155,4 @@
     border: 2px solid rgb(50, 50, 50);
     border-radius: 5px;
     z-index: 9999;
-}
+}*/
