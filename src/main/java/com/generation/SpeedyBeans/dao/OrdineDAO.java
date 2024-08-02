@@ -14,7 +14,7 @@ import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
-import com.generation.SpeedyBeans.entities.GenericEntity;
+import com.generation.SpeedyBeans.entities.Entity;
 
 @Repository
 public class OrdineDAO implements IDAO<Ordine> {
@@ -62,8 +62,8 @@ public class OrdineDAO implements IDAO<Ordine> {
     }
 
     @Override
-    public Map<Integer, GenericEntity> readAll() {
-        Map<Integer, GenericEntity> resultMap = new LinkedHashMap<>();
+    public Map<Integer, Entity> readAll() {
+        Map<Integer, Entity> resultMap = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = database.executeQuery(readAllOrdini);
 
         for (Entry<Integer, Map<String, String>> entry : result.entrySet()) {

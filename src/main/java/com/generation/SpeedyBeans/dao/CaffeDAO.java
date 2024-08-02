@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Caffe;
-import com.generation.SpeedyBeans.entities.GenericEntity;
+import com.generation.SpeedyBeans.entities.Entity;
 import com.generation.SpeedyBeans.entities.Ordine;
 
 @Repository
@@ -46,8 +46,8 @@ public class CaffeDAO implements IDAO<Caffe> {
     }
 
     @Override
-    public Map<Integer, GenericEntity> readAll() {
-        Map<Integer, GenericEntity> resultMap = new LinkedHashMap<>();
+    public Map<Integer, Entity> readAll() {
+        Map<Integer, Entity> resultMap = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = database.executeQuery(readAllCaffe);
 
         for (Entry<Integer, Map<String, String>> entry : result.entrySet()) {

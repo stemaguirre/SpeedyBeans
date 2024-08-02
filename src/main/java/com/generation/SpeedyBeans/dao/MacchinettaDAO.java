@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
-import com.generation.SpeedyBeans.entities.GenericEntity;
+import com.generation.SpeedyBeans.entities.Entity;
 
 @Repository
 public class MacchinettaDAO implements IDAO<Macchinetta> {
@@ -38,8 +38,8 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     }
 
     @Override
-    public Map<Integer, GenericEntity> readAll() {
-    Map<Integer, GenericEntity> ris = new LinkedHashMap<>();
+    public Map<Integer, Entity> readAll() {
+    Map<Integer, Entity> ris = new LinkedHashMap<>();
     Map<Integer, Map<String, String>> result = database.executeQuery(readAllMacchinette);
 
     for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {

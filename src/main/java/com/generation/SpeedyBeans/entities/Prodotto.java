@@ -4,7 +4,7 @@ import java.util.List;
 
 import lombok.Data;
 @Data
-public abstract class Prodotto extends GenericEntity
+public abstract class Prodotto extends Entity
 {
     private String idEAN;
     private String genere;

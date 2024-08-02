@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Ordine extends GenericEntity{
+public class Ordine extends Entity{
     int idOrdine;
     double quantita;
     boolean iva;

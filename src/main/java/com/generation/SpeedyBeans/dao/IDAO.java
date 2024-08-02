@@ -2,12 +2,11 @@ package com.generation.SpeedyBeans.dao;
 
 import java.util.Map;
 
-import com.generation.SpeedyBeans.entities.GenericEntity;
+import com.generation.SpeedyBeans.entities.Entity;
 
-public interface IDAO<E extends GenericEntity> {
+public interface IDAO<E extends Entity> {
     int create(E e);
-    Map<Integer, GenericEntity> readAll();
-    E readById(int id);
+    Map<Integer, Entity> readAll();
     void update(E e);
     void delete(int id);
 
