@@ -5,12 +5,11 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public abstract class Persona extends GenericEntity
+public abstract class Persona extends Entity
 {
-    int idPersona;
-    String nome;
-    String cognome;
-    String username;
-    String password;
-    List<Ordine> ordini;
+    private String nome;
+    private String cognome;
+    private String username;
+    private String password;
+    private List<Ordine> ordini;
 }

@@ -5,10 +5,12 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Ordine extends GenericEntity{
-    int idOrdine;
-    double quantita;
-    boolean iva;
-    double totale;
-    List<Prodotto> prodotti;
+public class Ordine extends Entity{
+
+    private int idPersona;
+    private double quantita;
+    private boolean iva;
+    private double totale;
+    private Persona persona;
+    private List<Prodotto> prodotti;
 }

@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.generation.SpeedyBeans.database.Database;
-import com.generation.SpeedyBeans.entities.GenericEntity;
+import com.generation.SpeedyBeans.entities.Entity;
 import com.generation.SpeedyBeans.entities.Utente;
 
 public class UserDAO{
