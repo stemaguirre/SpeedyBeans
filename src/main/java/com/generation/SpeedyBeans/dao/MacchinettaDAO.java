@@ -1,6 +1,8 @@
 package com.generation.SpeedyBeans.dao;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -21,55 +23,68 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     @Autowired
     private ApplicationContext context;
 
+    private final String insertProdotto = "INSERT INTO prodotti (genere, brand, prezzo, disponibilita, peso) VALUES (?, ?, ?, ?, ?)";
     private final String insertMacchinetta = "INSERT INTO macchinette(id_ean, utilizzo, colore, modello, serbatoio) VALUES (?, ?, ?, ?, ?)";
+
+
     private final String readAllMacchinette = "SELECT * FROM macchinette";
-    private final String readMacchinettaById = "SELECT * FROM macchinette WHERE id_ean = ?";
+
+    private final String updateProdotto = "update prodotti set genere = ?, brand = ?, prezzo = ?, disponibilita = ?, peso = ? where id_ean = ?";
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
     private final String deleteMacchinetta = "DELETE FROM macchinette WHERE id_ean = ?";
 
+    private final String readMacchinetteByOrdineId = "SELECT * FROM macchinette WHERE id_EAN IN (SELECT id_EAN FROM ordine_prodotti WHERE id_ordine = ?)";
+
     @Override
-    public int create(Macchinetta macchinetta) {
-        return database.executeUpdate(insertMacchinetta, 
-                                      macchinetta.getIdEAN(), 
-                                      macchinetta.getUtilizzo(), 
-                                      macchinetta.getColore(), 
-                                      macchinetta.getModello(), 
-                                      String.valueOf(macchinetta.getSerbatoio()));
+    public int create(Macchinetta m) {
+
+        int id = database.executeUpdate(insertProdotto, 
+                                        m.getGenere(), 
+                                        m.getBrand(), 
+                                        String.valueOf(m.getPrezzo()), 
+                                        String.valueOf(m.getDisponibilita()), 
+                                        String.valueOf(m.getPeso()) );
+
+        database.executeUpdate(insertMacchinetta, 
+                                String.valueOf(m.getId()), 
+                                m.getUtilizzo(), 
+                                m.getColore(), 
+                                m.getModello(), 
+                                String.valueOf(m.getSerbatoio()) );
+
+        return id;
     }
 
     @Override
     public Map<Integer, Entity> readAll() {
+
     Map<Integer, Entity> ris = new LinkedHashMap<>();
     Map<Integer, Map<String, String>> result = database.executeQuery(readAllMacchinette);
 
-    for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-        Macchinetta macchinetta = context.getBean(Macchinetta.class);
-        macchinetta.fromMap(coppia.getValue());
-        ris.put(Integer.parseInt(macchinetta.getIdEAN()), macchinetta); 
+    for (Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+        Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
+        ris.put(m.getId(), m); 
     }
     return ris;
 }
 
     @Override
-    public Macchinetta readById(int id) {
-        Map<Integer, Map<String, String>> result = database.executeQuery(readMacchinettaById, String.valueOf(id));
-        if (result.isEmpty()) {
-            return null;
-        }
-        Map<String, String> data = result.values().iterator().next();
-        Macchinetta macchinetta = context.getBean(Macchinetta.class);
-        macchinetta.fromMap(data);
-        return macchinetta;
-    }
+    public void update(Macchinetta m) {
 
-    @Override
-    public void update(Macchinetta macchinetta) {
+        database.executeUpdate(updateProdotto, 
+                               m.getGenere(), 
+                               m.getBrand(), 
+                               String.valueOf(m.getPrezzo()), 
+                               String.valueOf(m.getDisponibilita()), 
+                               String.valueOf(m.getPeso()), 
+                               String.valueOf(m.getId()));
+                               
         database.executeUpdate(updateMacchinetta, 
-                               macchinetta.getUtilizzo(), 
-                               macchinetta.getColore(), 
-                               macchinetta.getModello(), 
-                               String.valueOf(macchinetta.getSerbatoio()), 
-                               macchinetta.getIdEAN());
+                               m.getUtilizzo(), 
+                               m.getColore(), 
+                               m.getModello(), 
+                               String.valueOf(m.getSerbatoio()), 
+                               String.valueOf(m.getId()));
     }
 
     @Override

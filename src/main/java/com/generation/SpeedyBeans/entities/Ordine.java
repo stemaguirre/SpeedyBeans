@@ -6,11 +6,11 @@ import lombok.Data;
 
 @Data
 public class Ordine extends Entity{
-    int idOrdine;
-    double quantita;
-    boolean iva;
-    double totale;
-    Persona persona;
-    List<Macchinetta> macchine;  // Modificato per riflettere una lista di Macchinetta
-    List<Caffe> caffe;
+
+    private int idPersona;
+    private double quantita;
+    private boolean iva;
+    private double totale;
+    private Persona persona;
+    private List<Prodotto> prodotti;
 }

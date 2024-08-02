@@ -6,11 +6,12 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Repository;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Entity;
+import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Utente;
 
 @Repository
 public class AdminDAO implements IDAO<Admin> {
@@ -27,44 +28,56 @@ public class AdminDAO implements IDAO<Admin> {
     private final String updateAdmin = "UPDATE admin SET nomeUtente = ?, password = ? WHERE id = ?";
     private final String deleteAdmin = "DELETE FROM admin WHERE id = ?";
 
+    @Autowired
+    private Database database;
+
+    @Autowired
+    private ApplicationContext context;
+
+    private final String insertPersona = "insert into persone (nome, cognome, username, password) values (?, ?, ?, ?)";
+    private final String insertAdmin = "insert into admins (id_persona) values (?)";
+
+    private final String readAllAdmins = "select * from admins u join persone p on u.id_persona = p.id_persona";
+    
+    private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
+    private final String updateAdmin = "";
+
+    private final String deletePersona = "delete from persone where id_persona = ?";
+
     @Override
-    public int create(Admin admin) {
-        return database.executeUpdate(insertAdmin, admin.getNomeUtente(), admin.getPassword());
+    public int create(Admin e) {
+        int id = database.executeUpdate(insertPersona, e.getNome(), e.getCognome(), e.getUsername(), e.getPassword());
+
+        database.executeUpdate(insertAdmin, String.valueOf(id));
+
+        return id;
     }
 
     @Override
     public Map<Integer, Entity> readAll() {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
+
         Map<Integer, Map<String, String>> result = database.executeQuery(readAllAdmins);
 
-        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-            Admin admin = context.getBean(Admin.class);
-            admin.fromMap(coppia.getValue());
-            ris.put(admin.getIdPersona(), admin);
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Admin a = context.getBean(Admin.class, coppia.getValue());
+            ris.put(a.getId(), a);
+            
         }
+
         return ris;
     }
 
     @Override
-    public Admin readById(int id) {
-        Map<Integer, Map<String, String>> result = database.executeQuery(readAdminById, String.valueOf(id));
-        if (result.isEmpty()) {
-            return null;
-        }
-        Map<String, String> data = result.values().iterator().next();
-        Admin admin = context.getBean(Admin.class);
-        admin.fromMap(data);
-        return admin;
-    }
+    public void update(Admin a) {
+        database.executeUpdate(updatePersona, a.getNome(), a.getCognome(), a.getUsername(), a.getPassword(), String.valueOf(a.getId()));
 
-    @Override
-    public void update(Admin admin) {
-        database.executeUpdate(updateAdmin, admin.getNomeUtente(), admin.getPassword(), String.valueOf(admin.getIdPersona()));
+        database.executeUpdate(updateAdmin);
     }
 
     @Override
     public void delete(int id) {
-        database.executeUpdate(deleteAdmin, String.valueOf(id));
+        database.executeUpdate(deletePersona, String.valueOf(id));
     }
 
   

@@ -14,6 +14,7 @@ import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
+import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Repository
@@ -25,44 +26,37 @@ public class OrdineDAO implements IDAO<Ordine> {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private PersonaDAO personaDAO;
+
     private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale) VALUES (?, ?, ?, ?)";
-    private final String insertOrdineProdotti = "INSERT INTO ordine_prodotti(id_ordine, id_EAN) VALUES (?, ?)";
+
     private final String readAllOrdini = "SELECT * FROM ordini";
-    private final String readOrdineById = "SELECT * FROM ordini WHERE id_ordine = ?";
+
     private final String updateOrdine = "UPDATE ordini SET id_persona = ?, quantita = ?, iva = ?, totale = ? WHERE id_ordine = ?";
+
     private final String deleteOrdine = "DELETE FROM ordini WHERE id_ordine = ?";
-    private final String readOrdiniByUtenteId = "SELECT * FROM ordini WHERE id_persona = ?";
-    private final String readMacchinetteByOrdineId = "SELECT * FROM macchinette WHERE id_EAN IN (SELECT id_EAN FROM ordine_prodotti WHERE id_ordine = ?)";
-    private final String readCaffeByOrdineId = "SELECT * FROM caffe WHERE id_EAN IN (SELECT id_EAN FROM ordine_prodotti WHERE id_ordine = ?)";
+
+    private final String readByIdProdotto = "select o.* from ordini d join ordini_prodotti op on o.id_ordine = od.id_ordine join prodotti p on od.id_ean = p.id_ean where p.id_ean = ?";
+
+  
+    
 
     @Override
-    public int create(Ordine ordine) {
-        int updatedRows = database.executeUpdate(insertOrdine, 
-            String.valueOf(ordine.getPersona().getIdPersona()),
-            String.valueOf(ordine.getQuantita()),
-            ordine.isIva() ? "1" : "0", 
-            String.valueOf(ordine.getTotale())
+    public int create(Ordine o) {
+        int id = database.executeUpdate(insertOrdine, 
+            String.valueOf(o.getPersona().getId()), 
+            String.valueOf(o.getQuantita()), 
+            o.isIva() ? "1" : "0", 
+            String.valueOf(o.getTotale())
         );
 
-        for (Macchinetta macchina : ordine.getMacchine()) {
-            database.executeUpdate(insertOrdineProdotti,
-                String.valueOf(ordine.getIdOrdine()),
-                macchina.getIdEAN()
-            );
-        }
-
-        for (Caffe caffe : ordine.getCaffe()) {
-            database.executeUpdate(insertOrdineProdotti,
-                String.valueOf(ordine.getIdOrdine()),
-                caffe.getIdEAN()
-            );
-        }
-
-        return updatedRows;
+        return id;
     }
 
     @Override
     public Map<Integer, Entity> readAll() {
+<<<<<<< HEAD
         Map<Integer, Entity> resultMap = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = database.executeQuery(readAllOrdini);
 
@@ -116,6 +110,33 @@ public class OrdineDAO implements IDAO<Ordine> {
                 caffe.getIdEAN()
             );
         }
+=======
+
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readAllOrdini);
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            Persona p = personaDAO.readByid(Integer.parseInt(coppia.getValue().get("id_persona")));
+            o.setPersona(p);
+            ris.put(o.getId(), o);
+        }
+
+        return ris;
+    }
+
+
+    @Override
+    public void update(Ordine o) {
+        database.executeUpdate(updateOrdine, 
+            String.valueOf(o.getIdPersona()),
+            String.valueOf(o.getQuantita()),
+            o.isIva() ? "1" : "0", 
+            String.valueOf(o.getTotale()),
+            String.valueOf(o.getId())
+        );
+
+>>>>>>> stefano
     }
 
     @Override
@@ -123,6 +144,7 @@ public class OrdineDAO implements IDAO<Ordine> {
         database.executeUpdate(deleteOrdine, String.valueOf(id));
     }
 
+<<<<<<< HEAD
     //readByUtenteId: Recupera tutti gli ordini per un utente specifico.
     public List<Ordine> readByUtenteId(int utenteId) {
         List<Ordine> ordini = new ArrayList<>();
@@ -185,3 +207,20 @@ public class OrdineDAO implements IDAO<Ordine> {
         ordine.setCaffe(caffeList);
     }
 }
+=======
+    public Map<Integer,Entity> readByIdProdotto(int idProdotto){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+
+        Map<Integer, Map<String, String>> result = database.executeQuery(readByIdProdotto, String.valueOf(idProdotto));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            ris.put(o.getId(), o);
+
+
+        }
+        return ris;
+    }
+
+}
+>>>>>>> stefano

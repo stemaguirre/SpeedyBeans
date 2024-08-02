@@ -20,7 +20,7 @@ public class LoginService {
     private AdminService adminService;
 
     public Persona login(String username, String password) {
-        Long id = utenteDAO.readByUsernameAndPassword(username, password);
+        int id = userDAO.readByUsernameAndPassword(username, password);
         if (id > 0) {
             Utente utente = utenteService.readById(id);
             if (utente != null) {

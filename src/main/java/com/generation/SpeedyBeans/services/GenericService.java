@@ -9,17 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.generation.SpeedyBeans.dao.IDAO;
 import com.generation.SpeedyBeans.entities.Entity;
 import com.generation.SpeedyBeans.entities.Utente;
-import com.generation.SpeedyBeans.dao.UserDAO;
 
 import lombok.Getter;
 
 @Getter
 public abstract class GenericService<E extends Entity, D extends IDAO<E>> {
-
+    
     @Autowired 
     private D repository;
 
-
+    
     @Autowired
     private Utente utenteDAO;
 
@@ -38,8 +37,10 @@ public abstract class GenericService<E extends Entity, D extends IDAO<E>> {
         return ris;
     }
 
-    public E readById(int id) {
-        return repository.readById(id);
+    public E readById(int id){
+        Map<Integer, Entity> result = repository.readAll();
+        E e = (E)result.get(id);
+        return e;
     }
 
     public void update(E e){
@@ -50,7 +51,4 @@ public abstract class GenericService<E extends Entity, D extends IDAO<E>> {
         repository.delete(id);
     }
 
-    public void createOrUpdateUser(int id, String username, String password){
-        utenteDAO.updateUsernameAndPassword(id, username, password);  
-    }
 }

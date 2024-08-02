@@ -15,7 +15,7 @@ public class UserDAO{
     private Database database;
 
     private final String readByUsernameAndPassword = "select idPersona from persone where username = ? and password = ?";
-
+   
     public int readByUsernameAndPassword(String username, String password) {
         Map<Integer, Map<String, String>>  result = database.executeQuery(readByUsernameAndPassword, username, password);
         int idPersona = -1;
@@ -24,4 +24,6 @@ public class UserDAO{
         }
         return idPersona;
     }
+
+    
 }
