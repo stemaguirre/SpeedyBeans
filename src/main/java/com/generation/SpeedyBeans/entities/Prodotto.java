@@ -1,7 +1,5 @@
 package com.generation.SpeedyBeans.entities;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data

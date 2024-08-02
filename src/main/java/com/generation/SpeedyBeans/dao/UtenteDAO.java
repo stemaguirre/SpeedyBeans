@@ -6,11 +6,14 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Entity;
+import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Utente;
 
+@Service
 public class UtenteDAO implements IDAO<Utente> {
 
     @Autowired
@@ -27,6 +30,12 @@ public class UtenteDAO implements IDAO<Utente> {
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
     private final String updateUtente = "update utenti set ragioneSociale = ?, partitaIva = ?, codiceSdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where id_persona = ?";
     private final String deletePersona = "delete from persone where id_persona = ?";
+
+    private final String findByPartitaIvaLike = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.partita_iva like(concat('%', ?, '%'))";
+
+    private final String findByCognomeLike = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
+
+    private final String findByFilters = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.partita_iva like(concat('%', ?, '%')) AND p.cognome like(concat('%', ?, '%'))";
 
     @Override
     public int create(Utente s) {
@@ -65,5 +74,27 @@ public class UtenteDAO implements IDAO<Utente> {
     public void delete(int id) {
         database.executeUpdate(deletePersona, String.valueOf(id));
     }
+
+     public Map<Integer, Entity> findByFilters(String partitaIva, String cognome) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+
+        if(cognome == null) {
+            result = database.executeQuery(findByPartitaIvaLike, partitaIva);
+        } else if (partitaIva == null) {
+            result = database.executeQuery(findByCognomeLike, cognome); 
+        }else {
+            result = database.executeQuery(findByFilters, partitaIva, cognome);
+        }
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Utente u = context.getBean(Utente.class, coppia.getValue());
+            ris.put(u.getId(), u);
+        }
+
+        return ris;
+
+    }
+
     
 }

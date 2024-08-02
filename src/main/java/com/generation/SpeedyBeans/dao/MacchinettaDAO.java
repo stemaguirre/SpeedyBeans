@@ -1,20 +1,19 @@
 package com.generation.SpeedyBeans.dao;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
+import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
-@Repository
+@Service
 public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     @Autowired
@@ -33,7 +32,13 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
     private final String deleteMacchinetta = "DELETE FROM macchinette WHERE id_ean = ?";
 
-    private final String readMacchinetteByOrdineId = "SELECT * FROM macchinette WHERE id_EAN IN (SELECT id_EAN FROM ordine_prodotti WHERE id_ordine = ?)";
+    private final String findByBrandLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
+
+    private final String findByColoreLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
+
+    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.colore = ?";
+
+
 
     @Override
     public int create(Macchinetta m) {
@@ -90,6 +95,27 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     @Override
     public void delete(int id) {
         database.executeUpdate(deleteMacchinetta, String.valueOf(id));
+    }
+
+    public Map<Integer, Entity> findByFilters(String brand, String colore) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+
+        if(colore == null) {
+            result = database.executeQuery(findByBrandLike, brand);
+        } else if (brand == null) {
+            result = database.executeQuery(findByColoreLike, colore); 
+        }else {
+            result = database.executeQuery(findByFilters, brand, colore);
+        }
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
+            ris.put(m.getId(), m);
+        }
+
+        return ris;
+
     }
 
   

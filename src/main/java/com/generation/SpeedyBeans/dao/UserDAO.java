@@ -4,11 +4,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
-import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Utente;
 
+@Service
 public class UserDAO{
 
     @Autowired
