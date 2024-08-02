@@ -15,6 +15,6 @@ public class Utente extends Persona
     String citta;
     String provincia;
     String nazione;
-    String telefono;
+    int telefono;
     String email;
 }

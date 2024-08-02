@@ -2,13 +2,13 @@ package com.generation.SpeedyBeans.dao;
 
 import java.util.Map;
 
+import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.GenericEntity;
-import com.generation.SpeedyBeans.entities.Macchinetta;
 
-public class MacchinettaDAO implements IDAO<Macchinetta>{
+public class AdminDAO implements IDAO<Admin>{
 
     @Override
-    public int create(Macchinetta e) {
+    public int create(Admin e) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'create'");
     }
@@ -20,7 +20,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta>{
     }
 
     @Override
-    public void update(Macchinetta e) {
+    public void update(Admin e) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }

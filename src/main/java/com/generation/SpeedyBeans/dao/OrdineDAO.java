@@ -3,12 +3,12 @@ package com.generation.SpeedyBeans.dao;
 import java.util.Map;
 
 import com.generation.SpeedyBeans.entities.GenericEntity;
-import com.generation.SpeedyBeans.entities.Macchinetta;
+import com.generation.SpeedyBeans.entities.Ordine;
 
-public class MacchinettaDAO implements IDAO<Macchinetta>{
+public class OrdineDAO implements IDAO<Ordine> {
 
     @Override
-    public int create(Macchinetta e) {
+    public int create(Ordine e) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'create'");
     }
@@ -20,7 +20,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta>{
     }
 
     @Override
-    public void update(Macchinetta e) {
+    public void update(Ordine e) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
