@@ -34,9 +34,9 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     private final String findByBrandLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
 
-    private final String findByTipologiaLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
+    private final String findByTipologiaLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.tipologia like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.colore = ?";
+    private final String findByFilters = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
 
 
     @Override

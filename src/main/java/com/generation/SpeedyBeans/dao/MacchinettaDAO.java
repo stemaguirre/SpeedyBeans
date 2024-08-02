@@ -36,7 +36,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     private final String findByColoreLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.colore = ?";
+    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
 
 
 
