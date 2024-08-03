@@ -35,13 +35,115 @@
     --nav-default-color: #332311;
 }
 
+/*--- GEBERALE --*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-@media (max-width: 1200px) {
+body {
+  font-family: var(--default-font), sans-serif;
+  color: var(--nav-color);
+}
+
+a{
+  color: var(--nav-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--nav-hover-color);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--nav-font);
+}
+
+/*--- Sections & section Header ---*/
+
+
+.section-bg {
+  background-image: url("/src/main/resources/static/img/background-home-page.png"); /* Specifica il percorso dell'immagine */
+  background-size: cover; /* Rende l'immagine coprire tutto l'elemento */
+  background-position: center; /* Centra l'immagine all'interno dell'elemento */
+  background-repeat: no-repeat; /* Impedisce che l'immagine si ripeta */
+  height: 100vh; /* Imposta l'altezza dell'elemento a 100% dell'altezza del viewport */
+  color: var(--nav-hover-color); /* Imposta il colore del testo per un migliore contrasto */
+  display: flex;
+}
+
+/*--- HEADER --*/
+.header .navbar-logo {
+  line-height: 1;
+}
+
+.header .navbar-logo img {
+  max-height: 36px;
+  margin-right: 8px;
+}
+
+.navbar {
+  display: block;
+  background-color: var(--nav-bg-color);
+  padding: 50px 50px;
+}
+
+.navbar-links {
+  display: inline;
+  text-align: right;
+  vertical-align: middle;
+}
+
+.navbar-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 0 10px; 
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--nav-default-color);
+  font: var(--default-font);
+}
+
+.navbar-links a:hover {
+  color: var(--interact-color);
+}
+
+
+/*
+.navbar {
+  background: var(--nav-bg-color);
+  transition: all 0.5s;
+  z-index: 997;
+  height: 155px;
+  border-bottom: 1px solid #332311;
+}
+
+@media (max-width: 1920px) {
   .navbar {
-    text-align: right;
+    height: 155px;
+  }
+
+  .navbar-logo{
+    max-height: 118px;
+    margin-right: 10px;
   }
   
-  .navbar-links {
+  .header .navbar-links {
     float: none;
   }
   
@@ -56,15 +158,8 @@
 }
 
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-body {
-  font-family: var(--default-font), sans-serif;
-}
+
 
 /*.header {
   --background-color: rgba(0, 0, 0, 0);
@@ -75,39 +170,6 @@ body {
   transition: all 0.5s;
   z-index: 997;
 }*/
-
-.navbar {
-  display: block;
-  background-color: var(--nav-bg-color);
-  padding: 10px 10px;
-}
-
-.navbar-links {
-  display: inline;
-  text-align: right;
-  vertical-align: text-top;
-}
-
-.navbar-links ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.navbar-links li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-.navbar-links a {
-  text-decoration: none;
-  color: var(--nav-default-color);
-  font: var(--default-font);
-}
-
-.navbar-links a:hover {
-  color: var(--interact-color);
-}
 
 
 
