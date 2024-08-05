@@ -6,27 +6,15 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.entities.Utente;
 
-@Repository
+
+@Service
 public class AdminDAO implements IDAO<Admin> {
-
-    @Autowired
-    private Database database;
-
-    @Autowired
-    private ApplicationContext context;
-
-    private final String insertAdmin = "INSERT INTO admin(nomeUtente, password) VALUES (?, ?)";
-    private final String readAllAdmins = "SELECT * FROM admin";
-    private final String readAdminById = "SELECT * FROM admin WHERE id = ?";
-    private final String updateAdmin = "UPDATE admin SET nomeUtente = ?, password = ? WHERE id = ?";
-    private final String deleteAdmin = "DELETE FROM admin WHERE id = ?";
 
     @Autowired
     private Database database;

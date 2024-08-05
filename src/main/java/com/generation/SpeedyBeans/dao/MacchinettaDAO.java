@@ -33,7 +33,6 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
     private final String deleteMacchinetta = "DELETE FROM macchinette WHERE id_ean = ?";
 
-    private final String readMacchinetteByOrdineId = "SELECT * FROM macchinette WHERE id_EAN IN (SELECT id_EAN FROM ordine_prodotti WHERE id_ordine = ?)";
 
     @Override
     public int create(Macchinetta m) {

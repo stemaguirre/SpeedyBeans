@@ -49,24 +49,20 @@ public class UtenteDAO implements IDAO<Utente> {
             ris.put(u.getId(), u);
             
         }
+    return ris;
+    }
 
-    public void update(Utente u) {
-<<<<<<< HEAD
-        database.executeUpdate(updatePersona, u.getNome(), u.getCognome(), u.getUsername(), u.getPassword(), String.valueOf(u.getIdPersona()));
-
-        database.executeUpdate(updateUtente, u.getRagioneSociale(), u.getPartitaIva(), u.getCodiceSdi(), u.getIndirizzo(), String.valueOf(u.getCap()), u.getCitta(), u.getProvincia(), u.getNazione(), String.valueOf(u.getTelefono()), u.getEmail(), String.valueOf(u.getIdPersona()));
+  
+    @Override
+    public void update(Utente e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-        database.executeUpdate(deletePersona, String.valueOf(id));
-<<<<<<< HEAD
-    }
-
-    @Override
-    public Utente readById(int id) {
-        return null;
-=======
->>>>>>> stefano
+    public void delete(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
     
 }

@@ -39,8 +39,11 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     private final String readByIdProdotto = "select o.* from ordini d join ordini_prodotti op on o.id_ordine = od.id_ordine join prodotti p on od.id_ean = p.id_ean where p.id_ean = ?";
 
-  
+    private final String readByRange = "SELECT * FROM ordini WHERE totale BETWEEN ? AND ?";
     
+    private final String findByNomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%'))";
+    private final String findByCognomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
+    private final String findByNomeOrCognomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%')) or p.cognome like(concat('%', ?, '%'))";
 
     @Override
     public int create(Ordine o) {
@@ -54,63 +57,9 @@ public class OrdineDAO implements IDAO<Ordine> {
         return id;
     }
 
+
     @Override
     public Map<Integer, Entity> readAll() {
-<<<<<<< HEAD
-        Map<Integer, Entity> resultMap = new LinkedHashMap<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(readAllOrdini);
-
-        for (Entry<Integer, Map<String, String>> entry : result.entrySet()) {
-            Map<String, String> data = entry.getValue();
-            Ordine ordine = context.getBean(Ordine.class, data);
-
-            // Recupera e imposta le macchine e i caffè associati all'ordine
-            readProdottiByOrdineId(ordine.getIdOrdine(), ordine);
-
-            resultMap.put(ordine.getIdOrdine(), ordine);
-        }
-
-        return resultMap;
-    }
-
-    @Override
-    public Ordine readById(int id) {
-        Map<Integer, Map<String, String>> result = database.executeQuery(readOrdineById, String.valueOf(id));
-        if (result.isEmpty()) {
-            return null;
-        }
-        Map<String, String> data = result.values().iterator().next();
-        Ordine ordine = context.getBean(Ordine.class, data);
-        return ordine;
-    }
-
-    @Override
-    public void update(Ordine ordine) {
-        database.executeUpdate(updateOrdine, 
-            String.valueOf(ordine.getPersona().getIdPersona()),
-            String.valueOf(ordine.getQuantita()),
-            ordine.isIva() ? "1" : "0", 
-            String.valueOf(ordine.getTotale()),
-            String.valueOf(ordine.getIdOrdine())
-        );
-
-        // Aggiorna i prodotti associati
-        database.executeUpdate("DELETE FROM ordine_prodotti WHERE id_ordine = ?", String.valueOf(ordine.getIdOrdine()));
-
-        for (Macchinetta macchina : ordine.getMacchine()) {
-            database.executeUpdate(insertOrdineProdotti,
-                String.valueOf(ordine.getIdOrdine()),
-                macchina.getIdEAN()
-            );
-        }
-
-        for (Caffe caffe : ordine.getCaffe()) {
-            database.executeUpdate(insertOrdineProdotti,
-                String.valueOf(ordine.getIdOrdine()),
-                caffe.getIdEAN()
-            );
-        }
-=======
 
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = database.executeQuery(readAllOrdini);
@@ -136,7 +85,6 @@ public class OrdineDAO implements IDAO<Ordine> {
             String.valueOf(o.getId())
         );
 
->>>>>>> stefano
     }
 
     @Override
@@ -144,73 +92,8 @@ public class OrdineDAO implements IDAO<Ordine> {
         database.executeUpdate(deleteOrdine, String.valueOf(id));
     }
 
-<<<<<<< HEAD
-    //readByUtenteId: Recupera tutti gli ordini per un utente specifico.
-    public List<Ordine> readByUtenteId(int utenteId) {
-        List<Ordine> ordini = new ArrayList<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(readOrdiniByUtenteId, String.valueOf(utenteId));
-        for (Entry<Integer, Map<String, String>> entry : result.entrySet()) {
-            Map<String, String> data = entry.getValue();
-            Ordine ordine = context.getBean(Ordine.class, data);
-            ordini.add(ordine);
-        }
-        return ordini;
-    }
-
-    //readMacchinetteByOrdineId: Recupera tutte le macchine per un ordine specifico
-    public List<Macchinetta> readMacchinetteByOrdineId(int ordineId) {
-        List<Macchinetta> macchinette = new ArrayList<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(readMacchinetteByOrdineId, String.valueOf(ordineId));
-        for (Entry<Integer, Map<String, String>> entry : result.entrySet()) {
-            Map<String, String> data = entry.getValue();
-            Macchinetta macchinetta = context.getBean(Macchinetta.class, data);
-            macchinette.add(macchinetta);
-        }
-        return macchinette;
-    }
-
-    //readCaffeByOrdineId: Recupera tutti i caffè per un ordine specifico.
-    public List<Caffe> readCaffeByOrdineId(int ordineId) {
-        List<Caffe> caffeList = new ArrayList<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(readCaffeByOrdineId, String.valueOf(ordineId));
-        for (Entry<Integer, Map<String, String>> entry : result.entrySet()) {
-            Map<String, String> data = entry.getValue();
-            Caffe caffe = context.getBean(Caffe.class, data);
-            caffeList.add(caffe);
-        }
-        return caffeList;
-    }
-
-    //readProdottiByOrdineId: Recupera sia macchine che caffè 
-    //per un ordine specifico e aggiorna direttamente l'oggetto Ordine.
-    public void readProdottiByOrdineId(int idOrdine, Ordine ordine) {
-        List<Macchinetta> macchine = new ArrayList<>();
-        List<Caffe> caffeList = new ArrayList<>();
-
-        // Leggi le macchine
-        Map<Integer, Map<String, String>> macchineResult = database.executeQuery("SELECT * FROM macchinette WHERE id_EAN IN (SELECT id_EAN FROM ordine_prodotti WHERE id_ordine = ?)", String.valueOf(idOrdine));
-        for (Entry<Integer, Map<String, String>> entry : macchineResult.entrySet()) {
-            Map<String, String> data = entry.getValue();
-            Macchinetta macchina = context.getBean(Macchinetta.class, data);
-            macchine.add(macchina);
-        }
-
-        // Leggi i caffè
-        Map<Integer, Map<String, String>> caffeResult = database.executeQuery("SELECT * FROM caffe WHERE id_EAN IN (SELECT id_EAN FROM ordine_prodotti WHERE id_ordine = ?)", String.valueOf(idOrdine));
-        for (Entry<Integer, Map<String, String>> entry : caffeResult.entrySet()) {
-            Map<String, String> data = entry.getValue();
-            Caffe caffe = context.getBean(Caffe.class, data);
-            caffeList.add(caffe);
-        }
-
-        ordine.setMacchine(macchine);
-        ordine.setCaffe(caffeList);
-    }
-}
-=======
     public Map<Integer,Entity> readByIdProdotto(int idProdotto){
         Map<Integer, Entity> ris = new LinkedHashMap<>();
-
         Map<Integer, Map<String, String>> result = database.executeQuery(readByIdProdotto, String.valueOf(idProdotto));
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
@@ -222,5 +105,36 @@ public class OrdineDAO implements IDAO<Ordine> {
         return ris;
     }
 
+    public Map<Integer,Entity> readByRange(double min, double max){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readByRange, String.valueOf(min), String.valueOf(max));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            ris.put(o.getId(), o);
+        }
+        return ris;
+
+    }
+
+    public Map<Integer,Entity> readByPersona(String nome, String cognome){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+
+        if(nome != null && cognome != null){
+            result = database.executeQuery(findByNomeOrCognomeLike, nome, cognome);
+        } else if(nome == null){
+            result = database.executeQuery(findByCognomeLike, cognome);
+        } else if(cognome == null){
+            result = database.executeQuery(findByNomeLike, nome);
+        }
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            ris.put(o.getId(), o);
+        }
+        return ris;
+
+    }
+
+
 }
->>>>>>> stefano

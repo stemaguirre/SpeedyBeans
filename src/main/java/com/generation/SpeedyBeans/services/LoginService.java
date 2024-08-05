@@ -11,7 +11,7 @@ import com.generation.SpeedyBeans.entities.Utente;
 @Service
 public class LoginService {
     @Autowired
-    private UserDAO utenteDAO;
+    private UserDAO userDAO;
 
     @Autowired
     private UtenteService utenteService;
