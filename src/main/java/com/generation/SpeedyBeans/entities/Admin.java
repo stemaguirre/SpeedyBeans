@@ -7,5 +7,5 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public  class Admin extends Persona
 {
-
+    
 }
