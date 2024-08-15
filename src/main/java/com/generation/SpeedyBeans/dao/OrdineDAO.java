@@ -35,8 +35,11 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     private final String readByIdProdotto = "select o.* from ordini d join ordini_prodotti op on o.id_ordine = od.id_ordine join prodotti p on od.id_ean = p.id_ean where p.id_ean = ?";
 
-  
+    private final String readByRange = "SELECT * FROM ordini WHERE totale BETWEEN ? AND ?";
     
+    private final String findByNomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%'))";
+    private final String findByCognomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
+    private final String findByNomeOrCognomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%')) or p.cognome like(concat('%', ?, '%'))";
 
     @Override
     public int create(Ordine o) {
@@ -49,6 +52,7 @@ public class OrdineDAO implements IDAO<Ordine> {
 
         return id;
     }
+
 
     @Override
     public Map<Integer, Entity> readAll() {
@@ -86,7 +90,6 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     public Map<Integer,Entity> readByIdProdotto(int idProdotto){
         Map<Integer, Entity> ris = new LinkedHashMap<>();
-
         Map<Integer, Map<String, String>> result = database.executeQuery(readByIdProdotto, String.valueOf(idProdotto));
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
@@ -97,5 +100,37 @@ public class OrdineDAO implements IDAO<Ordine> {
         }
         return ris;
     }
+
+    public Map<Integer,Entity> readByRange(double min, double max){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readByRange, String.valueOf(min), String.valueOf(max));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            ris.put(o.getId(), o);
+        }
+        return ris;
+
+    }
+
+    public Map<Integer,Entity> readByPersona(String nome, String cognome){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+
+        if(nome != null && cognome != null){
+            result = database.executeQuery(findByNomeOrCognomeLike, nome, cognome);
+        } else if(nome == null){
+            result = database.executeQuery(findByCognomeLike, cognome);
+        } else if(cognome == null){
+            result = database.executeQuery(findByNomeLike, nome);
+        }
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            ris.put(o.getId(), o);
+        }
+        return ris;
+
+    }
+
 
 }
