@@ -36,6 +36,8 @@ public class UtenteDAO implements IDAO<Utente> {
 
     private final String findByFilters = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.partita_iva like(concat('%', ?, '%')) AND p.cognome like(concat('%', ?, '%'))";
 
+    private final String findByUsername = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username = ?";
+
     @Override
     public int create(Utente s) {
        
@@ -95,16 +97,16 @@ public class UtenteDAO implements IDAO<Utente> {
     }
 
 
-    public Map<Integer, Entity> readByUsername(String username) {
-        Map<Integer, Entity> ris = new LinkedHashMap<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(readAllUtenti + " where p.username = ?", username);
+    public Utente readByUsername(String username) {
+        Utente ris = null;
+        Map<Integer, Map<String, String>> result = database.executeQuery(findByUsername, username);
 
-    for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-        Utente u = context.getBean(Utente.class, coppia.getValue());
-        ris.put(u.getId(), u);
-    }
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            ris = context.getBean(Utente.class, coppia.getValue());
 
-    return ris;
+        }
+
+        return ris;
     
-}
+    }
 }

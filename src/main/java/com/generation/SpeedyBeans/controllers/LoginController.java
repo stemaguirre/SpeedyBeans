@@ -42,21 +42,22 @@ public class LoginController {
                 session.setAttribute("role", "U");
                 session.setAttribute("persona", p);
                 return "redirect:/area-utente";
+            }
+            else if(p instanceof Admin){
+                session.setAttribute("role", "A");
+                session.setAttribute("persona", p);
+                return "redirect:/area-admin";
+            }
         }
-        else if(p instanceof Admin){
-            session.setAttribute("role", "A");
-            session.setAttribute("persona", p);
-            return "redirect:/area-admin";
-        }
-    }
+
         appService.setMessage("Errore credenziali errate");
-        return "redirect:/loginpage";
+        return "homepage.html";
     }
 
     @GetMapping("logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/loginpage";
+        return "homepage.html";
     }
 
 

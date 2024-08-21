@@ -32,7 +32,7 @@ public class PersonaController {
     public String areaUtente(HttpSession session, Model model) {
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
-        if(role != null && role.equals("U")&& p instanceof Utente){
+        if(role != null && role.equals("U") && p instanceof Utente){
             model.addAttribute("persona", (Utente)p);
 
             AppService as = context.getBean(AppService.class);
@@ -43,7 +43,7 @@ public class PersonaController {
             return "areaUtente.html";
         }
         session.invalidate();
-        return "redirect:/loginpage";
+        return "homepage.html";
     }
 
     @GetMapping("/area-admin")
@@ -61,19 +61,22 @@ public class PersonaController {
             return "areaAdmin.html";
         }
         session.invalidate();
-        return "redirect:/loginpage";
+        return "homepage.html";
     }
 
     //Da sistemare
     @GetMapping("area-admin-search")
-    public String areaAdmin(@RequestParam(name = "username", defaultValue = "") String username, 
+    public String areaAdmin(@RequestParam(name = "username", defaultValue = "") String username,
+                            @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,        
+                            @RequestParam(name = "cognome", defaultValue = "") String cognome,
                             HttpSession session, Model model) {
 
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         if(role != null && role.equals("A") && p instanceof Admin){
             model.addAttribute("persona", (Admin)p);
-            model.addAttribute("listaUtenti", utenteService.getUtentiByUsername(username));
+            model.addAttribute("listaUtenti", utenteService.findByFilters(partitaIva, cognome));
+            model.addAttribute("utente", utenteService.getUtenteByUsername(username));
             
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){
@@ -83,6 +86,6 @@ public class PersonaController {
             return "areaAdmin.html";
         }
         session.invalidate();
-        return "redirect:/loginpage";
+        return "homepage.html";
     }
 }

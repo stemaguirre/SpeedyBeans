@@ -7,10 +7,14 @@ import com.generation.SpeedyBeans.entities.Utente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service 
 public class UtenteService extends GenericService<Utente, UtenteDAO> {
+    
     @Autowired
     private UtenteDAO utenteDAO; // Iniettare il DAO per interagire con il database
 
@@ -24,14 +28,13 @@ public class UtenteService extends GenericService<Utente, UtenteDAO> {
         }
 
         return ris;
-=======
     }
 
-    public List<Utente> getUtentiByUsername(String username) {   
+    public Utente getUtenteByUsername(String username) {   
 
-        Map<Integer, Entity> utenti = getRepository().readByUsername(username);
-        
-        return utenti.values().stream().map(e -> (Utente) e).collect(Collectors.toList());
+        Utente u = getRepository().readByUsername(username);
+
+        return u;
     }
 }
 
