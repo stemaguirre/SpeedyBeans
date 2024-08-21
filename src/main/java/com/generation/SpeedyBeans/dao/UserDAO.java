@@ -15,6 +15,10 @@ public class UserDAO{
     private Database database;
 
     private final String readByUsernameAndPassword = "select idPersona from persone where username = ? and password = ?";
+
+    private final String updateUsernameAndPassword = "update persone set username = ?, password = ? where id = ?";
+
+
    
     public int readByUsernameAndPassword(String username, String password) {
         Map<Integer, Map<String, String>>  result = database.executeQuery(readByUsernameAndPassword, username, password);
@@ -25,4 +29,8 @@ public class UserDAO{
         return idPersona;
     }
     
+    public void updateUsernameAndPassword(int idPersona, String username, String password){
+        database.executeUpdate(updateUsernameAndPassword, username, password, String.valueOf(idPersona));
+    }
+
 }

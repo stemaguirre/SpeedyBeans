@@ -13,6 +13,8 @@ import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
+import com.generation.SpeedyBeans.services.OrdineService;
+import com.generation.SpeedyBeans.services.ProdottoService;
 import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +26,12 @@ public class PersonaController {
 
     @Autowired
     private UtenteService utenteService;
+
+    @Autowired
+    private OrdineService ordineService;
+
+    @Autowired
+    private ProdottoService prodottoService;
 
     @Autowired
     private ApplicationContext context;
@@ -52,6 +60,9 @@ public class PersonaController {
         String role = (String)session.getAttribute("role");
         if(role != null && role.equals("A") && p instanceof Admin){
             model.addAttribute("persona", (Admin)p);
+            model.addAttribute("listaUtenti", utenteService.readAll());
+            model.addAttribute("listaOrdini", ordineService.readAll());
+            model.addAttribute("listaProdotti", prodottoService.readAll());
 
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){
@@ -64,19 +75,30 @@ public class PersonaController {
         return "homepage.html";
     }
 
-    //Da sistemare
+  
     @GetMapping("area-admin-search")
     public String areaAdmin(@RequestParam(name = "username", defaultValue = "") String username,
                             @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,        
                             @RequestParam(name = "cognome", defaultValue = "") String cognome,
+                            @RequestParam(name = "minOrdine", defaultValue = "0") double minOrdine,
+                            @RequestParam(name = "maxOrdine", defaultValue = "0") double maxOrdine,
+                            @RequestParam(name = "nome", defaultValue = "") String nome,
+                            @RequestParam(name = "genere", defaultValue = "") String genere,
+                            @RequestParam(name = "brand", defaultValue = "") String brand,
+                            @RequestParam(name = "minProdotto", defaultValue = "0") double minProdotto,
+                            @RequestParam(name = "max", defaultValue = "0") double maxProdotto,
                             HttpSession session, Model model) {
 
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         if(role != null && role.equals("A") && p instanceof Admin){
             model.addAttribute("persona", (Admin)p);
-            model.addAttribute("listaUtenti", utenteService.findByFilters(partitaIva, cognome));
-            model.addAttribute("utente", utenteService.getUtenteByUsername(username));
+            model.addAttribute("utentiFiltri", utenteService.findByFilters(partitaIva, cognome));
+            model.addAttribute("utenteUsername", utenteService.findByUsername(username));
+            model.addAttribute("ordiniRange", ordineService.findyByRangeTotale(minOrdine, maxOrdine));
+            model.addAttribute("ordiniPersona", ordineService.findByNomeCognomePersona(nome, cognome));
+            model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
+            model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
             
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){
@@ -84,6 +106,33 @@ public class PersonaController {
                 as.setMessage(null);
             }
             return "areaAdmin.html";
+        }
+        session.invalidate();
+        return "homepage.html";
+    }
+
+    @GetMapping("area-utente-search")
+    public String areaUtente(@RequestParam(name = "genere", defaultValue = "") String genere,
+                            @RequestParam(name = "brand", defaultValue = "") String brand,
+                            @RequestParam(name = "minProdotto", defaultValue = "0") double minProdotto,
+                            @RequestParam(name = "maxProdotto", defaultValue = "0") double maxProdotto,
+                            HttpSession session, Model model) {
+
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+
+        if(role != null && role.equals("U") && p instanceof Utente){
+
+            model.addAttribute("persona", (Utente)p);
+            model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
+            model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
+            
+            AppService as = context.getBean(AppService.class);
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "areaUtente.html";
         }
         session.invalidate();
         return "homepage.html";

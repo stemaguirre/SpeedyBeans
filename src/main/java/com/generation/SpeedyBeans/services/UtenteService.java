@@ -30,11 +30,12 @@ public class UtenteService extends GenericService<Utente, UtenteDAO> {
         return ris;
     }
 
-    public Utente getUtenteByUsername(String username) {   
+    public Utente findByUsername(String username) {   
 
         Utente u = getRepository().readByUsername(username);
 
         return u;
     }
+
 }
 

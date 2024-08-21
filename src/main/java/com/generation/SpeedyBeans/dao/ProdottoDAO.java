@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Entity;
+import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Prodotto;
+import com.generation.SpeedyBeans.entities.Utente;
 
 @Service
 public class ProdottoDAO implements IDAO<Prodotto>
@@ -31,6 +33,13 @@ public class ProdottoDAO implements IDAO<Prodotto>
     private final String deleteProdotto = "DELETE FROM prodotti WHERE id_EAN = ?";
 
     private final String readByIdOrdine = "select p.* from prodotti p join ordini_prodotti op on p.id_ean = od.id_ean join ordini o on od.id_ordine = p.id_ordine where p.id_ordine = ?";
+
+    private final String readByRange = "SELECT * FROM prodotti WHERE prezzo BETWEEN ? AND ?";
+
+    private final String findByGenereLike = "SELECT * FROM prodotti WHERE genere LIKE CONCAT('%', ?, '%')";
+    private final String findByBrandLike = "SELECT * FROM prodotti WHERE brand LIKE CONCAT('%', ?, '%')";
+    private final String findByFilters = "SELECT * FROM prodotti WHERE genere LIKE CONCAT('%', ?, '%') AND brand LIKE CONCAT('%', ?, '%')";
+
 
 
     @Override
@@ -81,5 +90,38 @@ public class ProdottoDAO implements IDAO<Prodotto>
 
         }
         return ris;
+    }
+
+    public Map<Integer,Entity> readByRangePrezzo(double min, double max){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readByRange, String.valueOf(min), String.valueOf(max));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Prodotto p = context.getBean(Prodotto.class, coppia.getValue());
+            ris.put(p.getId(), p);
+        }
+        return ris;
+
+    }
+
+    public Map<Integer, Entity> findByFilters(String genere, String brand) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+
+        if(brand == null) {
+            result = database.executeQuery(findByGenereLike, genere);
+        } else if (genere == null) {
+            result = database.executeQuery(findByBrandLike, brand); 
+        }else {
+            result = database.executeQuery(findByFilters, genere, brand);
+        }
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Prodotto p = context.getBean(Prodotto.class, coppia.getValue());
+            ris.put(p.getId(), p);
+        }
+
+        return ris;
+
     }
 }

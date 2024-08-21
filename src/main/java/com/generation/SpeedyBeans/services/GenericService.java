@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.generation.SpeedyBeans.dao.IDAO;
+import com.generation.SpeedyBeans.dao.UserDAO;
 import com.generation.SpeedyBeans.entities.Entity;
 import com.generation.SpeedyBeans.entities.Utente;
 
@@ -17,6 +18,9 @@ public abstract class GenericService<E extends Entity, D extends IDAO<E>> {
     
     @Autowired 
     private D repository;
+
+    @Autowired
+    private UserDAO userDAO;
 
     
     @Autowired
@@ -49,6 +53,10 @@ public abstract class GenericService<E extends Entity, D extends IDAO<E>> {
 
     public void delete(int id){
         repository.delete(id);
+    }
+
+    public void createOrUpdateUser(int id, String username, String password){
+        userDAO.updateUsernameAndPassword(id, username, password);  
     }
 
 }
