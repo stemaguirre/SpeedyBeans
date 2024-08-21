@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
-import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service

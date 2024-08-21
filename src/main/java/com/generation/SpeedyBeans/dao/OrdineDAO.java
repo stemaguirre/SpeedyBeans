@@ -115,7 +115,7 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     public Map<Integer,Entity> readByPersona(String nome, String cognome){
         Map<Integer, Entity> ris = new LinkedHashMap<>();
-        Map<Integer, Map<String, String>> result = null;
+        Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
 
         if(nome != null && cognome != null){
             result = database.executeQuery(findByNomeOrCognomeLike, nome, cognome);

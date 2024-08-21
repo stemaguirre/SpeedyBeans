@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Utente;
 
 @Service
@@ -64,17 +63,17 @@ public class UtenteDAO implements IDAO<Utente> {
   
     @Override
     public void update(Utente e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        database.executeUpdate(updatePersona, e.getNome(), e.getCognome(), e.getUsername(), e.getPassword(), String.valueOf(e.getId()));
+
+        database.executeUpdate(updateUtente, e.getRagioneSociale(), e.getPartitaIva(), e.getCodiceSdi(), e.getIndirizzo(), String.valueOf(e.getCap()), e.getCitta(), e.getProvincia(), e.getNazione(), String.valueOf(e.getTelefono()), e.getEmail(), String.valueOf(e.getId()));
     }
 
     @Override
     public void delete(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        database.executeUpdate(deletePersona, String.valueOf(id));
     }
 
-     public Map<Integer, Entity> findByFilters(String partitaIva, String cognome) {
+    public Map<Integer, Entity> findByFilters(String partitaIva, String cognome) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 

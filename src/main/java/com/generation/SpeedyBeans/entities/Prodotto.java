@@ -1,9 +1,10 @@
 package com.generation.SpeedyBeans.entities;
 
 import lombok.Data;
-<<<<<<< HEAD
+import lombok.ToString;
 
 @Data
+@ToString(callSuper = true)
 public abstract class Prodotto extends Entity
 {
     private String genere;
