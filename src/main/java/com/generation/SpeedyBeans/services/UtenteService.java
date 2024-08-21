@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service 
 public class UtenteService extends GenericService<Utente, UtenteDAO> {
+    @Autowired
+    private UtenteDAO utenteDAO; // Iniettare il DAO per interagire con il database
 
     public List<Utente> findByFilters(String partitaIva, String cognome) {
         List<Utente> ris = new ArrayList<>();
@@ -22,6 +24,14 @@ public class UtenteService extends GenericService<Utente, UtenteDAO> {
         }
 
         return ris;
+=======
     }
 
+    public List<Utente> getUtentiByUsername(String username) {   
+
+        Map<Integer, Entity> utenti = getRepository().readByUsername(username);
+        
+        return utenti.values().stream().map(e -> (Utente) e).collect(Collectors.toList());
+    }
 }
+
