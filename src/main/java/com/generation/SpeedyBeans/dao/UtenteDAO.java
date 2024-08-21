@@ -23,7 +23,7 @@ public class UtenteDAO implements IDAO<Utente> {
     private final String insertUtente = "insert into utenti (id_persona, ragioneSociale, partitaIva, codiceSdi, indirizzo, cap, citta, provincia, nazione, telefono, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private final String readAllUtenti = "select * from utenti u join persone p on u.id_persona = p.id_persona";
-    
+
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
     private final String updateUtente = "update utenti set ragioneSociale = ?, partitaIva = ?, codiceSdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where id_persona = ?";
     private final String deletePersona = "delete from persone where id_persona = ?";
@@ -64,5 +64,17 @@ public class UtenteDAO implements IDAO<Utente> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
+
+    public Map<Integer, Entity> readByUsername(String username) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readAllUtenti + " where p.username = ?", username);
+
+    for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+        Utente u = context.getBean(Utente.class, coppia.getValue());
+        ris.put(u.getId(), u);
+    }
+
+    return ris;
     
+}
 }

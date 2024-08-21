@@ -2,10 +2,18 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.Map;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.generation.SpeedyBeans.entities.Admin;
+import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Utente;
+import com.generation.SpeedyBeans.services.AppService;
+import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -14,11 +22,24 @@ import jakarta.servlet.http.HttpSession;
 public class PersonaController {
     
 
+    @Autowired
+    private UtenteService utenteService;
+
+    @Autowired
+    private ApplicationContext context;
+
     @GetMapping("/area-utente")
     public String areaUtente(HttpSession session, Model model) {
-        //Ho messo una condizione fittizia per simulare il login
-        int x = 0;
-        if(x > 2){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        if(role != null && role.equals("U")&& p instanceof Utente){
+            model.addAttribute("persona", (Utente)p);
+
+            AppService as = context.getBean(AppService.class);
+            if(as.getMessage() != null){
+                model.addAttribute("messaget", as.getMessage());
+                as.setMessage(null);
+            }
             return "areaUtente.html";
         }
         session.invalidate();
@@ -27,18 +48,38 @@ public class PersonaController {
 
     @GetMapping("/area-admin")
     public String areaAdmin(HttpSession session, Model model) {
-        int x = 0;
-        if(x < 2){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        if(role != null && role.equals("A") && p instanceof Admin){
+            model.addAttribute("persona", (Admin)p);
+
+            AppService as = context.getBean(AppService.class);
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
             return "areaAdmin.html";
         }
         session.invalidate();
         return "redirect:/loginpage";
     }
 
+    //Da sistemare
     @GetMapping("area-admin-search")
-    public String areaAdmin(@RequestParam Map<String, String> params, HttpSession session, Model model) {
-        int x = 0;
-        if(x < 2){
+    public String areaAdmin(@RequestParam(name = "username", defaultValue = "") String username, 
+                            HttpSession session, Model model) {
+
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        if(role != null && role.equals("A") && p instanceof Admin){
+            model.addAttribute("persona", (Admin)p);
+            model.addAttribute("listaUtenti", utenteService.getUtentiByUsername(username));
+            
+            AppService as = context.getBean(AppService.class);
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
             return "areaAdmin.html";
         }
         session.invalidate();
