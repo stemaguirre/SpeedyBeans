@@ -1,6 +1,7 @@
 package com.generation.SpeedyBeans.entities;
 
 import lombok.Data;
+<<<<<<< HEAD
 
 @Data
 public abstract class Prodotto extends Entity
