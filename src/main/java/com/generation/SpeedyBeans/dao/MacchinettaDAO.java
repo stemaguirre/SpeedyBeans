@@ -117,5 +117,11 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     }
 
+    @Override
+    public Macchinetta readById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'readById'");
+    }
+
   
 }

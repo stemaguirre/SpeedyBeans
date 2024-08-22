@@ -61,7 +61,7 @@ public class LoginController {
         }
 
         appService.setMessage("Errore credenziali errate");
-        return "homepage.html";
+        return "redirect:/loginpage";
     }
 
     @GetMapping("/logout")

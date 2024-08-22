@@ -98,4 +98,10 @@ public class CaffeDAO implements IDAO<Caffe>{
         return ris;
 
     }
+
+    @Override
+    public Caffe readById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'readById'");
+    }
 }

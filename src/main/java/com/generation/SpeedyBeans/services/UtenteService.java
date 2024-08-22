@@ -7,17 +7,13 @@ import com.generation.SpeedyBeans.entities.Utente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service 
 public class UtenteService extends GenericService<Utente, UtenteDAO> {
     
-    @Autowired
-    private UtenteDAO utenteDAO; // Iniettare il DAO per interagire con il database
-
+   
     public List<Utente> findByFilters(String partitaIva, String cognome) {
         List<Utente> ris = new ArrayList<>();
 

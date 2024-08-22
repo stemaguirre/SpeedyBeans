@@ -23,9 +23,6 @@ public abstract class GenericService<E extends Entity, D extends IDAO<E>> {
     private UserDAO userDAO;
 
     
-    @Autowired
-    private Utente utenteDAO;
-
     public int create(E e){
         return repository.create(e);
     }
@@ -42,10 +39,15 @@ public abstract class GenericService<E extends Entity, D extends IDAO<E>> {
     }
 
     public E readById(int id){
-        Map<Integer, Entity> result = repository.readAll();
-        E e = (E)result.get(id);
-        return e;
+        E result = repository.readById(id);
+        return result;
     }
+
+    // public E readById(int id){
+    //     Map<Integer, Entity> result = repository.readAll();
+    //     E e = (E)result.get(id);
+    //     return e;
+    // }
 
     public void update(E e){
         repository.update(e);

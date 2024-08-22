@@ -24,7 +24,9 @@ public class UtenteDAO implements IDAO<Utente> {
     private final String insertPersona = "insert into persone (nome, cognome, username, password) values (?, ?, ?, ?)";
     private final String insertUtente = "insert into utenti (id_persona, ragioneSociale, partitaIva, codiceSdi, indirizzo, cap, citta, provincia, nazione, telefono, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private final String readAllUtenti = "select * from utenti u join persone p on u.id_persona = p.id_persona";
+    private final String readAllUtenti = "select p.* from utenti u join persone p on u.id_persona = p.id_persona";
+
+    private final String readUtenteById = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.id_persona = ?";
 
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
     private final String updateUtente = "update utenti set ragioneSociale = ?, partitaIva = ?, codiceSdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where id_persona = ?";
@@ -62,6 +64,17 @@ public class UtenteDAO implements IDAO<Utente> {
             
         }
     return ris;
+    }
+
+    public Utente readById(int id) {
+        Utente ris = null;
+        Map<Integer, Map<String, String>> result = database.executeQuery(readUtenteById, String.valueOf(id));
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            ris = context.getBean(Utente.class, coppia.getValue());
+        }
+
+        return ris;
     }
 
   

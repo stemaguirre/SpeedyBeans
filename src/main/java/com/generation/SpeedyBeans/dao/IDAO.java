@@ -10,6 +10,8 @@ public interface IDAO <E extends Entity>
 
     public Map<Integer, Entity> readAll();
 
+    public E readById(int id);
+
     public void update(E e);
 
     public void delete(int id);

@@ -147,4 +147,11 @@ public class OrdineDAO implements IDAO<Ordine> {
     }
 
 
+    @Override
+    public Ordine readById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'readById'");
+    }
+
+
 }
