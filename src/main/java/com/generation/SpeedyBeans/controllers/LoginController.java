@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,6 +33,15 @@ public class LoginController {
     //     return "loginpage.html";
     // }
     //NON ABBIAMO PAGINA DI LOGIN MA POP UP
+
+    @GetMapping("/loginpage")
+    public String loginPage(Model model){
+        if(appService.getMessage() != null){
+            model.addAttribute("message", appService.getMessage());
+            appService.setMessage(null);
+        }
+        return "loginpage.html";
+    }
     
     @PostMapping("/login")
     public String login(@RequestParam Map<String,String> params, HttpSession session) {
