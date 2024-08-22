@@ -7,11 +7,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.LoginService;
@@ -25,7 +27,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -104,7 +105,7 @@ public class UtenteController {
     public String registerUser(@RequestParam Map<String,String> params){
        
         String nome = params.get("nome");
-        String cognome = params.get("cognome");
+        String cognome = params.get("cognome"); 
         String ragioneSociale = params.get("ragioneSociale");
         String partitaIva = params.get("partitaIva");
         String codiceSdi = params.get("codiceSdi");
@@ -117,11 +118,18 @@ public class UtenteController {
         String email = params.get("email");
         String username = params.get("username");
         String password = params.get("password");
+        String confermaPassword = params.get("confermaPassword");
 
+        
         AppService as = context.getBean(AppService.class);
-
+        
         if (personaService.usernameExists(username)) {
             as.setMessage("Username gia' in uso");
+            return "homepage.html";
+        }
+        
+        if (!password.equals(confermaPassword)) {
+            as.setMessage("Le password non corrispondono");
             return "homepage.html";
         }
 
@@ -183,6 +191,41 @@ public class UtenteController {
                 as.setMessage("Password modificata correttamente");
                 return "redirect:/area-utente";
             }
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "homepage.html";
+    }
+
+    @GetMapping("/profile")
+    public String userProfile(HttpSession session, Model model) {
+
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            Utente u = (Utente)p;
+            model.addAttribute("utente", u);
+            return "iMieiDatiUtente.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "homepage.html";
+
+    }
+    
+    @GetMapping("/dettaglio")
+    public String dettaglioUtente(@RequestParam(name = "id", defaultValue = "0") int idUtente, HttpSession session, Model model){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("A") && p != null){
+            Utente u = utenteService.readById(idUtente);
+            model.addAttribute("utente", u);
+            return "dettaglioUtente.html";
+            
         }
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();

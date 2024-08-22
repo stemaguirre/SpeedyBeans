@@ -13,10 +13,10 @@ import com.generation.SpeedyBeans.entities.Macchinetta;
 @Service
 public class MacchinettaService extends GenericService<Macchinetta, MacchinettaDAO> {
     
-    public List<Macchinetta> findByFilters(String brand, String colore) {
+    public List<Macchinetta> findByFilters(String utilizzo, String colore) {
         List<Macchinetta> ris = new ArrayList<>();
 
-        Map<Integer, Entity> macchinette = getRepository().findByFilters(brand, colore);
+        Map<Integer, Entity> macchinette = getRepository().findByFilters(utilizzo, colore);
 
         for (Entity e : macchinette.values()) {
             ris.add((Macchinetta) e);

@@ -13,10 +13,10 @@ import com.generation.SpeedyBeans.entities.Entity;
 @Service
 public class CaffeService extends GenericService<Caffe, CaffeDAO> {
     
-    public List<Caffe> findByFilters(String brand, String tipologia) {
+    public List<Caffe> findByFilters(String formato, String tipologia) {
         List<Caffe> ris = new ArrayList<>();
 
-        Map<Integer, Entity> caffes = getRepository().findByFilters(brand, tipologia);
+        Map<Integer, Entity> caffes = getRepository().findByFilters(formato, tipologia);
 
         for (Entity e : caffes.values()) {
             ris.add((Caffe) e);

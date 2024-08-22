@@ -38,6 +38,8 @@ public class UtenteDAO implements IDAO<Utente> {
 
     private final String findByUsername = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username = ?";
 
+    private final String readRegistrati = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.username is not null";    
+
     @Override
     public int create(Utente s) {
        
@@ -108,6 +110,19 @@ public class UtenteDAO implements IDAO<Utente> {
 
         return ris;
     
+    }
+
+    public Map<Integer, Entity> readRegistrati()
+    {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readRegistrati);
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Utente u = context.getBean(Utente.class, coppia.getValue());
+            ris.put(u.getId(), u);
+        }
+
+        return ris;
     }
 
     

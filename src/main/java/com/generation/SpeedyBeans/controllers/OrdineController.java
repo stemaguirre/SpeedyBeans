@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
-import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.OrdineService;
 import com.generation.SpeedyBeans.services.ProdottoService;
@@ -102,7 +101,7 @@ public class OrdineController {
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
-        if(role != null && (role.equals("A") || role.equals("U")) && p != null){
+        if(role != null && role.equals("A") && p != null){
             List<Prodotto> listaProdotti = prodottoService.findByIdOrdine(idOrdine);
             Ordine o = ordineService.readById(idOrdine);
            
@@ -115,4 +114,22 @@ public class OrdineController {
         session.invalidate();
         return "homepage.html";
     }
+
+    @GetMapping("/i-miei-ordini")
+    public String iMieiOrdini(HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            List<Ordine> listaOrdini = ordineService.findByIdPersona(p.getId());
+            model.addAttribute("listaMieiOrdini", listaOrdini);
+            return "listaOrdiniUtente.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "homepage.html";
+
+    }
+    
 }

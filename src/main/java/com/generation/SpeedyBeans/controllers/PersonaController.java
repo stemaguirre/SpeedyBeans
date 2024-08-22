@@ -2,6 +2,8 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.Map;
 
+import javax.crypto.Mac;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,8 @@ import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
+import com.generation.SpeedyBeans.services.CaffeService;
+import com.generation.SpeedyBeans.services.MacchinettaService;
 import com.generation.SpeedyBeans.services.OrdineService;
 import com.generation.SpeedyBeans.services.ProdottoService;
 import com.generation.SpeedyBeans.services.UtenteService;
@@ -32,6 +36,12 @@ public class PersonaController {
 
     @Autowired
     private ProdottoService prodottoService;
+
+    @Autowired
+    private CaffeService caffeService;
+
+    @Autowired
+    private MacchinettaService macchinettaService;
 
     @Autowired
     private ApplicationContext context;
@@ -61,6 +71,7 @@ public class PersonaController {
         if(role != null && role.equals("A") && p instanceof Admin){
             model.addAttribute("persona", (Admin)p);
             model.addAttribute("listaUtenti", utenteService.readAll());
+            model.addAttribute("utentiRegistrati", utenteService.utentiRegistrati());
             model.addAttribute("listaOrdini", ordineService.readAll());
             model.addAttribute("listaProdotti", prodottoService.readAll());
 
@@ -87,6 +98,10 @@ public class PersonaController {
                             @RequestParam(name = "brand", defaultValue = "") String brand,
                             @RequestParam(name = "minProdotto", defaultValue = "0") double minProdotto,
                             @RequestParam(name = "max", defaultValue = "0") double maxProdotto,
+                            @RequestParam(name = "formato", defaultValue = "") String formato,
+                            @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
+                            @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
+                            @RequestParam(name = "colore", defaultValue = "") String colore,
                             HttpSession session, Model model) {
 
         Persona p = (Persona)session.getAttribute("persona");
@@ -99,6 +114,9 @@ public class PersonaController {
             model.addAttribute("ordiniPersona", ordineService.findByNomeCognomePersona(nome, cognome));
             model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
             model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
+            model.addAttribute("caffeFiltri", caffeService.findByFilters(formato, tipologia));
+            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(utilizzo, colore));
+            
             
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){
@@ -116,6 +134,10 @@ public class PersonaController {
                             @RequestParam(name = "brand", defaultValue = "") String brand,
                             @RequestParam(name = "minProdotto", defaultValue = "0") double minProdotto,
                             @RequestParam(name = "maxProdotto", defaultValue = "0") double maxProdotto,
+                            @RequestParam(name = "formato", defaultValue = "") String formato,
+                            @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
+                            @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
+                            @RequestParam(name = "colore", defaultValue = "") String colore,
                             HttpSession session, Model model) {
 
         Persona p = (Persona)session.getAttribute("persona");
@@ -126,6 +148,8 @@ public class PersonaController {
             model.addAttribute("persona", (Utente)p);
             model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
             model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
+            model.addAttribute("caffeFiltri", caffeService.findByFilters(formato, tipologia));
+            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(utilizzo, colore));
             
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){
