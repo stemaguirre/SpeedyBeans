@@ -55,7 +55,7 @@ public class PersonaController {
 
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){
-                model.addAttribute("messaget", as.getMessage());
+                model.addAttribute("message", as.getMessage());
                 as.setMessage(null);
             }
             return "areaUtente.html";

@@ -5,24 +5,34 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Prodotto;
-import com.generation.SpeedyBeans.entities.Utente;
 
 @Service
 public class ProdottoDAO implements IDAO<Prodotto>
 {
 
-    @Autowired
-    private Database database;
+    // @Autowired
+    // private Database database;
+
+    // @Autowired
+    // private ApplicationContext context;
+
+    private final Database database;
+    private final ApplicationContext context;
+    private final Prodotto newProdotto;
 
     @Autowired
-    private ApplicationContext context;
+    public ProdottoDAO(Database database, ApplicationContext context, @Qualifier("newProdotto") Prodotto newProdotto) {
+        this.database = database;
+        this.context = context;
+        this.newProdotto = newProdotto;
+    }
 
     private final String insertProdotto = "insert into prodotti(id_EAN, genere, brand, prezzo, disponibilità, peso) values(?,?,?,?,?,?)";
 
@@ -55,8 +65,24 @@ public class ProdottoDAO implements IDAO<Prodotto>
         Map<Integer, Map<String, String>> result = database.executeQuery(readAllProdotti);
 
         for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-            Prodotto p = context.getBean(Prodotto.class, coppia.getValue());
+            Prodotto p = context.getBean("newProdotto", Prodotto.class);
             
+            // Popola l'oggetto Prodotto con i valori della mappa
+            String idStr = coppia.getValue().get("id");
+            String genere = coppia.getValue().get("genere");
+            String brand = coppia.getValue().get("brand");
+            String prezzoStr = coppia.getValue().get("prezzo");
+            String disponibilitaStr = coppia.getValue().get("disponibilita");
+            String pesoStr = coppia.getValue().get("peso");
+
+            // Controlla e assegna i valori
+            p.setId(idStr != null ? Integer.parseInt(idStr) : 0);
+            p.setGenere(genere != null ? genere : "");
+            p.setBrand(brand != null ? brand : "");
+            p.setPrezzo(prezzoStr != null ? Double.parseDouble(prezzoStr) : 0.0);
+            p.setDisponibilita(disponibilitaStr != null ? Integer.parseInt(disponibilitaStr) : 0);
+            p.setPeso(pesoStr != null ? Double.parseDouble(pesoStr) : 0.0);
+
             ris.put(p.getId(), p);
         }
 

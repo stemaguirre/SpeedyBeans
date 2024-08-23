@@ -40,7 +40,7 @@ public class UtenteDAO implements IDAO<Utente> {
 
     private final String findByUsername = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username = ?";
 
-    private final String readRegistrati = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.username is not null";    
+    private final String readRegistrati = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username is not null";    
 
     @Override
     public int create(Utente s) {

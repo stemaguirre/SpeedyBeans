@@ -214,6 +214,28 @@ public class UtenteController {
         return "homepage.html";
 
     }
+
+    @GetMapping("/ordini")
+    public String userOrdini(HttpSession session, Model model) {
+
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
+            if(ordini.isEmpty()){
+                as.setMessage("Nessun ordine effettuato");
+                return "redirect:/area-utente";
+            }
+            model.addAttribute("listaOrdini", ordini);
+            return "listaOrdiniUtente.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "homepage.html";
+
+    }
     
     @GetMapping("/dettaglio")
     public String dettaglioUtente(@RequestParam(name = "id", defaultValue = "0") int idUtente, HttpSession session, Model model){

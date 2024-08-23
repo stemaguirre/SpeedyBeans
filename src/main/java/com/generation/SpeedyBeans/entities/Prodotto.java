@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public abstract class Prodotto extends Entity
+public class Prodotto extends Entity
 {
     private String genere;
     private String brand;

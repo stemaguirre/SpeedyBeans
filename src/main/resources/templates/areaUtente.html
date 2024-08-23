@@ -1,9 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Utente</title>
 </head>
 <body>
+    <nav class="navbar">
+        <div>
+            <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area utente</h2>
+        </div>
+        <div>
+            <a href="/logout"><button class="btn-logout">Logout</button></a>
+        </div>
+    </nav>
+    <div>
+        <form action="/area-utente-search" method="get">
+            <label for="search">Cerca</label>
+            <input type="text" name="search" id="search" placeholder="Cerca ordine o prodotto">
+            <input type="submit" value="Cerca">
+            <a href="/area-utente">Annulla ricerca</a>
+        </form>
+    </div>
+    <div>
+        <a href="/utente/profile">
+            <button>I miei dati</button>
+        </a>
+    </div>
+    <div>
+        <a href="/utente/ordini">
+            <button>I miei ordini</button>
+        </a>
+    </div>
+    
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
 </body>
 </html>

@@ -1,5 +1,8 @@
 package com.generation.SpeedyBeans.services;
 
+import java.util.logging.Logger;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +18,9 @@ import com.generation.SpeedyBeans.entities.Prodotto;
 
 @Service
 public class OrdineService extends GenericService<Ordine, OrdineDAO> {
+
+    private static final Logger logger = Logger.getLogger(OrdineService.class.getName());
+
 
     @Autowired
     private ProdottoDAO prodottoDAO;
@@ -114,6 +120,8 @@ public class OrdineService extends GenericService<Ordine, OrdineDAO> {
     }
 
     public List<Ordine> findByIdPersona(int idPersona) {
+        logger.info("findByIdPersona called with idPersona: " + idPersona);
+
         Map<Integer, Entity> ordini = getRepository().readByIdPersona(idPersona);
         List<Ordine> listaOrdini = new ArrayList<>();
         for (Entity e : ordini.values()) {
