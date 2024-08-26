@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
+@ToString(callSuper = true)
 public abstract class Persona extends Entity
 {
     private String nome;

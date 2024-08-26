@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I miei ordini</title>
+    <link rel="stylesheet" href="css/general.css">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr th:>
+                <th>Totale</th>
+                <th>Quantita'</th>
+                <th>Iva</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ordine : ${listaOrdini}">
+                <td th:text="${ordine.totale}"></td>
+                <td th:text="${ordine.quantita}"></td>
+                <td th:text="${ordine.iva}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+</body>
+</html>

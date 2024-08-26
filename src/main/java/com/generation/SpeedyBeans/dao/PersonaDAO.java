@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Entity;
 import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Utente;
 
 @Service
 public class PersonaDAO implements IDAO<Persona>
@@ -28,6 +29,8 @@ public class PersonaDAO implements IDAO<Persona>
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
 
     private final String deletePersona = "delete from persone where id_persona = ?";
+
+    private final String findByUsername = "select p.* persone p where p.username = ?";
 
 
 
@@ -62,9 +65,22 @@ public class PersonaDAO implements IDAO<Persona>
         database.executeUpdate(deletePersona, String.valueOf(id));
     }
 
-    public Persona readByid(int id){
+    public Persona readById(int id){
         Map<Integer, Entity> allPersone = readAll();
         return (Persona)allPersone.get(id);
+    }
+
+    public Persona readByUsername(String username) {
+        Persona ris = null;
+        Map<Integer, Map<String, String>> result = database.executeQuery(findByUsername, username);
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            ris = context.getBean(Persona.class, coppia.getValue());
+
+        }
+
+        return ris;
+    
     }
     
     

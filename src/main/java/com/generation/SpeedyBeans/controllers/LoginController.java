@@ -2,12 +2,19 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.servlet.http.HttpSession;
+import com.generation.SpeedyBeans.entities.Admin;
+import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Utente;
+import com.generation.SpeedyBeans.services.AppService;
+import com.generation.SpeedyBeans.services.LoginService;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -16,30 +23,51 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class LoginController {
     
+    @Autowired
+    private LoginService loginService;
+
+    @Autowired
+    private AppService appService;
     // @GetMapping("/loginpage")
     // public String loginPage(Model model) {
     //     return "loginpage.html";
     // }
     //NON ABBIAMO PAGINA DI LOGIN MA POP UP
+
+    @GetMapping("/loginpage")
+    public String loginPage(Model model){
+        if(appService.getMessage() != null){
+            model.addAttribute("message", appService.getMessage());
+            appService.setMessage(null);
+        }
+        return "loginpage.html";
+    }
     
     @PostMapping("/login")
     public String login(@RequestParam Map<String,String> params, HttpSession session) {
-        //TODO: process POST request
-        int x = 2;
-        if(x > 0){
-            return "redirect:/area-utente";
-        }
-        else if(x < 2){
-            return "redirect:/area-admin";
-        }
+        Persona p = loginService.login(params.get("username"),params.get("password"));
         
+        if(p != null){
+            if(p instanceof Utente){
+                session.setAttribute("role", "U");
+                session.setAttribute("persona", p);
+                return "redirect:/area-utente";
+            }
+            else if(p instanceof Admin){
+                session.setAttribute("role", "A");
+                session.setAttribute("persona", p);
+                return "redirect:/area-admin";
+            }
+        }
+
+        appService.setMessage("Errore credenziali errate");
         return "redirect:/loginpage";
     }
 
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/loginpage";
+        return "homepage.html";
     }
 
 

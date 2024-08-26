@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
-import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -32,11 +31,11 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
     private final String deleteMacchinetta = "DELETE FROM macchinette WHERE id_ean = ?";
 
-    private final String findByBrandLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
+    private final String findByUtilizzoLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.utilizzo like(concat('%', ?, '%'))";
 
     private final String findByColoreLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
+    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
 
 
 
@@ -97,16 +96,16 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         database.executeUpdate(deleteMacchinetta, String.valueOf(id));
     }
 
-    public Map<Integer, Entity> findByFilters(String brand, String colore) {
+    public Map<Integer, Entity> findByFilters(String utilizzo, String colore) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
         if(colore == null) {
-            result = database.executeQuery(findByBrandLike, brand);
-        } else if (brand == null) {
+            result = database.executeQuery(findByUtilizzoLike, utilizzo);
+        } else if (utilizzo == null) {
             result = database.executeQuery(findByColoreLike, colore); 
         }else {
-            result = database.executeQuery(findByFilters, brand, colore);
+            result = database.executeQuery(findByFilters, utilizzo, colore);
         }
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
@@ -116,6 +115,12 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
         return ris;
 
+    }
+
+    @Override
+    public Macchinetta readById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'readById'");
     }
 
   

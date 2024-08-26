@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Utente;
 
 @Service
@@ -25,8 +24,10 @@ public class UtenteDAO implements IDAO<Utente> {
     private final String insertPersona = "insert into persone (nome, cognome, username, password) values (?, ?, ?, ?)";
     private final String insertUtente = "insert into utenti (id_persona, ragioneSociale, partitaIva, codiceSdi, indirizzo, cap, citta, provincia, nazione, telefono, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private final String readAllUtenti = "select * from utenti u join persone p on u.id_persona = p.id_persona";
-    
+    private final String readAllUtenti = "select p.* from utenti u join persone p on u.id_persona = p.id_persona";
+
+    private final String readUtenteById = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.id_persona = ?";
+
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
     private final String updateUtente = "update utenti set ragioneSociale = ?, partitaIva = ?, codiceSdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where id_persona = ?";
     private final String deletePersona = "delete from persone where id_persona = ?";
@@ -36,6 +37,10 @@ public class UtenteDAO implements IDAO<Utente> {
     private final String findByCognomeLike = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
 
     private final String findByFilters = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.partita_iva like(concat('%', ?, '%')) AND p.cognome like(concat('%', ?, '%'))";
+
+    private final String findByUsername = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username = ?";
+
+    private final String readRegistrati = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username is not null";    
 
     @Override
     public int create(Utente s) {
@@ -61,20 +66,31 @@ public class UtenteDAO implements IDAO<Utente> {
     return ris;
     }
 
+    public Utente readById(int id) {
+        Utente ris = null;
+        Map<Integer, Map<String, String>> result = database.executeQuery(readUtenteById, String.valueOf(id));
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            ris = context.getBean(Utente.class, coppia.getValue());
+        }
+
+        return ris;
+    }
+
   
     @Override
     public void update(Utente e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        database.executeUpdate(updatePersona, e.getNome(), e.getCognome(), e.getUsername(), e.getPassword(), String.valueOf(e.getId()));
+
+        database.executeUpdate(updateUtente, e.getRagioneSociale(), e.getPartitaIva(), e.getCodiceSdi(), e.getIndirizzo(), String.valueOf(e.getCap()), e.getCitta(), e.getProvincia(), e.getNazione(), String.valueOf(e.getTelefono()), e.getEmail(), String.valueOf(e.getId()));
     }
 
     @Override
     public void delete(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        database.executeUpdate(deletePersona, String.valueOf(id));
     }
 
-     public Map<Integer, Entity> findByFilters(String partitaIva, String cognome) {
+    public Map<Integer, Entity> findByFilters(String partitaIva, String cognome) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
@@ -93,6 +109,33 @@ public class UtenteDAO implements IDAO<Utente> {
 
         return ris;
 
+    }
+
+
+    public Utente readByUsername(String username) {
+        Utente ris = null;
+        Map<Integer, Map<String, String>> result = database.executeQuery(findByUsername, username);
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            ris = context.getBean(Utente.class, coppia.getValue());
+
+        }
+
+        return ris;
+    
+    }
+
+    public Map<Integer, Entity> readRegistrati()
+    {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readRegistrati);
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Utente u = context.getBean(Utente.class, coppia.getValue());
+            ris.put(u.getId(), u);
+        }
+
+        return ris;
     }
 
     

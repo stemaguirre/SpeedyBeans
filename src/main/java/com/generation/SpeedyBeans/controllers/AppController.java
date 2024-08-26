@@ -10,7 +10,7 @@ public class AppController {
     
     @GetMapping("/")
     public String root() {
-        return "index.html";
+        return "homepage.html";
     }
     
 }

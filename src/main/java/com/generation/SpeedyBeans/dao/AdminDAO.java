@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Admin;
@@ -25,7 +24,9 @@ public class AdminDAO implements IDAO<Admin>{
     private final String insertPersona = "insert into persone (nome, cognome, username, password) values (?, ?, ?, ?)";
     private final String insertAdmin = "insert into admins (id_persona) values (?)";
 
-    private final String readAllAdmins = "select * from admins u join persone p on u.id_persona = p.id_persona";
+    private final String readAllAdmins = "select p.* from admins u join persone p on u.id_persona = p.id_persona";
+
+    private final String readAdminById = "select u.*, p.* from admins u join persone p on u.id_persona = p.id_persona where u.id_persona = ?";
     
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
     private final String updateAdmin = "";
@@ -56,6 +57,17 @@ public class AdminDAO implements IDAO<Admin>{
         return ris;
     }
 
+    public Admin readById(int id) {
+        Map<Integer, Map<String, String>> result = database.executeQuery(readAdminById, String.valueOf(id));
+        Admin a = null;
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            a = context.getBean(Admin.class, coppia.getValue());
+        }
+
+        return a;
+    }
+
     @Override
     public void update(Admin a) {
         database.executeUpdate(updatePersona, a.getNome(), a.getCognome(), a.getUsername(), a.getPassword(), String.valueOf(a.getId()));
@@ -70,3 +82,5 @@ public class AdminDAO implements IDAO<Admin>{
 
   
 }
+
+

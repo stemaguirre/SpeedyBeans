@@ -10,6 +10,7 @@ import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
+import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
 
 @Configuration
@@ -53,6 +54,14 @@ public class EntitiesContext {
         Ordine o = new Ordine();
         o.fromMap(params);
         return o;
+    }
+
+    @Bean
+    @Scope("prototype")
+    public Prodotto newProdotto(Map<String, String> params) {
+        Prodotto p = new Prodotto();
+        p.fromMap(params);
+        return p;
     }
 
 }

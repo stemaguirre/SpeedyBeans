@@ -32,11 +32,11 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     private final String deleteProdotto = "delete from prodotti where id_ean = ?";
 
-    private final String findByBrandLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
+    private final String findByFormatoLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.formato like(concat('%', ?, '%'))";
 
     private final String findByTipologiaLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.tipologia like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
+    private final String findByFilters = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
 
 
     @Override
@@ -78,16 +78,16 @@ public class CaffeDAO implements IDAO<Caffe>{
     }
 
     
-    public Map<Integer, Entity> findByFilters(String brand, String tipologia) {
+    public Map<Integer, Entity> findByFilters(String formato, String tipologia) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
         if(tipologia == null) {
-            result = database.executeQuery(findByBrandLike, brand);
-        } else if (brand == null) {
+            result = database.executeQuery(findByFormatoLike, formato);
+        } else if (formato == null) {
             result = database.executeQuery(findByTipologiaLike, tipologia);
         } else {
-            result = database.executeQuery(findByFilters, brand, tipologia);
+            result = database.executeQuery(findByFilters, formato, tipologia);
         }
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
@@ -97,5 +97,11 @@ public class CaffeDAO implements IDAO<Caffe>{
 
         return ris;
 
+    }
+
+    @Override
+    public Caffe readById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'readById'");
     }
 }
