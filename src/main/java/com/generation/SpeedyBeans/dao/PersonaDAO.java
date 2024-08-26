@@ -30,7 +30,7 @@ public class PersonaDAO implements IDAO<Persona>
 
     private final String deletePersona = "delete from persone where id_persona = ?";
 
-    private final String findByUsername = "select p.* persone p where p.username = ?";
+    private final String findByUsername = "select p.* from persone p where p.username = ?";
 
 
 
