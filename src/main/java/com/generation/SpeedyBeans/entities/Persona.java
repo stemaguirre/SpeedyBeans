@@ -3,14 +3,15 @@ package com.generation.SpeedyBeans.entities;
 import java.util.List;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
-public abstract class Persona extends GenericEntity
+@ToString(callSuper = true)
+public abstract class Persona extends Entity
 {
-    int idPersona;
-    String nome;
-    String cognome;
-    String nomeUtente;
-    String password;
-    List<Ordine> ordini;
+    private String nome;
+    private String cognome;
+    private String username;
+    private String password;
+    private List<Ordine> ordini;
 }

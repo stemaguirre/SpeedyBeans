@@ -7,8 +7,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Macchinetta extends Prodotto
 {
-    String utilizzo;
-    String colore;
-    String modello;
-    double serbatoio;
+    private String utilizzo;
+    private String colore;
+    private String modello;
+    private double serbatoio;
 }

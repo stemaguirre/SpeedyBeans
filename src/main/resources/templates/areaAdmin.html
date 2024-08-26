@@ -7,6 +7,9 @@
 </head>
 <body>
     <div>
+        <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area admin</h2>
+    </div>
+    <div>
         <form action="/area-admin-search" method="get">
             <label for="search">Cerca</label>
             <input type="text" name="search" id="search" placeholder="Cerca ordine, utente o prodotto">

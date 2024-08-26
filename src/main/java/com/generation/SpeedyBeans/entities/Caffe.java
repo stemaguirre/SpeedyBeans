@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Caffe extends Prodotto
 {
-    String tipologia;
-    Date dataProduzione;
-    Date dataScadenza;
-    String formato;
+    private String tipologia;
+    private Date dataProduzione;
+    private Date dataScadenza;
+    private String formato;
 }

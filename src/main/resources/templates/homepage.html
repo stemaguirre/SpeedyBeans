@@ -16,35 +16,42 @@
 
      <!-- Main CSS File -->
      <link rel="stylesheet" href="/src/main/resources/static/css/main.css">
-</head>
+  
 
+</head>
 <body>
 
     <!-- ======= Header ======= -->
-        <div class="header">
-            <div class="left-side">
-                <div class="logo">
-                    <img src="/src/main/resources/static/img/logo-speedybeans.png" alt="Logo">
+    <header id="header" class="header">
+        <div>
+            <a href="index.html" class="navbar-logo"></a>
+            <div class="logo">
+                <img src="/src/main/resources/static/img/logo-speedybeans.png">
+                <nav id="navbar" class="navbar">  
+                    <div class="navbar-links">
+                        <ul>
+                            <li><a href="#home" class="active">Home</a></li>
+                            <li><a href="#caffe" class="">Caffè</a></li>
+                            <li><a href="#macchinette" class="">Macchinette</a></li>
+                            <li><a href="#contatti" class="">Contatti</a></li>
+                            <a class="login" href="/loginpage">LOGIN</a>
+                            <a class="singin" href="#sign-in">SIGN-IN</a>
+                        </ul>
+                        <div id="login-modal" class="modal-form" hidden>
+                            <form action="/login" method="post">
+                                <label for="username">Username</label>
+                                <input type="text"  name="username" id="username">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" id="password">
+                                <input type="submit" value="Accedi">
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search...">
-                </div>
-            </div>
-            <nav class="navbar">   
-                <ul>
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#caffe" class="">Caffè</a></li>
-                    <li><a href="#macchinette" class="">Macchinette</a></li>
-                    <li><a href="#contatti" class="">Contatti</a></li>
-                </ul>
-            </nav>
-            <div class="auth-buttons">
-                <button class="login">LOGIN</button>
-                <button class="signin">SIGNIN</button>
-            </div>
+            </nav><!-- .navbar -->
         </div>
-
-        <!-- ======= Hero Section ======= -->
+    </header>
+<!-- ======= Hero Section ======= -->
 <section id="hero" class="section-bg">
     <div class="section-bg">
         

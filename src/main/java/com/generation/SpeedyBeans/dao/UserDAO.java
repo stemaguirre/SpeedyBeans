@@ -1,34 +1,43 @@
 package com.generation.SpeedyBeans.dao;
 
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Logger;
 
-import com.generation.SpeedyBeans.entities.GenericEntity;
-import com.generation.SpeedyBeans.entities.Utente;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class UserDAO implements IDAO<Utente>{
+import com.generation.SpeedyBeans.database.Database;
 
-    @Override
-    public int create(Utente e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
-    }
+@Service
+public class UserDAO{
 
-    @Override
-    public Map<Integer, GenericEntity> readAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readAll'");
-    }
+    private static final Logger logger = Logger.getLogger(UserDAO.class.getName());
 
-    @Override
-    public void update(Utente e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
+    @Autowired
+    private Database database;
 
-    @Override
-    public void delete(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    private final String readByUsernameAndPassword = "select id_persona from persone where username = ? and password = ?";
+
+    private final String updateUsernameAndPassword = "update persone set username = ?, password = ? where id_persona = ?";
+
+
+   
+    public int readByUsernameAndPassword(String username, String password) {
+        Map<Integer, Map<String, String>>  result = database.executeQuery(readByUsernameAndPassword, username, password);
+        int idPersona = -1;
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            idPersona = coppia.getKey();
+        }
+        logger.info("Executing query: " + readByUsernameAndPassword + " with username: " + username + " and password: " + password + " idPersona" + idPersona);
+
+        return idPersona;
     }
     
+    public void updateUsernameAndPassword(int idPersona, String username, String password){
+        database.executeUpdate(updateUsernameAndPassword, username, password, String.valueOf(idPersona));
+    }
+
+    
+
 }
