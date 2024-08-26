@@ -110,7 +110,9 @@ public class Database implements IDatabase
                 
                 mappaProprietà = new HashMap<>();
                 for(int i = 1; i <= rs.getMetaData().getColumnCount();i++){
-                    mappaProprietà.put(rs.getMetaData().getColumnName(i).replace("_", "").toLowerCase(), 
+                    // mappaProprietà.put(rs.getMetaData().getColumnName(i).replace("_", "").toLowerCase(), 
+                    //                     rs.getString(i));
+                    mappaProprietà.put(rs.getMetaData().getColumnLabel(i).replace("_", "").toLowerCase(), 
                                         rs.getString(i));
 
                 }

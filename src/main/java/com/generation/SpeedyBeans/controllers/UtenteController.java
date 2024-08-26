@@ -2,6 +2,7 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.LoginService;
@@ -217,6 +217,7 @@ public class UtenteController {
 
     @GetMapping("/ordini")
     public String userOrdini(HttpSession session, Model model) {
+        Logger logger = Logger.getLogger(UtenteController.class.getName());
 
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
@@ -224,6 +225,7 @@ public class UtenteController {
 
         if(role != null && role.equals("U") && p != null){
             List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
+            logger.info("LEGGENDO: " + p.getId());
             if(ordini.isEmpty()){
                 as.setMessage("Nessun ordine effettuato");
                 return "redirect:/area-utente";

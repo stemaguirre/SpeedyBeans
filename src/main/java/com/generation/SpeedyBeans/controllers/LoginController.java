@@ -13,6 +13,7 @@ import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.LoginService;
+import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,11 +29,9 @@ public class LoginController {
 
     @Autowired
     private AppService appService;
-    // @GetMapping("/loginpage")
-    // public String loginPage(Model model) {
-    //     return "loginpage.html";
-    // }
-    //NON ABBIAMO PAGINA DI LOGIN MA POP UP
+    
+    @Autowired
+    private UtenteService utenteService;
 
     @GetMapping("/loginpage")
     public String loginPage(Model model){
@@ -68,6 +67,23 @@ public class LoginController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "homepage.html";
+    }
+
+    @GetMapping("/signinpage")
+    public String signinPage(Model model){
+        if(appService.getMessage() != null){
+            model.addAttribute("message", appService.getMessage());
+            appService.setMessage(null);
+        }
+        return "registrazione.html";
+    }
+
+    @PostMapping("/signin")
+    public String signin(@RequestParam Map<String,String> params){
+        Utente u = new Utente();
+        u.fromMap(params);
+        utenteService.create(u);
+        return "redirect:/loginpage";
     }
 
 
