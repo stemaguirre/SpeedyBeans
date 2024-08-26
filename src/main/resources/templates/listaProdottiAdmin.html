@@ -36,8 +36,8 @@
                 <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}" th:text="${prodotto.utilizzo}"></td>
                 <td th:unless="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) || prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}">-</td> -->
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.tipologia : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.data_produzione : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.data_scadenza : '-'}"></td>
+                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataProduzione : '-'}"></td>
+                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataScadenza : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.formato : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.utilizzo : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.colore : '-'}"></td>

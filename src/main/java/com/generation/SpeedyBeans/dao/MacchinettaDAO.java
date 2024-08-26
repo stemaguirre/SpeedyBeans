@@ -25,7 +25,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     private final String insertMacchinetta = "INSERT INTO macchinette(id_ean, utilizzo, colore, modello, serbatoio) VALUES (?, ?, ?, ?, ?)";
 
 
-    private final String readAllMacchinette = "SELECT * FROM macchinette";
+    private final String readAllMacchinette = "SELECT p.*, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean";
 
     private final String updateProdotto = "update prodotti set genere = ?, brand = ?, prezzo = ?, disponibilita = ?, peso = ? where id_ean = ?";
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
@@ -67,7 +67,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     for (Entry<Integer, Map<String, String>> coppia : result.entrySet()){
         Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
-        ris.put(m.getId(), m); 
+        ris.put(coppia.getKey(), m); 
     }
     return ris;
 }
