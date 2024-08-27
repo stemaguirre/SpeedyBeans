@@ -2,23 +2,29 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Macchinetta;
+import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
+import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.CaffeService;
 import com.generation.SpeedyBeans.services.MacchinettaService;
 import com.generation.SpeedyBeans.services.ProdottoService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -37,6 +43,23 @@ public class ProdottoController {
 
     @Autowired
     private ApplicationContext context;
+
+     @PostMapping("/insert")
+    public String insertProdotto(@RequestParam Map<String, String> params, HttpSession session) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("A") && p != null){
+            Macchinetta m = context.getBean(Macchinetta.class, params);
+            macchinettaService.create(m);
+            as.setMessage("Macchinetta inserita correttamente");
+            return "redirect:/area-admin";
+        }
+        as.setMessage("Richiesta non autorizzata");
+        session.invalidate();
+        return "homepage.html";
+    }
     
     
     @GetMapping("/tutti-i-prodotti")
@@ -54,7 +77,7 @@ public class ProdottoController {
             prodotti.addAll(caffes);
             prodotti.addAll(macchinette);
 
-            prodotti.forEach(System.out::println);
+            // prodotti.forEach(System.out::println);
 
             model.addAttribute("listaProdotti", prodotti);
 
@@ -64,5 +87,38 @@ public class ProdottoController {
         session.invalidate();
         return "loginpage.html";
         
+    }
+
+    // @PostMapping("/update")
+    // public String update(@RequestParam Map<String,String> params, HttpSession session) {
+    //     Persona p = (Persona)session.getAttribute("persona");
+    //     String role = (String)session.getAttribute("role");
+    //     AppService as = context.getBean(AppService.class);
+
+    //     if(role != null && role.equals("A") && p != null){
+    //         Utente u = context.getBean(Utente.class, params);
+    //         List<Ordine> ordini = ordineService.findByIdPersona(Integer.parseInt(params.get("id")));
+    //         u.setOrdini(ordini);
+    //         utenteService.update(u);
+    //         as.setMessage("Utente modificato correttamente");
+    //         return "redirect:/area-admin";
+    //     }
+    //     as.setMessage("Errore richiesta non autorizzata");
+    //     return "homepage.html";
+    // }
+
+    @GetMapping("/delete/{idProdotto}")
+    public String eliminaProdotto (@PathVariable("idProdotto") int idProdotto, HttpSession session){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("A") && p != null){
+            prodottoService.delete(idProdotto);
+            as.setMessage("Prodotto eliminato correttamente");
+            return "redirect:/area-admin";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        return "loginpage.html";
     }
 }

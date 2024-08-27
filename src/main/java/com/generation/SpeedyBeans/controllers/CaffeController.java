@@ -37,8 +37,8 @@ public class CaffeController {
         AppService as = context.getBean(AppService.class);
 
         if(role != null && role.equals("A") && p != null){
-            Caffe m = context.getBean(Caffe.class, params);
-            caffeService.create(m);
+            Caffe c = context.getBean(Caffe.class, params);
+            caffeService.create(c);
             as.setMessage("Caffe inserito correttamente");
             return "redirect:/area-admin";
         }

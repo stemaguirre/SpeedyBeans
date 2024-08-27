@@ -41,7 +41,6 @@ public interface IMappable
                                 m.invoke(this, Double.parseDouble(valoreAssociato));
                             break;
                             case "date":
-                                
                                 m.invoke(this, Date.valueOf(valoreAssociato));
                             break;
                             case "boolean":

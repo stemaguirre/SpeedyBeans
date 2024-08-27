@@ -65,13 +65,14 @@ public class Database implements IDatabase
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String[] colonne = {"id"};
+            String[] colonne = {"id","id_ean"};
             ps = connection.prepareStatement(query,colonne);
             for(int i = 0; i < params.length;i++){
                 ps.setString(i+1, params[i]);
             }
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
+            
             if(rs.next()){
                 return rs.getInt(1);
             }
