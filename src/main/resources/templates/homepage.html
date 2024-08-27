@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPEEDY·BEANS</title>
     <meta name="description" content="Rifornisci il tuo negozio di caffè con SPEEDY·BEANS: l'e-commerce che garantisce spedizioni veloci e affidabili. Scopri di più!">
     <meta name="keywords" content="caffè, rifornimento caffè, spedizione veloce, negozio caffè, e-commerce caffè">
@@ -15,78 +15,87 @@
     <link href="https://db.onlinewebfonts.com/c/066ce24dae3730ed6c648b09efaea93a?family=Acumin+Variable+Concept" rel="stylesheet">
 
      <!-- Main CSS File -->
-     <link rel="stylesheet" href="/src/main/resources/static/css/main.css">
+     <link rel="stylesheet" href="css/main.css">
   
 
 </head>
+
+
 <body>
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="header">
-        <div>
-            <a href="index.html" class="navbar-logo"></a>
+<!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side" >
             <div class="logo">
-                <img src="/src/main/resources/static/img/logo-speedybeans.png">
-                <nav id="navbar" class="navbar">  
-                    <div class="navbar-links">
-                        <ul>
-                            <li><a href="#home" class="active">Home</a></li>
-                            <li><a href="#caffe" class="">Caffè</a></li>
-                            <li><a href="#macchinette" class="">Macchinette</a></li>
-                            <li><a href="#contatti" class="">Contatti</a></li>
-                            <a class="login" href="/loginpage">LOGIN</a>
-                            <a class="singin" href="#sign-in">SIGN-IN</a>
-                        </ul>
-                        <div id="login-modal" class="modal-form" hidden>
-                            <form action="/login" method="post">
+                <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home" class="">Home</a></li>
+                <li><a href="#caffe" class="">Caffè</a></li>
+                <li><a href="#macchinette" class="">Macchinette</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="/loginpage" class="button login">LOGIN</a>
+            <a href="#sign-in" class="button signin">SIGN-IN</a>
+                <div id="login-modal" class="modal-form" hidden>
+                    <form action="/login" method="post">
                                 <label for="username">Username</label>
                                 <input type="text"  name="username" id="username">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" id="password">
                                 <input type="submit" value="Accedi">
-                            </form>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </nav><!-- .navbar -->
         </div>
-    </header>
-<!-- ======= Hero Section ======= -->
-<section id="hero" class="section-bg">
-    <div class="section-bg">
-        
     </div>
-  </section><!-- End Hero Section -->
 
+<!-- ======= Hero Section ======= -->
+<section class="section-bg">
+    <div class="hero-text">
+        <h2>TARIFFE:</h2>
+        <p>Ordine minimo 200 € + iva</p>
+        
+        <h2>SPEDIZIONE GRATUITA:</h2>
+        <p>A partire da 1000€ + iva</p>
+    </div>
+    <div class="hero-image">
+        <img src="/img/Consegne.png" alt="Phone and Pallet Image">
+    </div>
+  </section><!--End Hero Section -->
 
+<!-- ======= FOOTER ======= -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="left-sides">
+            <div class="footer-logo">
+                <img src="/img/logo/nome-inconrniciato.png" alt="Logo-nome">
+            </div>
+        </div>
+        <div class="footer-links">
+            <ul>
 
-    
-    
-<!-- BOTTONE 
-    <section id="login" class="login-popup">
-    <button th:attr="onlick=|openLoginModal()|">
-        Accedi
-    </button>
-    <div id="login-modal" class="modal-form" hidden>
-        <form action="/login" method="post">
-            <label for="username">Username</label>
-            <input type="text"  name="username" id="username">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
-            <input type="submit" value="Accedi">
-        </form>
-    </div><>
--->
-
-
-
-
-
-
-
-
+                <a href="#">Termini e condizioni</a>
+                <a href="#">Cookie e privacy</a>
+                <a href="#">Contatti</a>
+            </ul>
+        </div>
+        <div class="footer-social">
+            <span>Social</span>
+            <div class="footer-social-icons">
+                <a href="#"><img class="social-icon" src="/img/social/instagram fill.png" alt="Instagram"></a>
+                <a href="#"><img class="social-icon" src="/img/social/linkedin fill.png" alt="LinkedIn"></a>
+            </div>
+        </div>
+    </div>
+</footer>
 
  <!-- Main JS File -->
- <script src="/src/main/resources/static/js/main.js"></script>
+ <script src="/js/main.js"></script>
 </body>
 </html>
