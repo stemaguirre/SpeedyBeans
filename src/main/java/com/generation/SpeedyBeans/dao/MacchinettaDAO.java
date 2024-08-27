@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
+import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -26,6 +27,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
 
     private final String readAllMacchinette = "SELECT p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean";
+    private final String readMacchinettaById = "SELECT p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean WHERE p.id_ean = ?";
 
     private final String updateProdotto = "update prodotti set genere = ?, brand = ?, prezzo = ?, disponibilita = ?, peso = ? where id_ean = ?";
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
@@ -119,8 +121,14 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     @Override
     public Macchinetta readById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readById'");
+        Map<Integer, Map<String, String>> result = database.executeQuery(readMacchinettaById, String.valueOf(id));
+        Macchinetta m = null;
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            m = context.getBean(Macchinetta.class, coppia.getValue());
+        }
+
+        return m;
     }
 
   

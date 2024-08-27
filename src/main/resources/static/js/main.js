@@ -9,20 +9,24 @@ function toggleInsert(){
 
 function openInsertCaffe() {
     document.querySelector("#insert-caffe").hidden = false;
+    document.querySelector("#insert-macchinetta").hidden = true;
+
 }
 
 function openInsertMacchinetta() {
     document.querySelector("#insert-macchinetta").hidden = false;
+    document.querySelector("#insert-caffe").hidden = true;
 }
 
 function openUpdateForm(id, genere, brand, prezzo, disponibilita, peso,
-                        tipologia, dataProduzione, dataScadenza, formato,
-                        utilizzo, colore, modello, serbatoio) 
-{
+    tipologia, dataProduzione, dataScadenza, formato,
+    utilizzo, colore, modello, serbatoio) {
+    console.log(genere);
     if (genere === '0') {
         document.getElementById('update-caffe').hidden = false;
         document.getElementById('update-macchinetta').hidden = true;
         document.getElementById('update-caffe-id').value = id;
+        document.getElementById('update-caffe-genere').value = 'Caffè';
         document.getElementById('update-caffe-brand').value = brand;
         document.getElementById('update-caffe-prezzo').value = prezzo;
         document.getElementById('update-caffe-disponibilita').value = disponibilita;
@@ -35,6 +39,7 @@ function openUpdateForm(id, genere, brand, prezzo, disponibilita, peso,
         document.getElementById('update-macchinetta').hidden = false;
         document.getElementById('update-caffe').hidden = true;
         document.getElementById('update-macchinetta-id').value = id;
+        document.getElementById('update-macchinetta-genere').value = 'Macchinetta';
         document.getElementById('update-macchinetta-brand').value = brand;
         document.getElementById('update-macchinetta-prezzo').value = prezzo;
         document.getElementById('update-macchinetta-disponibilita').value = disponibilita;
@@ -44,4 +49,5 @@ function openUpdateForm(id, genere, brand, prezzo, disponibilita, peso,
         document.getElementById('update-macchinetta-modello').value = modello;
         document.getElementById('update-macchinetta-serbatoio').value = serbatoio;
     }
+    
 }

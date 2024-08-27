@@ -44,6 +44,9 @@ public class ProdottoController {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private ProdottoService ProdottoService;
+
      @PostMapping("/insert")
     public String insertProdotto(@RequestParam Map<String, String> params, HttpSession session) {
         Persona p = (Persona)session.getAttribute("persona");
@@ -89,24 +92,6 @@ public class ProdottoController {
         
     }
 
-    // @PostMapping("/update")
-    // public String update(@RequestParam Map<String,String> params, HttpSession session) {
-    //     Persona p = (Persona)session.getAttribute("persona");
-    //     String role = (String)session.getAttribute("role");
-    //     AppService as = context.getBean(AppService.class);
-
-    //     if(role != null && role.equals("A") && p != null){
-    //         Utente u = context.getBean(Utente.class, params);
-    //         List<Ordine> ordini = ordineService.findByIdPersona(Integer.parseInt(params.get("id")));
-    //         u.setOrdini(ordini);
-    //         utenteService.update(u);
-    //         as.setMessage("Utente modificato correttamente");
-    //         return "redirect:/area-admin";
-    //     }
-    //     as.setMessage("Errore richiesta non autorizzata");
-    //     return "homepage.html";
-    // }
-
     @GetMapping("/delete/{idProdotto}")
     public String eliminaProdotto (@PathVariable("idProdotto") int idProdotto, HttpSession session){
         Persona p = (Persona)session.getAttribute("persona");
@@ -119,6 +104,31 @@ public class ProdottoController {
             return "redirect:/area-admin";
         }
         as.setMessage("Errore richiesta non autorizzata");
+        return "loginpage.html";
+    }
+
+    @GetMapping("/dettaglio")
+    public String dettaglioProdotto(@RequestParam(name = "id", defaultValue = "0") int idProdotto, HttpSession session, Model model){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && (role.equals("A") || role.equals("U")) && p != null){
+            Prodotto c = caffeService.readById(idProdotto);
+            Prodotto m = macchinettaService.readById(idProdotto);
+            if(c != null){
+                model.addAttribute("prodotto", c);
+                return "dettaglioProdotto.html";
+            }
+            else if(m != null){
+                model.addAttribute("prodotto", m);
+                return "dettaglioProdotto.html";
+            }
+            as.setMessage("Prodotto non trovato");
+            
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
         return "loginpage.html";
     }
 }
