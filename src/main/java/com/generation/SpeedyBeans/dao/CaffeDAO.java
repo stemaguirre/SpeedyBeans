@@ -32,11 +32,11 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     private final String deleteProdotto = "delete from prodotti where id_ean = ?";
 
-    private final String findByFormatoLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.formato like(concat('%', ?, '%'))";
+    private final String findByFormatoLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%'))";
 
     private final String findByTipologiaLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.tipologia like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where p.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
+    private final String findByFilters = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
 
 
     @Override

@@ -46,7 +46,7 @@ public class ProdottoController {
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
-        if(role != null && role.equals("A") && p != null){
+        if(role != null && (role.equals("A") || role.equals("U")) && p != null){
             List<Prodotto> prodotti = new ArrayList<>();
             List<Caffe> caffes = caffeService.readAll();
             List<Macchinetta> macchinette = macchinettaService.readAll();
@@ -58,7 +58,11 @@ public class ProdottoController {
 
             model.addAttribute("listaProdotti", prodotti);
 
-            return "listaProdottiAdmin.html";
+            if (role.equals("A")) {
+                return "listaProdottiAdmin.html";
+            } else {
+                return "listaProdottiUtente.html"; 
+            }
         }
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();

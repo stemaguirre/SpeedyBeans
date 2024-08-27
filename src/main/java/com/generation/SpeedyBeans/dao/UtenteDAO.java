@@ -24,7 +24,7 @@ public class UtenteDAO implements IDAO<Utente> {
     private final String insertPersona = "insert into persone (nome, cognome, username, password) values (?, ?, ?, ?)";
     private final String insertUtente = "insert into utenti (id_persona, ragione_sociale, partita_iva, codice_sdi, indirizzo, cap, citta, provincia, nazione, telefono, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private final String readAllUtenti = "select p.* from utenti u join persone p on u.id_persona = p.id_persona";
+    private final String readAllUtenti = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona";
 
     private final String readUtenteById = "select u.id_persona as id, u.ragione_sociale, u.partita_iva, u.codice_sdi, u.indirizzo, u.cap, u.citta, u.provincia, u.nazione, u.telefono, u.email, p.nome, p.cognome, p.username, p.password from utenti u join persone p on u.id_persona = p.id_persona where u.id_persona = ?";
 
