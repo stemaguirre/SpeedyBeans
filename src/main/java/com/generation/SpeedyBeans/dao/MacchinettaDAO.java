@@ -50,7 +50,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
                                         String.valueOf(m.getPeso()) );
 
         database.executeUpdate(insertMacchinetta, 
-                                String.valueOf(m.getId()), 
+                                String.valueOf(id), 
                                 m.getUtilizzo(), 
                                 m.getColore(), 
                                 m.getModello(), 

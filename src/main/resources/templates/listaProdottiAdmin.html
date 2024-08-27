@@ -27,7 +27,9 @@
                 <th>Colore</th>
                 <th>Modello</th>
                 <th>Serbatoio</th>
+                <th>Dettaglio</th>
                 <th>Elimina</th>
+                <th>Aggiorna</th>
             </tr>
         </thead>
         <tbody>
@@ -46,8 +48,9 @@
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.colore : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.modello : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.serbatoio : '-'}"></td>
+                <td><a href="/prodotto/dettaglio"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/prodotto/delete/${prodotto.id}|"><button>Elimina</button></a></td>
-                
+                <td><button th:onclick="|openUpdateForm(`${prodotto.id}`, `${#strings.equals(prodotto.genere, 'Macchinetta') ? 1 : 0}`)|">Aggiorna</button></td>
             </tr>
         </tbody>
     </table>
@@ -59,47 +62,97 @@
     <div id="insert-caffe" hidden>
         <form action="/caffe/insert" method="post">
             <label for="genere">Genere</label>
-            <input type="text" name="genere" id="genere">
+            <input type="text" name="genere" id="insert-caffe-genere">
             <label for="brand">Brand</label>
-            <input type="text" name="brand" id="brand">
+            <input type="text" name="brand" id="insert-caffe-brand">
             <label for="prezzo">Prezzo</label>
-            <input type="number" name="prezzo" id="prezzo">
+            <input type="number" name="prezzo" id="insert-caffe-prezzo">
             <label for="disponibilita">Disponibilità</label>
-            <input type="number" name="disponibilita" id="disponibilita">
+            <input type="number" name="disponibilita" id="insert-caffe-disponibilita">
             <label for="peso">Peso</label>
-            <input type="number" name="peso" id="peso">
+            <input type="number" name="peso" id="insert-caffe-peso">
             <label for="tipologia">Tipologia</label>
-            <input type="text" name="tipologia" id="tipologia">
+            <input type="text" name="tipologia" id="insert-caffe-tipologia">
             <label for="dataproduzione">Data Produzione</label>
-            <input type="date" name="dataproduzione" id="dataproduzione">
+            <input type="date" name="dataproduzione" id="insert-caffe-dataproduzione">
             <label for="datascadenza">Data Scadenza</label>
-            <input type="date" name="datascadenza" id="datascadenza">
+            <input type="date" name="datascadenza" id="insert-caffe-datascadenza">
             <label for="formato">Formato</label>
-            <input type="text" name="formato" id="formato">
+            <input type="text" name="formato" id="insert-caffe-formato">
             <button type="submit">Inserisci</button>
         </form>
     </div>
     <div id="insert-macchinetta" hidden> 
         <form action="/macchinetta/insert" method="post">
             <label for="genere">Genere</label>
-            <input type="text" name="genere" id="genere">
+            <input type="text" name="genere" id="insert-macchinetta-genere">
             <label for="brand">Brand</label>
-            <input type="text" name="brand" id="brand">
+            <input type="text" name="brand" id="insert-macchinetta-brand">
             <label for="prezzo">Prezzo</label>
-            <input type="number" name="prezzo" id="prezzo">
+            <input type="number" name="prezzo" id="insert-macchinetta-prezzo">
             <label for="disponibilita">Disponibilità</label>
-            <input type="number" name="disponibilita" id="disponibilita">
+            <input type="number" name="disponibilita" id="insert-macchinetta-disponibilita">
             <label for="peso">Peso</label>
-            <input type="number" name="peso" id="peso">
+            <input type="number" name="peso" id="insert-macchinetta-peso">
             <label for="utilizzo">Utilizzo</label>
-            <input type="text" name="utilizzo" id="utilizzo">
+            <input type="text" name="utilizzo" id="insert-macchinetta-utilizzo">
             <label for="colore">Colore</label>
-            <input type="text" name="colore" id="colore">
+            <input type="text" name="colore" id="insert-macchinetta-colore">
             <label for="modello">Modello</label>
-            <input type="text" name="modello" id="modello">
+            <input type="text" name="modello" id="insert-macchinetta-modello">
             <label for="serbatoio">Serbatoio</label>
-            <input type="number" name="serbatoio" id="serbatoio">
+            <input type="number" name="serbatoio" id="insert-macchinetta-serbatoio">
             <button type="submit">Inserisci</button>
+        </form>
+    </div>
+    <div id="update-caffe" hidden>
+    <form action="/caffe/update" method="post">
+
+        <input type="hidden" name="id" id="update-caffe-id">
+
+        <label for="brand">Brand</label>
+        <input type="text" name="brand" id="update-caffe-brand">
+        <label for="prezzo">Prezzo</label>
+        <input type="number" name="prezzo" id="update-caffe-prezzo">
+        <label for="disponibilita">Disponibilità</label>
+        <input type="number" name="disponibilita" id="update-caffe-disponibilita">
+        <label for="peso">Peso</label>
+        <input type="number" name="peso" id="update-caffe-peso">
+
+        <label for="tipologia">Tipologia</label>
+        <input type="text" name="tipologia" id="update-caffe-tipologia">
+        <label for="dataproduzione">Data Produzione</label>
+        <input type="date" name="dataproduzione" id="update-caffe-dataproduzione">
+        <label for="datascadenza">Data Scadenza</label>
+        <input type="date" name="datascadenza" id="update-caffe-datascadenza">
+        <label for="formato">Formato</label>
+        <input type="text" name="formato" id="update-caffe-formato">
+        
+        <button type="submit">Aggiorna</button>
+    </form>
+    </div>
+    <div id="update-macchinetta" hidden>
+        <form action="/macchinetta/update" method="post">
+            <input type="hidden" name="id" id="update-macchinetta-id">
+
+            <label for="brand">Brand</label>
+            <input type="text" name="brand" id="update-caffe-brand">
+            <label for="prezzo">Prezzo</label>
+            <input type="number" name="prezzo" id="update-caffe-prezzo">
+            <label for="disponibilita">Disponibilità</label>
+            <input type="number" name="disponibilita" id="update-caffe-disponibilita">
+            <label for="peso">Peso</label>
+            <input type="number" name="peso" id="update-caffe-peso">
+
+            <label for="utilizzo">Utilizzo</label>
+            <input type="text" name="utilizzo" id="update-macchinetta-utilizzo">
+            <label for="colore">Colore</label>
+            <input type="text" name="colore" id="update-macchinetta-colore">
+            <label for="modello">Modello</label>
+            <input type="text" name="modello" id="update-macchinetta-modello">
+            <label for="serbatoio">Serbatoio</label>
+            <input type="text" name="serbatoio" id="update-macchinetta-serbatoio">
+            <button type="submit">Aggiorna</button>
         </form>
     </div>
     
