@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGN IN</title>
+</head>
+<body>
+    <form action="/utente/register" method="post">
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+        </div>
+        <div>
+            <label for="cognome">Cognome:</label>
+            <input type="text" id="cognome" name="cognome" required>
+        </div>
+        <div>
+            <label for="ragione-sociale">Ragione sociale:</label>
+            <input type="text" id="ragione-sociale" name="ragione-sociale" required>
+        </div>
+        <div>
+            <label for="p-iva">Partita IVA:</label>
+            <input type="text" id="p-iva" name="p-iva" required>
+        </div>
+        <div>
+            <label for="codice-sdi">Codice SDI:</label>
+            <input type="text" id="codice-sdi" name="codice-sdi" required>
+        </div>
+        <div>
+            <label for="indirizzo">Indirizzo:</label>
+            <input type="text" id="indirizzo" name="indirizzo" required>
+        </div>
+        <div>
+            <label for="cap">CAP:</label>
+            <input type="number" id="cap" name="cap" required>
+        </div>
+        <div>
+            <label for="citta">Città:</label>
+            <input type="text" id="citta" name="citta" required>
+        </div>
+        <div>
+            <label for="provincia">Provincia:</label>
+            <input type="text" id="provincia" name="provincia" required>
+        </div>
+        <div>
+            <label for="nazione">Nazione:</label>
+            <input type="text" id="nazione" name="nazione" required>
+        </div>
+        <div>
+            <label for="telefono">Telefono:</label>
+            <input type="number" id="telefono" name="telefono" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="conferma-password">Conferma password:</label>
+            <input type="password" id="conferma-password" name="conferma-password" required>
+        </div>
+        <div>
+            <button type="submit">Sign Up</button>
+        </div>
+    </form>
+
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
+    
+</body>
+</html>

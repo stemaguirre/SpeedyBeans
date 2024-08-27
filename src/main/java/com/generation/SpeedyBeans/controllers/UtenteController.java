@@ -2,6 +2,7 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.LoginService;
@@ -106,9 +106,9 @@ public class UtenteController {
        
         String nome = params.get("nome");
         String cognome = params.get("cognome"); 
-        String ragioneSociale = params.get("ragioneSociale");
-        String partitaIva = params.get("partitaIva");
-        String codiceSdi = params.get("codiceSdi");
+        String ragioneSociale = params.get("ragione-sociale");
+        String partitaIva = params.get("p-iva");
+        String codiceSdi = params.get("codice-sdi");
         String indirizzo = params.get("indirizzo");
         int cap = Integer.parseInt(params.get("cap"));
         String citta = params.get("citta");
@@ -118,19 +118,19 @@ public class UtenteController {
         String email = params.get("email");
         String username = params.get("username");
         String password = params.get("password");
-        String confermaPassword = params.get("confermaPassword");
+        String confermaPassword = params.get("conferma-password");
 
         
         AppService as = context.getBean(AppService.class);
         
         if (personaService.usernameExists(username)) {
             as.setMessage("Username gia' in uso");
-            return "homepage.html";
+            return "registrazione.html";
         }
         
         if (!password.equals(confermaPassword)) {
             as.setMessage("Le password non corrispondono");
-            return "homepage.html";
+            return "registrazione.html";
         }
 
         Utente u = context.getBean(Utente.class);
@@ -149,8 +149,10 @@ public class UtenteController {
         u.setUsername(username);
         u.setPassword(password);
 
+        utenteService.create(u);
+
         as.setMessage("User registrato correttamente");
-        return "homepage.html";
+        return "loginpage.html";
         
     }
 
@@ -217,6 +219,7 @@ public class UtenteController {
 
     @GetMapping("/ordini")
     public String userOrdini(HttpSession session, Model model) {
+        Logger logger = Logger.getLogger(UtenteController.class.getName());
 
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
@@ -224,6 +227,7 @@ public class UtenteController {
 
         if(role != null && role.equals("U") && p != null){
             List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
+            logger.info("LEGGENDO: " + p.getId());
             if(ordini.isEmpty()){
                 as.setMessage("Nessun ordine effettuato");
                 return "redirect:/area-utente";

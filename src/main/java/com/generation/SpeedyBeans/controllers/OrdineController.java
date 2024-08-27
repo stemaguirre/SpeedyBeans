@@ -131,5 +131,21 @@ public class OrdineController {
         return "homepage.html";
 
     }
+
+    @GetMapping("/tutti-gli-ordini")
+    public String tuttiGliOrdini(HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("A") && p != null){
+            List<Ordine> ordini = ordineService.readAll();
+            model.addAttribute("listaOrdini", ordini);
+            return "listaOrdiniAdmin.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "loginpage.html";
+    }
     
 }
