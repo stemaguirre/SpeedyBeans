@@ -2,7 +2,6 @@ package com.generation.SpeedyBeans.dao;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +10,6 @@ import com.generation.SpeedyBeans.database.Database;
 
 @Service
 public class UserDAO{
-
-    private static final Logger logger = Logger.getLogger(UserDAO.class.getName());
 
     @Autowired
     private Database database;
@@ -29,7 +26,6 @@ public class UserDAO{
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             idPersona = coppia.getKey();
         }
-        logger.info("Executing query: " + readByUsernameAndPassword + " with username: " + username + " and password: " + password + " idPersona" + idPersona);
 
         return idPersona;
     }

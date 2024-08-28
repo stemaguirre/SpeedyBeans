@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutti i Prodotti</title>
-    <link rel="stylesheet" href="css/general.css">
+    <title>Dettaglio prodotto</title>
 </head>
 <body>
     <table>
@@ -22,19 +21,16 @@
                 <th>Utilizzo</th>
                 <th>Colore</th>
                 <th>Modello</th>
-                <th>Serbatoio</th>
+                <th>Serbatoio</th>       
             </tr>
         </thead>
         <tbody>
-            <tr th:each="prodotto : ${listaProdotti}">
+            <tr>
                 <td th:text="${prodotto.genere}"></td>
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>
                 <td th:text="${prodotto.peso}"></td>
-                <!-- <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}" th:text="${prodotto.tipologia}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}" th:text="${prodotto.utilizzo}"></td>
-                <td th:unless="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) || prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}">-</td> -->
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.tipologia : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataProduzione : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataScadenza : '-'}"></td>
@@ -43,11 +39,9 @@
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.colore : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.modello : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.serbatoio : '-'}"></td>
-
             </tr>
         </tbody>
     </table>
-    
     
 </body>
 </html>

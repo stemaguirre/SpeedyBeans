@@ -1,7 +1,5 @@
 package com.generation.SpeedyBeans.dao;
 
-import java.util.logging.Logger;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -140,7 +138,6 @@ public class OrdineDAO implements IDAO<Ordine> {
     }
 
     public Map<Integer,Entity> readByIdPersona(int idPersona){
-        Logger.getLogger(OrdineDAO.class.getName()).info("readByIdPersona called with idPersona: " + idPersona);
 
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = database.executeQuery(readByIdPersona, String.valueOf(idPersona));

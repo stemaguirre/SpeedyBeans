@@ -13,8 +13,6 @@ import com.generation.SpeedyBeans.entities.Utente;
 @Service
 public class LoginService {
 
-    private static final Logger logger = Logger.getLogger(LoginService.class.getName());
-
     @Autowired
     private UserDAO userDAO;
 
@@ -25,9 +23,9 @@ public class LoginService {
     private AdminService adminService;
 
     public Persona login(String username, String password) {
-        logger.info("Attempting login with username: " + username);
+        
         int id = userDAO.readByUsernameAndPassword(username, password);
-        System.out.println("id da userDAO: " + id);
+       
         if(id > 0) 
         {
             Utente u = utenteService.readById(id);

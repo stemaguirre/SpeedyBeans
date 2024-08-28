@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
+import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -25,7 +26,8 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     private final String insertMacchinetta = "INSERT INTO macchinette(id_ean, utilizzo, colore, modello, serbatoio) VALUES (?, ?, ?, ?, ?)";
 
 
-    private final String readAllMacchinette = "SELECT * FROM macchinette";
+    private final String readAllMacchinette = "SELECT p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean";
+    private final String readMacchinettaById = "SELECT p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean WHERE p.id_ean = ?";
 
     private final String updateProdotto = "update prodotti set genere = ?, brand = ?, prezzo = ?, disponibilita = ?, peso = ? where id_ean = ?";
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
@@ -35,7 +37,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     private final String findByColoreLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
+    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
 
 
 
@@ -50,7 +52,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
                                         String.valueOf(m.getPeso()) );
 
         database.executeUpdate(insertMacchinetta, 
-                                String.valueOf(m.getId()), 
+                                String.valueOf(id), 
                                 m.getUtilizzo(), 
                                 m.getColore(), 
                                 m.getModello(), 
@@ -67,7 +69,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     for (Entry<Integer, Map<String, String>> coppia : result.entrySet()){
         Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
-        ris.put(m.getId(), m); 
+        ris.put(coppia.getKey(), m); 
     }
     return ris;
 }
@@ -119,8 +121,14 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     @Override
     public Macchinetta readById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readById'");
+        Map<Integer, Map<String, String>> result = database.executeQuery(readMacchinettaById, String.valueOf(id));
+        Macchinetta m = null;
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            m = context.getBean(Macchinetta.class, coppia.getValue());
+        }
+
+        return m;
     }
 
   
