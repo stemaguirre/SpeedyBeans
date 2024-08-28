@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Utenti</title>
+    <link rel="stylesheet" href="css/general.css">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Ragione Sociale</th>
+                <th>Partita IVA</th>
+                <th>Codice SDI</th>
+                <th>Indirizzo</th>
+                <th>CAP</th>
+                <th>Città</th>
+                <th>Provincia</th>
+                <th>Nazione</th>
+                <th>Telefono</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="utente : ${listaUtenti}">
+                <td th:text="${utente.nome}"></td>
+                <td th:text="${utente.cognome}"></td>
+                <td th:text="${utente.username}"></td>
+                <td th:text="${utente.password}"></td>
+                <td th:text="${utente.ragioneSociale}"></td>
+                <td th:text="${utente.partitaIva}"></td>
+                <td th:text="${utente.codiceSdi}"></td>
+                <td th:text="${utente.indirizzo}"></td>
+                <td th:text="${utente.cap}"></td>
+                <td th:text="${utente.citta}"></td>
+                <td th:text="${utente.provincia}"></td>
+                <td th:text="${utente.nazione}"></td>
+                <td th:text="${utente.telefono}"></td>
+                <td th:text="${utente.email}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

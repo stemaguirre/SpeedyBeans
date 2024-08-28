@@ -258,6 +258,22 @@ public class UtenteController {
         return "homepage.html";
     }
 
+    @GetMapping("/tutti-gli-utenti")
+    public String tuttiGliUtenti(HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);  
+
+        if(role != null && role.equals("A") && p != null){
+            List<Utente> utenti = utenteService.readAll();
+            model.addAttribute("listaUtenti", utenti);
+            return "listaUtenti.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "homepage.html";
+    }
+    
     
     
     
