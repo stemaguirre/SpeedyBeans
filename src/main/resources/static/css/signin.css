@@ -1,4 +1,4 @@
-/* Font */
+/* -- Font -- */
 @import url(https://db.onlinewebfonts.com/c/066ce24dae3730ed6c648b09efaea93a?family=Acumin+Variable+Concept);
 
 @font-face {
@@ -18,63 +18,117 @@
   --foot-font: "Acumin Variable Concept Extra Condensed Medium Italic", sans-serif;
 }
 
-/*Colori globali*/
+/* -- Colori globali -- */
 :root{
     --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
     --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
     --interaction-color: #A1450B; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
     --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
+    --botton-color: #723C1A;
     --body-color: #AC773A;
     --bg-color: #DDD0AE;
 }
 
-/* General styling */
+
+/* -- General styling -- */
 body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #d2c2a1;
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
-    font-family: var(--default-font);
-    background-color: #d7c4a3;
-    display: flex;
+    align-items: center;
     justify-content: center;
+    height: 100vh;
+}
+
+/* -- Container styling -- */
+.container {
+    display: flex;
+    gap: 200px;
+}
+
+.form-left, .form-right {
+    background-color: #a76b43;
+    padding: 20px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-/* Container styling */
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px;
-}
-.left-container, .right-container {
-    width: 48%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-}
-.left-container img, .right-container img {
-    display: block;
-    margin: 0 auto 20px;
-}
-.left-container form {
+form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
-.left-container form label {
-    margin-top: 10px;
-}
-.left-container form input {
-    margin-bottom: 10px;
+
+input {
+    width: 250px;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
 }
-.left-container .row {
+
+.city-province, .cap-country {
     display: flex;
-    justify-content: space-between;
+    gap: 10px;
 }
-.left-container .row input {
-    width: 48%;
+
+.city-province input, .cap-country input {
+    width: 115px;
+}
+
+.sign-in-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: var(--botton-color);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.sign-in-button:hover {
+    background-color: var(--interaction-color);
+}
+
+/* -- Logo styling -- */
+
+.logo {
+    display: flex;
+    justify-items: space-between;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Contenitore per il logo uno */
+.logo-uno {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+/* Contenitore per il logo due */
+.logo-due {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    margin-left: 100px; /* Margine di 100px tra i due container */
+}
+
+.logo-uno img {
+    margin-left: 130px;
+    width: 130px;
+    height: 118px;
+}
+
+.logo-due img {
+    margin-left: 120px;
+    width: 447px;
+    height: 87px;
 }
