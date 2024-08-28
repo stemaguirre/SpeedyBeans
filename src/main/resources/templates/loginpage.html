@@ -1,79 +1,42 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>LoginPage</title>
-    <style>
-        body {
-            background-color: burlywood;
-        }
-
-        .main-div{
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .login-form {
-            background-color: saddlebrown;
-            border-radius: 10px;
-            position: relative;
-            margin: auto;
-            margin-left: 25%;
-            margin-right: 25%;
-            padding: 10px;
-        }
-
-        form > table{
-            width: 100%;
-        }
-
-        form input, form label {
-            font-size: 18pt;
-            font-weight: bold;
-            padding: 2px;
-            margin: 5px;
-        }
-        
-        input[type="submit"]{
-            width: 100%;
-        }
-
-        #message-modal{
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgb(0, 130, 236);
-            padding: 15px;
-            border: 2px solid rgb(50, 50, 50);
-            border-radius: 5px;
-            z-index: 9999;
-        }
-
-    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Speedy Beans Login</title>
 </head>
 <body>
-    <div class="main-div">
+    <div class="logo">
+        <div class="logo-uno">
+            <img src="/img/logo/logo-speedybeans.png" alt="Logo 1">
+        </div>
+        <div class="logo-due">
+            <img src="/img/logo/nome-inconrniciato.png" alt="Logo 2" class="logo-text">
+        </div>
+    </div>
+    <div class="login-container">
         <div class="login-form">
             <form action="/login" method="post">
-                <table>
-                    <tr>
-                        <td><label for="username">Username:</label></td>
-                        <td><input type="text" name="username" id="username" autocomplete="username"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="password">Password:</label></td>
-                        <td><input type="password" name="password" id="password" autocomplete="current-password"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><input type="submit" value="Esegui login"></td>
-                    </tr>
-                </table>
+                <div class="input-group">
+                    <div class="icon">
+                        <img src="/img/vevtor/user.png" alt="User Icon">
+                    </div>
+                    <input type="text" name="username" id="username" autocomplete="username" placeholder="Email o ID">
+                </div>
+                <div class="input-group">
+                    <div class="icon">
+                        <img src="/img/vevtor/password.png" alt="Password Icon">
+                    </div>
+                    <input type="password" name="password" id="password" autocomplete="current-password" placeholder="Password">
+                </div>
+                <button type="submit">L<div class="login-cafe">
+                    <img src="/img/vevtor/coffee bean.png" alt="Coffee Bean" class="coffee-bean">
+                </div>GIN</button>
             </form>
         </div>
     </div>
-
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
 </body>
 </html>
+
