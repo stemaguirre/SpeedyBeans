@@ -17,6 +17,7 @@ import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.LoginService;
 import com.generation.SpeedyBeans.services.OrdineService;
+import com.generation.SpeedyBeans.services.PersonaService;
 import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,7 +42,7 @@ public class LoginController {
     private ApplicationContext context;
 
     @Autowired
-    private OrdineService ordineService;
+    private PersonaService personaService;
 
     @GetMapping("/loginpage")
     public String loginPage(Model model){
@@ -88,15 +89,61 @@ public class LoginController {
         return "registrazione.html";
     }
 
-    // @PostMapping("/signin")
-    // public String signin(@RequestParam Map<String,String> params){
-    //     Utente u = context.getBean(Utente.class, params);
-    //     List<Ordine> ordini = ordineService.findByIdPersona(u.getId());
-    //     u.setOrdini(ordini);
-    //     utenteService.create(u);
-    //     appService.setMessage("Utente inserito correttamente");
-    //     return "redirect:/loginpage";
-    // }
+    @PostMapping("/register")
+    public String registerUser(@RequestParam Map<String,String> params){
+       
+        String nome = params.get("nome");
+        String cognome = params.get("cognome"); 
+        String ragioneSociale = params.get("ragione-sociale");
+        String partitaIva = params.get("p-iva");
+        String codiceSdi = params.get("codice-sdi");
+        String indirizzo = params.get("indirizzo");
+        int cap = Integer.parseInt(params.get("cap"));
+        String citta = params.get("citta");
+        String provincia = params.get("provincia");
+        String nazione = params.get("nazione");
+        int telefono = Integer.parseInt(params.get("telefono"));
+        String email = params.get("email");
+        String username = params.get("username");
+        String password = params.get("password");
+        String confermaPassword = params.get("conferma-password");
+
+        
+        AppService as = context.getBean(AppService.class);
+        
+        if (personaService.usernameExists(username)) {
+            as.setMessage("Username gia' in uso");
+            return "registrazione.html";
+        }
+        
+        if (!password.equals(confermaPassword)) {
+            as.setMessage("Le password non corrispondono");
+            return "registrazione.html";
+        }
+
+        Utente u = context.getBean(Utente.class);
+        u.setNome(nome);
+        u.setCognome(cognome);
+        u.setRagioneSociale(ragioneSociale);
+        u.setPartitaIva(partitaIva);
+        u.setCodiceSdi(codiceSdi);
+        u.setIndirizzo(indirizzo);
+        u.setCap(cap);
+        u.setCitta(citta);
+        u.setProvincia(provincia);
+        u.setNazione(nazione);
+        u.setTelefono(telefono);
+        u.setEmail(email);
+        u.setUsername(username);
+        u.setPassword(password);
+
+        utenteService.create(u);
+
+        as.setMessage("User registrato correttamente");
+        return "loginpage.html";
+        
+    }
+
 
 
     

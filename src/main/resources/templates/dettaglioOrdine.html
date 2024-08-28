@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettaglio Ordine</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
+    <div>
+        <button onclick="toggleInsert()">Inserisci</button>
+    </div>
     <table>
         <thead>
             <tr>
@@ -27,30 +32,90 @@
         </thead>
         <tbody>   
             <tr th:each="prodotto : ${listaProdotti}">
+                
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>
                 <td th:text="${prodotto.peso}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.tipologia : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataProduzione : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataScadenza : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.formato : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.utilizzo : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.colore : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.modello : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.serbatoio : '-'}"></td>
-                <td><button th:attr="onclick=|openUpdateProdottiOrdine()|">Modifica</button></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.tipologia : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.dataProduzione : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.dataScadenza : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.formato : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.utilizzo : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.colore : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.modello : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.serbatoio : '-'}"></td>
+                <td><a th:href="|/prodotto/delete/${prodotto.id}|"><button>Elimina</button></a></td>
             </tr>
             
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="7">Totale</td>
-                <td colspan="7" th:text="${ordine.totale}"></td>
+                <td>Committente</td>
+                <td th:text="${ordine.persona.nome} + ' ' + ${ordine.persona.cognome}"></td>
+            </tr>
+            <tr>
+                <td>Totale</td>
+                <td th:text="${ordine.totale}"></td>
             </tr>
         </tfoot>
+        
     </table>
+    <div id="insert" hidden>
+        <p>Cosa vuoi inserire?</p>
+        <button onclick="openInsertCaffe()">Caffe</button>
+        <button onclick="openInsertMacchinetta()">Macchinetta</button>
+    </div>
+    <div id="insert-caffe" hidden>
+        <form action="/caffe/insert" method="post">
+            
+            <label for="brand">Brand</label>
+            <input type="text" name="brand" id="insert-caffe-brand">
+            <label for="prezzo">Prezzo</label>
+            <input type="number" name="prezzo" id="insert-caffe-prezzo">
+            <label for="disponibilita">Disponibilità</label>
+            <input type="number" name="disponibilita" id="insert-caffe-disponibilita">
+            <label for="peso">Peso</label>
+            <input type="number" name="peso" id="insert-caffe-peso">
+            <label for="tipologia">Tipologia</label>
+            <input type="text" name="tipologia" id="insert-caffe-tipologia">
+            <label for="dataproduzione">Data Produzione</label>
+            <input type="date" name="dataproduzione" id="insert-caffe-dataproduzione">
+            <label for="datascadenza">Data Scadenza</label>
+            <input type="date" name="datascadenza" id="insert-caffe-datascadenza">
+            <label for="formato">Formato</label>
+            <input type="text" name="formato" id="insert-caffe-formato">
+            <button type="submit">Inserisci</button>
+        </form>
+    </div>
+    <div id="insert-macchinetta" hidden> 
+        <form action="/macchinetta/insert" method="post">
+    
+            <label for="brand">Brand</label>
+            <input type="text" name="brand" id="insert-macchinetta-brand">
+            <label for="prezzo">Prezzo</label>
+            <input type="number" name="prezzo" id="insert-macchinetta-prezzo">
+            <label for="disponibilita">Disponibilità</label>
+            <input type="number" name="disponibilita" id="insert-macchinetta-disponibilita">
+            <label for="peso">Peso</label>
+            <input type="number" name="peso" id="insert-macchinetta-peso">
+            <label for="utilizzo">Utilizzo</label>
+            <input type="text" name="utilizzo" id="insert-macchinetta-utilizzo">
+            <label for="colore">Colore</label>
+            <input type="text" name="colore" id="insert-macchinetta-colore">
+            <label for="modello">Modello</label>
+            <input type="text" name="modello" id="insert-macchinetta-modello">
+            <label for="serbatoio">Serbatoio</label>
+            <input type="number" name="serbatoio" id="insert-macchinetta-serbatoio">
+            <button type="submit">Inserisci</button>
+        </form>
+    </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
 </body>
 </html>

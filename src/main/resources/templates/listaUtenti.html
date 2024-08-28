@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Utenti</title>
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <div>
@@ -29,9 +29,80 @@
                 <td th:text="${utente.email}"></td>
                 <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
-                <td><button>Modifica</button></td>
+                <td><button th:attr="onclick=|openUpdateUtente(`${utente.id}`,
+                    `${utente.nome}`,
+                    `${utente.cognome}`,
+                    `${utente.ragioneSociale}`,
+                    `${utente.partitaIva}`,
+                    `${utente.codiceSdi}`,
+                    `${utente.indirizzo}`,
+                    `${utente.citta}`,
+                    `${utente.cap}`,
+                    `${utente.provincia}`,
+                    `${utente.nazione}`,
+                    `${utente.telefono}`,
+                    `${utente.email}`)|">Modifica</button></td>
             </tr>
         </tbody>
     </table>
+    <div id="insert" hidden>
+        <form action="/utente/insert" method="post">
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" id="insert-utente-nome">
+            <label for="cognome">Cognome</label>
+            <input type="text" name="cognome" id="insert-utente-cognome">
+            <label for="email">Ragione Sociale</label>
+            <input type="text" name="ragionesociale" id="insert-utente-ragionesociale">
+            <label for="email">Partita Iva</label>
+            <input type="text" name="partitaiva" id="insert-utente-partitaiva">
+            <label for="email">Codice SDI</label>
+            <input type="text" name="codicesdi" id="insert-utente-codicesdi">
+            <label for="email">Indirizzo</label>
+            <input type="text" name="indirizzo" id="insert-utente-indirizzo">
+            <label for="email">Città</label>
+            <input type="text" name="citta" id="insert-utente-citta">
+            <label for="email">Cap</label>
+            <input type="text" name="cap" id="insert-utente-cap">
+            <label for="email">Provincia</label>
+            <input type="text" name="provincia" id="insert-utente-provincia">
+            <label for="email">Nazione</label>
+            <input type="text" name="nazione" id="insert-utente-nazione">
+            <label for="email">Telefono</label>
+            <input type="text" name="telefono" id="insert-utente-telefono">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="insert-utente-email">
+            <input type="submit" value="Inserisci">
+        </form>
+    </div>
+    <div id="update-utente" hidden>
+        <form action="/utente/update" method="post">
+            <input type="hidden" name="id" id="update-utente-id">
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" id="update-utente-nome">
+            <label for="cognome">Cognome</label>
+            <input type="text" name="cognome" id="update-utente-cognome">
+            <label for="email">Ragione Sociale</label>
+            <input type="text" name="ragionesociale" id="update-utente-ragionesociale">
+            <label for="email">Partita Iva</label>
+            <input type="text" name="partitaiva" id="update-utente-partitaiva">
+            <label for="email">Codice SDI</label>
+            <input type="text" name="codicesdi" id="update-utente-codicesdi">
+            <label for="email">Indirizzo</label>
+            <input type="text" name="indirizzo" id="update-utente-indirizzo">
+            <label for="email">Città</label>
+            <input type="text" name="citta" id="update-utente-citta">
+            <label for="email">Cap</label>
+            <input type="text" name="cap" id="update-utente-cap">
+            <label for="email">Provincia</label>
+            <input type="text" name="provincia" id="update-utente-provincia">
+            <label for="email">Nazione</label>
+            <input type="text" name="nazione" id="update-utente-nazione">
+            <label for="email">Telefono</label>
+            <input type="text" name="telefono" id="update-utente-telefono">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="update-utente-email">
+            <input type="submit" value="Modifica">
+        </form>
+    </div>
 </body>
 </html>

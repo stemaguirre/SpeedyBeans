@@ -14,6 +14,7 @@
     <table>
         <thead>
             <tr>
+                <th>Committente</th>
                 <th>Totale</th>
                 <th>Quantita'</th>
                 <th>Iva</th>
@@ -24,12 +25,14 @@
         </thead>
         <tbody>
             <tr th:each="ordine : ${listaOrdini}">
+                <td th:text="${ordine.persona.nome} + ' ' + ${ordine.persona.cognome}"></td>
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva == true} ? Sì : No"></td>
                 <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/ordine/delete/${ordine.id}|"><button>Elimina</button></a></td>
                 <td><button th:attr="onclick=|openUpdateOrdine(`${ordine.id}`,
+                    `${ordine.idPersona}`,
                     `${ordine.totale}`,
                     `${ordine.quantita}`,
                     `$${ordine.iva == true} ? Sì : No`)|">Modifica</button></td>
@@ -50,6 +53,7 @@
     <div id="update-ordine" hidden>
         <form action="/ordine/update" method="post">
             <input type="hidden" name="id" id="update-ordine-id">
+            <input type="hidden" name="idpersona" id="update-ordine-idpersona">
             <label for="totale">Totale</label>
             <input type="text" name="totale" id="update-ordine-totale">
             <label for="quantita">Quantita'</label>
