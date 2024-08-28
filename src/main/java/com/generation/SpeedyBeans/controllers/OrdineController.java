@@ -36,6 +36,8 @@ public class OrdineController {
     @Autowired
     private OrdineService ordineService;
     
+    @Autowired
+    private AppService appService;
     
     @PostMapping("/insert")
     public String insertOrdine(@RequestParam Map<String,String> params, HttpSession session) {
@@ -115,23 +117,6 @@ public class OrdineController {
         return "homepage.html";
     }
 
-    @GetMapping("/i-miei-ordini")
-    public String iMieiOrdini(HttpSession session, Model model) {
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
-        AppService as = context.getBean(AppService.class);
-
-        if(role != null && role.equals("U") && p != null){
-            List<Ordine> listaOrdini = ordineService.findByIdPersona(p.getId());
-            model.addAttribute("listaMieiOrdini", listaOrdini);
-            return "listaOrdiniUtente.html";
-        }
-        as.setMessage("Errore richiesta non autorizzata");
-        session.invalidate();
-        return "homepage.html";
-
-    }
-
     @GetMapping("/tutti-gli-ordini")
     public String tuttiGliOrdini(HttpSession session, Model model) {
         Persona p = (Persona)session.getAttribute("persona");
@@ -145,7 +130,9 @@ public class OrdineController {
         }
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
-        return "loginpage.html";
+        return "loginpage";
     }
+
+    
     
 }
