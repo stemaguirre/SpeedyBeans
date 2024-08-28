@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -66,13 +65,14 @@ public class Database implements IDatabase
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String[] colonne = {"id"};
+            String[] colonne = {"id","id_ean"};
             ps = connection.prepareStatement(query,colonne);
             for(int i = 0; i < params.length;i++){
                 ps.setString(i+1, params[i]);
             }
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
+            
             if(rs.next()){
                 return rs.getInt(1);
             }
@@ -87,7 +87,6 @@ public class Database implements IDatabase
 
     @Override
     public Map<Integer, Map<String, String>> executeQuery(String query, String... params) {
-        Logger logger = Logger.getLogger(Database.class.getName());
         openConnection();
         Map<Integer, Map<String,String>> righe = new HashMap<>();
 
@@ -100,9 +99,6 @@ public class Database implements IDatabase
                 
                 ps.setString(i+1, params[i]);
             }
-
-            logger.info("Executing query: " + ps.toString());
-
             
             rs = ps.executeQuery();
             Map<String,String> mappaProprietà;
@@ -117,8 +113,6 @@ public class Database implements IDatabase
 
                 }
                 righe.put(rs.getInt(1), mappaProprietà);
-                logger.info("Row: " + rs.getInt(1) + " " + mappaProprietà);
-                logger.info("Nome colonna: " + rs.getMetaData().getColumnName(1));
             }
 
             ps.close();

@@ -106,9 +106,9 @@ public class UtenteController {
        
         String nome = params.get("nome");
         String cognome = params.get("cognome"); 
-        String ragioneSociale = params.get("ragioneSociale");
-        String partitaIva = params.get("partitaIva");
-        String codiceSdi = params.get("codiceSdi");
+        String ragioneSociale = params.get("ragione-sociale");
+        String partitaIva = params.get("p-iva");
+        String codiceSdi = params.get("codice-sdi");
         String indirizzo = params.get("indirizzo");
         int cap = Integer.parseInt(params.get("cap"));
         String citta = params.get("citta");
@@ -118,19 +118,19 @@ public class UtenteController {
         String email = params.get("email");
         String username = params.get("username");
         String password = params.get("password");
-        String confermaPassword = params.get("confermaPassword");
+        String confermaPassword = params.get("conferma-password");
 
         
         AppService as = context.getBean(AppService.class);
         
         if (personaService.usernameExists(username)) {
             as.setMessage("Username gia' in uso");
-            return "homepage.html";
+            return "registrazione.html";
         }
         
         if (!password.equals(confermaPassword)) {
             as.setMessage("Le password non corrispondono");
-            return "homepage.html";
+            return "registrazione.html";
         }
 
         Utente u = context.getBean(Utente.class);
@@ -149,8 +149,10 @@ public class UtenteController {
         u.setUsername(username);
         u.setPassword(password);
 
+        utenteService.create(u);
+
         as.setMessage("User registrato correttamente");
-        return "homepage.html";
+        return "loginpage.html";
         
     }
 

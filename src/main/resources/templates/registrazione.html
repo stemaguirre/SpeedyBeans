@@ -6,7 +6,7 @@
     <title>SIGN IN</title>
 </head>
 <body>
-    <form action="/signin" method="post">
+    <form action="/utente/register" method="post">
         <div>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required>
@@ -33,7 +33,7 @@
         </div>
         <div>
             <label for="cap">CAP:</label>
-            <input type="text" id="cap" name="cap" required>
+            <input type="number" id="cap" name="cap" required>
         </div>
         <div>
             <label for="citta">Città:</label>
@@ -44,8 +44,12 @@
             <input type="text" id="provincia" name="provincia" required>
         </div>
         <div>
+            <label for="nazione">Nazione:</label>
+            <input type="text" id="nazione" name="nazione" required>
+        </div>
+        <div>
             <label for="telefono">Telefono:</label>
-            <input type="text" id="telefono" name="telefono" required>
+            <input type="number" id="telefono" name="telefono" required>
         </div>
         <div>
             <label for="email">Email:</label>
@@ -64,9 +68,15 @@
             <input type="password" id="conferma-password" name="conferma-password" required>
         </div>
         <div>
-            <button type="submit">Sign In</button>
+            <button type="submit">Sign Up</button>
         </div>
     </form>
+
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
 </body>
 </html>

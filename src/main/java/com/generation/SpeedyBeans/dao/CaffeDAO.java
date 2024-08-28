@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
+import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
@@ -23,9 +24,10 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     
     private final String insertProdotto = "insert into prodotti (genere, brand, prezzo, disponibilita, peso) values (?, ?, ?, ?, ?)";
-    private final String insertCaffe = "insert into caffe (id_ean, tipologia, dataProduzione, dataScadenza, formato) values (?, ?, ?, ?, ?)";
+    private final String insertCaffe = "insert into caffes (id_ean, tipologia, data_produzione, data_scadenza, formato) values (?, ?, ?, ?, ?)";
     
-    private final String readAllCaffes = "select * from caffe c join prodotto p on c.id_ean = p.id_ean";
+    private final String readAllCaffes = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean";
+    private final String readCaffeById = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where p.id_ean = ?";
 
     private final String updateProdotto = "update prodotti set genere = ?, brand = ?, prezzo = ?, disponibilita = ?, peso = ? where id_ean = ?";
     private final String updateCaffe = "update caffes set tipologia = ?, dataProduzione = ?, dataScadenza = ?, formato = ? where id_ean = ?";
@@ -57,8 +59,7 @@ public class CaffeDAO implements IDAO<Caffe>{
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             Caffe c = context.getBean(Caffe.class, coppia.getValue());
-            ris.put(c.getId(), c);
-            
+            ris.put(coppia.getKey(), c);
         }
 
         return ris;
@@ -101,7 +102,13 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     @Override
     public Caffe readById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readById'");
+        Map<Integer, Map<String, String>> result = database.executeQuery(readCaffeById, String.valueOf(id));
+        Caffe c = null;
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            c = context.getBean(Caffe.class, coppia.getValue());
+        }
+
+        return c;
     }
 }

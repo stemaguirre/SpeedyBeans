@@ -22,7 +22,7 @@ public class UtenteDAO implements IDAO<Utente> {
     private ApplicationContext context;
 
     private final String insertPersona = "insert into persone (nome, cognome, username, password) values (?, ?, ?, ?)";
-    private final String insertUtente = "insert into utenti (id_persona, ragioneSociale, partitaIva, codiceSdi, indirizzo, cap, citta, provincia, nazione, telefono, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final String insertUtente = "insert into utenti (id_persona, ragione_sociale, partita_iva, codice_sdi, indirizzo, cap, citta, provincia, nazione, telefono, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private final String readAllUtenti = "select p.* from utenti u join persone p on u.id_persona = p.id_persona";
 
@@ -33,7 +33,7 @@ public class UtenteDAO implements IDAO<Utente> {
     //select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.id_persona = ?
 
     private final String updatePersona = "update persone set nome = ?, cognome = ?, username = ?, password = ? where id_persona = ?";
-    private final String updateUtente = "update utenti set ragioneSociale = ?, partitaIva = ?, codiceSdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where id_persona = ?";
+    private final String updateUtente = "update utenti set ragione_sociale = ?, partita_iva = ?, codice_sdi = ?, indirizzo = ?, cap = ?, citta = ?, provincia = ?, nazione = ?, telefono = ?, email = ? where id_persona = ?";
     private final String deletePersona = "delete from persone where id_persona = ?";
 
     private final String findByPartitaIvaLike = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where u.partita_iva like(concat('%', ?, '%'))";
