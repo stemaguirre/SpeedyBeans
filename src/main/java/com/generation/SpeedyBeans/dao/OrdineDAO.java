@@ -28,7 +28,7 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale) VALUES (?, ?, ?, ?)";
 
-    private final String readAllOrdini = "SELECT * FROM ordini";
+    private final String readAllOrdini = "SELECT id_ordine as id, id_persona, quantita, iva, totale FROM ordini";
 
     private final String updateOrdine = "UPDATE ordini SET id_persona = ?, quantita = ?, iva = ?, totale = ? WHERE id_ordine = ?";
 
