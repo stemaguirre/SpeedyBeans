@@ -43,6 +43,7 @@ public class LoginController {
 
     @Autowired
     private PersonaService personaService;
+    private PersonaService personaService;
 
     @GetMapping("/loginpage")
     public String loginPage(Model model){

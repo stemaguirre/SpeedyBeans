@@ -52,6 +52,60 @@
                                 <input type="submit" value="Accedi">
                     </form>
                 </div>
+                <div id="sign-in" class="modal-form" hidden>
+                    <form action="/register" method="post">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                
+                    <label for="cognome">Cognome</label>
+                    <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
+                
+                    <label for="ragione_sociale">Regione sociale</label>
+                    <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Regione sociale" required>
+                
+                    <label for="indirizzo">Indirizzo di fatturazione</label>
+                    <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
+                
+                    <div class="city-province">
+                        <label for="citta">Città</label>
+                        <input type="text" id="citta" name="citta" placeholder="Città" required>
+                
+                        <label for="provincia">Provincia</label>
+                        <input type="text" id="provincia" name="provincia" placeholder="Provincia" required>
+                    </div>
+                
+                    <div class="cap-country">
+                        <label for="cap">CAP</label>
+                        <input type="text" id="cap" name="cap" placeholder="CAP" required>
+                
+                        <label for="nazione">Nazione</label>
+                        <input type="text" id="nazione" name="nazione" placeholder="Nazione" required>
+                    </div>
+                </form>
+                
+                <div class="form-right">
+                    <form>
+                        <label for="partita-iva">Partita IVA</label>
+                        <input type="text" id="partita-iva" name="partita-iva" placeholder="Partita IVA" required>
+                
+                        <label for="codice-sdi">Codice SDI</label>
+                        <input type="text" id="codice-sdi" name="codice-sdi" placeholder="Codice SDI" required>
+                
+                        <label for="numero-telefono">Numero di telefono</label>
+                        <input type="text" id="numero-telefono" name="numero-telefono" placeholder="Numero di telefono" required>
+                
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                
+                        <label for="conferma-password">Conferma Password</label>
+                        <input type="password" id="conferma-password" name="conferma-password" placeholder="Conferma Password" required>
+                    </form>
+                </div>
+                
+            </div>
         </div>
     </div>
 

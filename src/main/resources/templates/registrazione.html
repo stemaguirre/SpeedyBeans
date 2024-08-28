@@ -2,81 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGN IN</title>
+    <link rel="stylesheet" href="css/signin.css">
+    <title>Speedy Beans Sign-In</title>
 </head>
-<body>
-    <form action="/utente/register" method="post">
-        <div>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
-        </div>
-        <div>
-            <label for="cognome">Cognome:</label>
-            <input type="text" id="cognome" name="cognome" required>
-        </div>
-        <div>
-            <label for="ragione-sociale">Ragione sociale:</label>
-            <input type="text" id="ragione-sociale" name="ragione-sociale" required>
-        </div>
-        <div>
-            <label for="p-iva">Partita IVA:</label>
-            <input type="text" id="p-iva" name="p-iva" required>
-        </div>
-        <div>
-            <label for="codice-sdi">Codice SDI:</label>
-            <input type="text" id="codice-sdi" name="codice-sdi" required>
-        </div>
-        <div>
-            <label for="indirizzo">Indirizzo:</label>
-            <input type="text" id="indirizzo" name="indirizzo" required>
-        </div>
-        <div>
-            <label for="cap">CAP:</label>
-            <input type="number" id="cap" name="cap" required>
-        </div>
-        <div>
-            <label for="citta">Città:</label>
-            <input type="text" id="citta" name="citta" required>
-        </div>
-        <div>
-            <label for="provincia">Provincia:</label>
-            <input type="text" id="provincia" name="provincia" required>
-        </div>
-        <div>
-            <label for="nazione">Nazione:</label>
-            <input type="text" id="nazione" name="nazione" required>
-        </div>
-        <div>
-            <label for="telefono">Telefono:</label>
-            <input type="number" id="telefono" name="telefono" required>
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div>
-            <label for="conferma-password">Conferma password:</label>
-            <input type="password" id="conferma-password" name="conferma-password" required>
-        </div>
-        <div>
-            <button type="submit">Sign Up</button>
-        </div>
-    </form>
 
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
+<body>
+    <div class="logo">
+        <div class="logo-uno">
+            <img src="/img/logo/logo-speedybeans.png" alt="Coffee Truck Icon" class="icon">
+        </div>
+        <div class="logo-due">
+            <img src="/img/logo/nome-inconrniciato.png" alt="Speedy Beans Logo" class="logo">
+        </div>
     </div>
-    
+    <div class="container">
+        <div class="form-left">
+            <form>
+                <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
+                <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Regione sociale" required>
+                <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
+                <div class="city-province">
+                    <input type="text"  id="citta" name="citta" placeholder="Città" required>
+                    <input type="text"  id="provincia" name="provincia" placeholder="Provincia" required>
+                </div>
+                <div class="cap-country">
+                    <input type="text" placeholder="CAP" required>
+                    <input type="text" placeholder="Nazione" required>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-right">
+            <form>
+                <input type="text" id="partita-iva" name="partita-iva" placeholder="Partita IVA" required>
+                <input type="text" id="codice-sdi" name="codice-sdi" placeholder="Codice SDI" required>
+                <input type="text" id="numero-telefono" name="numero-telefono" placeholder="Numero di telefono"required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="conferma-password" name="conferma-password" placeholder="Conferma Password"required>
+            </form>
+        </div>
+    </div>
+    <button class="sign-in-button">SIGN-IN</button>
 </body>
+
 </html>
