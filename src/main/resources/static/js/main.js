@@ -18,7 +18,7 @@ function openInsertMacchinetta() {
     document.querySelector("#insert-caffe").hidden = true;
 }
 
-function openUpdateForm(id, genere, brand, prezzo, disponibilita, peso,
+function openUpdateProdotto(id, genere, brand, prezzo, disponibilita, peso,
     tipologia, dataProduzione, dataScadenza, formato,
     utilizzo, colore, modello, serbatoio) {
     console.log(genere);
@@ -50,4 +50,12 @@ function openUpdateForm(id, genere, brand, prezzo, disponibilita, peso,
         document.getElementById('update-macchinetta-serbatoio').value = serbatoio;
     }
     
+}
+
+function openUpdateOrdine(id, totale, quantita, iva){
+    document.getElementById('update-ordine').hidden = false;
+    document.getElementById('update-ordine-id').value = id;
+    document.getElementById('update-ordine-totale').value = totale;
+    document.getElementById('update-ordine-quantita').value = quantita;
+    document.getElementById('update-ordine-iva').value = iva ? 'Sì' : 'No';
 }

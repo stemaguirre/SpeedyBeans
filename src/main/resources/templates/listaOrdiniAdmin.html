@@ -4,26 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutti gli ordini</title>
-    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
+    <div>
+        <button onclick="toggleInsert()">Inserisci</button>
+    </div>
     <table>
         <thead>
             <tr>
                 <th>Totale</th>
                 <th>Quantita'</th>
                 <th>Iva</th>
+                <th>Dettaglio</th>
+                <th>Elimina</th>
+                <th>Modifica</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="ordine : ${listaOrdini}">
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
-                <td th:text="${ordine.iva}"></td>
+                <td th:text="${ordine.iva == true} ? Sì : No"></td>
+                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
+                <td><a th:href="|/ordine/delete/${ordine.id}|"><button>Elimina</button></a></td>
+                <td><button th:attr="onclick=|openUpdateOrdine(`${ordine.id}`,
+                    `${ordine.totale}`,
+                    `${ordine.quantita}`,
+                    `$${ordine.iva == true} ? Sì : No`)|">Modifica</button></td>
             </tr>
         </tbody>
     </table>
-    
+    <div id="insert" hidden>
+        <form action="/ordine/insert" method="post">
+            <label for="totale">Totale</label>
+            <input type="text" name="totale" id="insert-ordine-totale">
+            <label for="quantita">Quantita'</label>
+            <input type="text" name="quantita" id="insert-ordine-quantita">
+            <label for="iva">Iva</label>
+            <input type="text" name="iva" id="insert-ordine-iva">
+            <input type="submit" value="Inserisci">
+        </form>
+    </div>
+    <div id="update-ordine" hidden>
+        <form action="/ordine/update" method="post">
+            <input type="hidden" name="id" id="update-ordine-id">
+            <label for="totale">Totale</label>
+            <input type="text" name="totale" id="update-ordine-totale">
+            <label for="quantita">Quantita'</label>
+            <input type="text" name="quantita" id="update-ordine-quantita">
+            <label for="iva">Iva</label>
+            <input type="text" name="iva" id="update-ordine-iva">
+            <input type="submit" value="Modifica">
+        </form>
+    </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -265,8 +266,10 @@ public class UtenteController {
         AppService as = context.getBean(AppService.class);  
 
         if(role != null && role.equals("A") && p != null){
+            List<Persona> persone = new ArrayList<>();
             List<Utente> utenti = utenteService.readAll();
-            model.addAttribute("listaUtenti", utenti);
+            persone.addAll(utenti);
+            model.addAttribute("listaUtenti", persone);
             return "listaUtenti.html";
         }
         as.setMessage("Errore richiesta non autorizzata");

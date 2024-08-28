@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +24,13 @@ public class ProdottoDAO implements IDAO<Prodotto>
 
     private final String insertProdotto = "insert into prodotti(id_EAN, genere, brand, prezzo, disponibilità, peso) values(?,?,?,?,?,?)";
 
-    private final String readAllProdotti = "SELECT * FROM prodotti";
+    private final String readAllProdotti = "select id_ean as id, genere, brand, prezzo, disponibilita, peso from prodotti";
 
     private final String updateProdotto = "UPDATE prodotto SET  genere = ?, brand = ?, prezzo = ?, disponibilita = ?, peso = ? WHERE id_EAN = ?";
 
     private final String deleteProdotto = "DELETE FROM prodotti WHERE id_EAN = ?";
 
-    private final String readByIdOrdine = "select p.* from prodotti p join ordini_prodotti op on p.id_ean = op.id_ean join ordini o on op.id_ordine = o.id_ordine where o.id_ordine = ?";
+    private final String readByIdOrdine = "select p.id_ean, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, o.id_ordine, o.id_persona, o.quantita, o.iva, o.totale from prodotti p join ordini_prodotti op on p.id_ean = op.id_ean join ordini o on op.id_ordine = o.id_ordine where o.id_ordine = ?";
 
     private final String readByRange = "SELECT * FROM prodotti WHERE prezzo BETWEEN ? AND ?";
 

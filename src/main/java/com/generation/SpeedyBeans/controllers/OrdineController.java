@@ -1,6 +1,7 @@
 package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.generation.SpeedyBeans.entities.Caffe;
+import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.services.AppService;
+import com.generation.SpeedyBeans.services.CaffeService;
+import com.generation.SpeedyBeans.services.MacchinettaService;
 import com.generation.SpeedyBeans.services.OrdineService;
 import com.generation.SpeedyBeans.services.ProdottoService;
 
@@ -35,9 +40,12 @@ public class OrdineController {
 
     @Autowired
     private OrdineService ordineService;
-    
+
     @Autowired
-    private AppService appService;
+    private CaffeService caffeService;
+
+    @Autowired
+    private MacchinettaService macchinettaService;
     
     @PostMapping("/insert")
     public String insertOrdine(@RequestParam Map<String,String> params, HttpSession session) {
@@ -89,12 +97,12 @@ public class OrdineController {
             Ordine o = context.getBean(Ordine.class, params);
             List<Prodotto> prodotti = prodottoService.findByIdOrdine(Integer.parseInt(params.get("id")));
             o.setProdotti(prodotti);
-            ordineService.create(o);
+            ordineService.update(o);
             as.setMessage("Ordine modificato correttamente");
             return "redirect:/area-admin";
         }
         as.setMessage("Errore richiesta non autorizzata");
-        return "homepage.html";
+        return "loginpage.html";
     }
 
     @GetMapping("/dettaglio")
@@ -104,10 +112,18 @@ public class OrdineController {
         AppService as = context.getBean(AppService.class);
 
         if(role != null && role.equals("A") && p != null){
-            List<Prodotto> listaProdotti = prodottoService.findByIdOrdine(idOrdine);
-            Ordine o = ordineService.readById(idOrdine);
+
+            List<Prodotto> prodotti = new ArrayList<>();
+            List<Caffe> caffes = caffeService.findByIdOrdine(idOrdine);
+            List<Macchinetta> macchinette = macchinettaService.findByIdOrdine(idOrdine);
            
-            model.addAttribute("listaProdotti", listaProdotti);
+            prodotti.addAll(caffes);
+            prodotti.addAll(macchinette);
+
+            Ordine o = ordineService.readById(idOrdine);
+            
+           
+            model.addAttribute("listaProdotti", prodotti);
             model.addAttribute("ordine", o);
             return "dettaglioOrdine.html";
             

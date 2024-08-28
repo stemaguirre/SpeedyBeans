@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutti i Prodotti</title>
-    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/main.css">
     <script src="/js/main.js"></script>
 </head>
 <body>
@@ -19,14 +19,6 @@
                 <th>Prezzo</th>
                 <th>Disponibilità</th>
                 <th>Peso</th>
-                <th>Tipologia</th>
-                <th>Data Produzione</th>
-                <th>Data Scadenza</th>
-                <th>Formato</th>
-                <th>Utilizzo</th>
-                <th>Colore</th>
-                <th>Modello</th>
-                <th>Serbatoio</th>
                 <th>Dettaglio</th>
                 <th>Elimina</th>
                 <th>Modifica</th>
@@ -39,31 +31,14 @@
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>
                 <td th:text="${prodotto.peso}"></td>
-                
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.tipologia : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataProduzione : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataScadenza : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.formato : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.utilizzo : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.colore : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.modello : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.serbatoio : '-'}"></td>
                 <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/prodotto/delete/${prodotto.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|openUpdateForm(`${prodotto.id}`, 
+                <td><button th:attr="onclick=|openUpdateProdotto(`${prodotto.id}`, 
                     `${#strings.equals(prodotto.genere, 'M') ? 1 : 0}`,
                     `${prodotto.brand}`,
                     `${prodotto.prezzo}`,
                     `${prodotto.disponibilita}`,
-                    `${prodotto.peso}`,
-                    `${#strings.equals(prodotto.genere, 'C') ? prodotto.tipologia : ''}`,
-                    `${#strings.equals(prodotto.genere, 'C') ? prodotto.dataProduzione : ''}`,
-                    `${#strings.equals(prodotto.genere, 'C') ? prodotto.dataScadenza : ''}`,
-                    `${#strings.equals(prodotto.genere, 'C') ? prodotto.formato : ''}`,
-                    `${#strings.equals(prodotto.genere, 'M') ? prodotto.utilizzo : ''}`,
-                    `${#strings.equals(prodotto.genere, 'M') ? prodotto.colore : ''}`,
-                    `${#strings.equals(prodotto.genere, 'M') ? prodotto.modello : ''}`,
-                    `${#strings.equals(prodotto.genere, 'M') ? prodotto.serbatoio : 0}`)|">Modifica</button></td>
+                    `${prodotto.peso}`)|">Modifica</button></td>
             </tr>
         </tbody>
     </table>
