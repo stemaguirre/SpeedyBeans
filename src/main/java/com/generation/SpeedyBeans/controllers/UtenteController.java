@@ -255,6 +255,8 @@ public class UtenteController {
         session.invalidate();
         return "homepage.html";
     }
+
+    
     
     
 }
