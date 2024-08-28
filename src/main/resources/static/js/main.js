@@ -26,7 +26,7 @@ function openUpdateForm(id, genere, brand, prezzo, disponibilita, peso,
         document.getElementById('update-caffe').hidden = false;
         document.getElementById('update-macchinetta').hidden = true;
         document.getElementById('update-caffe-id').value = id;
-        document.getElementById('update-caffe-genere').value = 'Caffè';
+        document.getElementById('update-caffe-genere').value = 'C';
         document.getElementById('update-caffe-brand').value = brand;
         document.getElementById('update-caffe-prezzo').value = prezzo;
         document.getElementById('update-caffe-disponibilita').value = disponibilita;
@@ -39,7 +39,7 @@ function openUpdateForm(id, genere, brand, prezzo, disponibilita, peso,
         document.getElementById('update-macchinetta').hidden = false;
         document.getElementById('update-caffe').hidden = true;
         document.getElementById('update-macchinetta-id').value = id;
-        document.getElementById('update-macchinetta-genere').value = 'Macchinetta';
+        document.getElementById('update-macchinetta-genere').value = 'M';
         document.getElementById('update-macchinetta-brand').value = brand;
         document.getElementById('update-macchinetta-prezzo').value = prezzo;
         document.getElementById('update-macchinetta-disponibilita').value = disponibilita;

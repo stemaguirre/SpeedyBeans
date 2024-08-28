@@ -48,7 +48,7 @@
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.colore : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.modello : '-'}"></td>
                 <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.serbatoio : '-'}"></td>
-                <td><a href="/prodotto/dettaglio"><button>Dettaglio</button></a></td>
+                <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/prodotto/delete/${prodotto.id}|"><button>Elimina</button></a></td>
                 <td><button th:attr="onclick=|openUpdateForm(`${prodotto.id}`, 
                     `${#strings.equals(prodotto.genere, 'M') ? 1 : 0}`,

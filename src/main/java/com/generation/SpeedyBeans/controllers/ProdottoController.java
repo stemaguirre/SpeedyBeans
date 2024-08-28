@@ -116,6 +116,8 @@ public class ProdottoController {
         if(role != null && (role.equals("A") || role.equals("U")) && p != null){
             Prodotto c = caffeService.readById(idProdotto);
             Prodotto m = macchinettaService.readById(idProdotto);
+            System.out.println(c);
+            System.out.println(m);
             if(c != null){
                 model.addAttribute("prodotto", c);
                 return "dettaglioProdotto.html";
