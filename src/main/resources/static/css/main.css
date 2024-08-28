@@ -21,9 +21,9 @@
 /*Colori globali*/
 :root{
     --background-color: #ddd0ae; /*Colore del BG per l'intero sitoweb, anche singole sezioni*/
-    --default-color: #332311; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
+    --default-color: #723C1A; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
     --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
-    --interact-color: #ab6d22; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
+    --interact-color: #904E00; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
     --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
 }
 
@@ -32,14 +32,14 @@
     --nav-bg-color:#D4AB73;
     --nav-color: #94652E;  /* The default color of the main navmenu links */
     --nav-hover-color: #904E00; /* Applied to main navmenu links when they are hovered over or active */
-    --nav-default-color: #332311;
+    --nav-default-color: #36251E;
 }
 
-/*--- GEBERALE --*/
+/*--- GENERALE --*/
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -47,39 +47,76 @@ body {
   color: var(--nav-color);
 }
 
-a{
-  color: var(--nav-color);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--nav-hover-color);
-  text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--nav-font);
-}
-
-/*--- Sections & section Header ---*/
-
-
-.section-bg {
-  background-image: url("/src/main/resources/static/img/background-home-page.png"); /* Specifica il percorso dell'immagine */
-  background-size: cover; /* Rende l'immagine coprire tutto l'elemento */
-  background-position: center; /* Centra l'immagine all'interno dell'elemento */
-  background-repeat: no-repeat; /* Impedisce che l'immagine si ripeta */
-  height: 100vh; /* Imposta l'altezza dell'elemento a 100% dell'altezza del viewport */
-  color: var(--nav-hover-color); /* Imposta il colore del testo per un migliore contrasto */
-  display: flex;
-}
 
 /*--- HEADER --*/
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--nav-bg-color);
+  padding: 10px 20px;
+}
+
+.left-side {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 130px;
+  height: 118px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  margin-left: 55px;
+}
+
+.search-bar input {
+  width: 580px;
+  height: 45px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a{
+  text-decoration: none;
+  color: var(--nav-default-color);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px
+}
+
+.auth-buttons button{
+  padding: 5px 15px;
+  border: none;
+  border-radius: 15px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+.login {
+  background-color: var(--nav-default-color);
+}
+
+.signin {
+  background-color: var(--default-color);
+}
+
 .header .navbar-logo {
   line-height: 1;
 }
@@ -88,6 +125,7 @@ h6 {
   max-height: 36px;
   margin-right: 8px;
 }
+
 
 .navbar {
   display: block;
@@ -124,97 +162,13 @@ h6 {
 }
 
 
-/*
-.navbar {
-  background: var(--nav-bg-color);
-  transition: all 0.5s;
-  z-index: 997;
-  height: 155px;
-  border-bottom: 1px solid #332311;
+/*====== HERO =====*/
+.section-bg {
+  background-image: url("/src/main/resources/static/img/background-home-page.png"); /* Specifica il percorso dell'immagine */
+  background-size: cover; /* Rende l'immagine coprire tutto l'elemento */
+  background-position: center; /* Centra l'immagine all'interno dell'elemento */
+  background-repeat: no-repeat; /* Impedisce che l'immagine si ripeta */
+  height: 100vh; /* Imposta l'altezza dell'elemento a 100% dell'altezza del viewport */
+  color: var(--nav-hover-color); /* Imposta il colore del testo per un migliore contrasto */
+  display: flex;
 }
-
-@media (max-width: 1920px) {
-  .navbar {
-    height: 155px;
-  }
-
-  .navbar-logo{
-    max-height: 118px;
-    margin-right: 10px;
-  }
-  
-  .header .navbar-links {
-    float: none;
-  }
-  
-  .navbar-links ul {
-    display: inline-block;
-  }
-  
-  .navbar-links li {
-    display: block;
-    margin: 10px 0;
-  }
-}
-
-
-
-
-
-/*.header {
-  --background-color: rgba(0, 0, 0, 0);
-  --heading-color: #ffffff;
-  color: var(--default-color);
-  background-color: var(--background-color);
-  padding: 20px 0;
-  transition: all 0.5s;
-  z-index: 997;
-}*/
-
-
-
-
-
-/*
-    body {
-    font-family: var(--main-font);
-    }
-
-    h1, h2, h3 {
-        font-family: var(--main-font);
-    }
-
-    /* Definizione del font personalizzato 
-    @font-face {
-        font-family: 'MyCustomFont';
-        src: url('fonts/mycustomfont.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    /* Definizione delle variabili CSS 
-    :root {
-        --main-font: 'MyCustomFont', sans-serif;
-    }
-
-    /* Applicazione del font 
-    body {
-        font-family: var(--main-font);
-    }
-
-    h1, h2, h3 {
-        font-family: var(--main-font);
-    }
-
-
-.modal-form{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: bisque;
-    padding: 15px;
-    border: 2px solid rgb(50, 50, 50);
-    border-radius: 5px;
-    z-index: 9999;
-}*/
