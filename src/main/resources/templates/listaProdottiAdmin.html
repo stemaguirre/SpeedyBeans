@@ -8,6 +8,15 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
+    <div class="search-bar">
+        <form action="/prodotto/cerca-prodotti" method="get">
+            <input type="text" name="formato" id="src-hmp-formato" placeholder="Formato caffè">
+            <input type="text" name="tipologia" id="src-hmp-tipologia" placeholder="Tipologia caffè">
+            <input type="text" name="utilizzo" id="src-hmp-utilizzo" placeholder="Utilizzo macchinetta">
+            <input type="text" name="colore" id="src-hmp-colore" placeholder="Colore macchinetta">
+            <input type="submit" value="Cerca" hidden>
+        </form>
+    </div>
     <div>
         <button onclick="toggleInsert()">Inserisci</button>
     </div>
