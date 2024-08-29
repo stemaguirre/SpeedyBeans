@@ -15,16 +15,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
+import com.generation.SpeedyBeans.entities.Utente;
+import com.generation.SpeedyBeans.services.AdminService;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.CaffeService;
 import com.generation.SpeedyBeans.services.MacchinettaService;
 import com.generation.SpeedyBeans.services.OrdineService;
 import com.generation.SpeedyBeans.services.ProdottoService;
+import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -46,6 +50,12 @@ public class OrdineController {
 
     @Autowired
     private MacchinettaService macchinettaService;
+
+    @Autowired
+    UtenteService utenteService;
+    
+    @Autowired
+    AdminService adminService;
     
     @PostMapping("/insert")
     public String insertOrdine(@RequestParam Map<String,String> params, HttpSession session) {
@@ -113,16 +123,35 @@ public class OrdineController {
     
         if (p != null && idOrdine > 0) {
             Ordine o = ordineService.readById(idOrdine);
-            List<Prodotto> prodotti = prodottoService.findByIdOrdine(idOrdine);
-    
-            model.addAttribute("ordine", o);
-            model.addAttribute("listaProdotti", prodotti);
-    
-            if ("A".equals(role)) {
-                return "dettaglioOrdineAdmin.html"; // Pagina di dettaglio per l'admin
-            } else if ("U".equals(role) && o.getPersona().getId() == p.getId()) {
-                return "dettaglioOrdineUtente.html"; // Pagina di dettaglio per l'utente
+            Persona u = utenteService.readById(o.getIdPersona());
+            Persona a = adminService.readById(o.getIdPersona());
+            if(u != null){
+                o.setPersona(u);
             }
+            if(a != null){
+                o.setPersona(a);
+            }
+           
+            model.addAttribute("listaProdotti", prodotti);
+            model.addAttribute("ordine", o);
+            return "dettaglioOrdineAdmin.html";
+            
+        }
+        if(role != null && role.equals("U") && p != null){
+
+            List<Prodotto> prodotti = new ArrayList<>();
+            List<Caffe> caffes = caffeService.findByIdOrdine(idOrdine);
+            List<Macchinetta> macchinette = macchinettaService.findByIdOrdine(idOrdine);
+           
+            prodotti.addAll(caffes);
+            prodotti.addAll(macchinette);
+
+            Ordine o = ordineService.readById(idOrdine);
+
+            model.addAttribute("listaProdotti", prodotti);
+            model.addAttribute("ordine", o);
+            return "dettaglioOrdineUtente.html";
+            
         }
     
         as.setMessage("Errore richiesta non autorizzata");
@@ -139,6 +168,16 @@ public class OrdineController {
 
         if(role != null && role.equals("A") && p != null){
             List<Ordine> ordini = ordineService.readAll();
+            for(Ordine o : ordini){
+                Persona u = utenteService.readById(o.getIdPersona());
+                Persona a = adminService.readById(o.getIdPersona());
+                if(u != null){
+                    o.setPersona(u);
+                }
+                if(a != null){
+                    o.setPersona(a);
+                }
+            }
             model.addAttribute("listaOrdini", ordini);
             return "listaOrdiniAdmin.html";
         }

@@ -52,10 +52,31 @@ function openUpdateProdotto(id, genere, brand, prezzo, disponibilita, peso,
     
 }
 
-function openUpdateOrdine(id, totale, quantita, iva){
+function openUpdateOrdine(id, idPersona, totale, quantita, iva){
     document.getElementById('update-ordine').hidden = false;
     document.getElementById('update-ordine-id').value = id;
+    document.getElementById('update-ordine-idpersona').value = idPersona;
     document.getElementById('update-ordine-totale').value = totale;
     document.getElementById('update-ordine-quantita').value = quantita;
     document.getElementById('update-ordine-iva').value = iva ? 'Sì' : 'No';
+}
+
+function openUpdateUtente(id, nome, cognome, ragioneSociale, partitaIva, codiceSdi, indirizzo, citta, cap, provincia, nazione, telefono, email){
+    document.getElementById('update-utente').hidden = false;
+    document.getElementById('update-utente-id').value = id;
+    document.getElementById('update-utente-nome').value = nome;
+    document.getElementById('update-utente-cognome').value = cognome;
+    document.getElementById('update-utente-ragionesociale').value = ragioneSociale;
+    document.getElementById('update-utente-partitaiva').value = partitaIva;
+    document.getElementById('update-utente-codicesdi').value = codiceSdi;
+    document.getElementById('update-utente-indirizzo').value = indirizzo;
+    document.getElementById('update-utente-citta').value = citta;
+    document.getElementById('update-utente-cap').value = cap;
+    document.getElementById('update-utente-provincia').value = provincia;
+    document.getElementById('update-utente-nazione').value = nazione;
+    document.getElementById('update-utente-telefono').value = telefono;
+    document.getElementById('update-utente-email').value = email;
+
+
+
 }

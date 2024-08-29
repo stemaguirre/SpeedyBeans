@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             <tr>
-                <td th:text="${prodotto.genere}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>

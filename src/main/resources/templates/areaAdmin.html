@@ -12,7 +12,6 @@
     </div>
     <div>
         <form action="/area-admin-search" method="get">
-            <label for="search">Cerca</label>
             <input type="text" name="search" id="search" placeholder="Cerca ordine, utente o prodotto">
             <input type="submit" value="Cerca">
             <a href="/area-admin">Annulla ricerca</a>
@@ -33,11 +32,11 @@
             <button>Tutti gli utenti</button>
         </a>
     </div>
-    <div>
+    <!-- <div>
        <a href="/admin/utenti-registrati">
         <button>Utenti registrati</button>
        </a>
-    </div>
+    </div> -->
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>

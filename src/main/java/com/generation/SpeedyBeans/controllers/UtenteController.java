@@ -108,61 +108,6 @@ public class UtenteController {
         return "homepage.html";
     }
 
-    @PostMapping("/register")
-    public String registerUser(@RequestParam Map<String,String> params){
-       
-        String nome = params.get("nome");
-        String cognome = params.get("cognome"); 
-        String ragioneSociale = params.get("ragione-sociale");
-        String partitaIva = params.get("p-iva");
-        String codiceSdi = params.get("codice-sdi");
-        String indirizzo = params.get("indirizzo");
-        int cap = Integer.parseInt(params.get("cap"));
-        String citta = params.get("citta");
-        String provincia = params.get("provincia");
-        String nazione = params.get("nazione");
-        int telefono = Integer.parseInt(params.get("telefono"));
-        String email = params.get("email");
-        String username = params.get("username");
-        String password = params.get("password");
-        String confermaPassword = params.get("conferma-password");
-
-        
-        AppService as = context.getBean(AppService.class);
-        
-        if (personaService.usernameExists(username)) {
-            as.setMessage("Username gia' in uso");
-            return "registrazione.html";
-        }
-        
-        if (!password.equals(confermaPassword)) {
-            as.setMessage("Le password non corrispondono");
-            return "registrazione.html";
-        }
-
-        Utente u = context.getBean(Utente.class);
-        u.setNome(nome);
-        u.setCognome(cognome);
-        u.setRagioneSociale(ragioneSociale);
-        u.setPartitaIva(partitaIva);
-        u.setCodiceSdi(codiceSdi);
-        u.setIndirizzo(indirizzo);
-        u.setCap(cap);
-        u.setCitta(citta);
-        u.setProvincia(provincia);
-        u.setNazione(nazione);
-        u.setTelefono(telefono);
-        u.setEmail(email);
-        u.setUsername(username);
-        u.setPassword(password);
-
-        utenteService.create(u);
-
-        as.setMessage("User registrato correttamente");
-        return "loginpage.html";
-        
-    }
-
     @GetMapping("/createUser/{idUtente}")
     public String createUser(@PathVariable("idUtente") int idUtente, HttpSession session){
         Persona p = (Persona)session.getAttribute("persona");
@@ -226,7 +171,6 @@ public class UtenteController {
 
     @GetMapping("/ordini")
     public String userOrdini(HttpSession session, Model model) {
-        Logger logger = Logger.getLogger(UtenteController.class.getName());
 
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
@@ -234,7 +178,6 @@ public class UtenteController {
 
         if(role != null && role.equals("U") && p != null){
             List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
-            logger.info("LEGGENDO: " + p.getId());
             if(ordini.isEmpty()){
                 as.setMessage("Nessun ordine effettuato");
                 return "redirect:/area-utente";

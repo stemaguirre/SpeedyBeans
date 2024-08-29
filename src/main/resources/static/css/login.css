@@ -35,8 +35,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: var(--default-font);
-    background-color: #d7c4a3;
-    display: flex;
+    background-color: var(--bg-color);
     justify-content: center;
     align-items: center;
 }
