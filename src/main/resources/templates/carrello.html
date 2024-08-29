@@ -6,6 +6,9 @@
     <title>Carrello</title>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/main.js"></script>
+</head>
+<body></body>
+    <a href="/prodotto/tutti-i-prodotti">Indietro</a>
     <table>
         <thead>
             <tr>
@@ -15,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="prodotto : ${listaProdotti}">
+            <tr th:each="prodotto : ${carrello}">
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
@@ -29,8 +32,8 @@
             </tr>
         </tfoot>
     </table>
-</head>
-<body>
+
+
     
 </body>
 </html>

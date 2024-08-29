@@ -284,13 +284,13 @@ public class UtenteController {
             List<Prodotto> carrello = new ArrayList<>();
             if(c != null){
                 carrello.add(c);
-                model.addAttribute("carrello", carrello);
+                session.setAttribute("carrello", carrello);
                 as.setMessage("Prodotto aggiunto al carrello");
                 return "redirect:/prodotto/tutti-i-prodotti";
             }
             else if(m != null){
                 carrello.add(m);
-                model.addAttribute("carrello", carrello);
+                session.setAttribute("carrello", carrello);
                 as.setMessage("Prodotto aggiunto al carrello");
                 return "redirect:/prodotto/tutti-i-prodotti";
             }
