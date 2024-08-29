@@ -120,8 +120,16 @@ public class OrdineController {
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
-    
-        if (p != null && idOrdine > 0) {
+
+        if(role != null && role.equals("A") && p != null){
+
+            List<Prodotto> prodotti = new ArrayList<>();
+            List<Caffe> caffes = caffeService.findByIdOrdine(idOrdine);
+            List<Macchinetta> macchinette = macchinettaService.findByIdOrdine(idOrdine);
+           
+            prodotti.addAll(caffes);
+            prodotti.addAll(macchinette);
+
             Ordine o = ordineService.readById(idOrdine);
             Persona u = utenteService.readById(o.getIdPersona());
             Persona a = adminService.readById(o.getIdPersona());
@@ -153,7 +161,6 @@ public class OrdineController {
             return "dettaglioOrdineUtente.html";
             
         }
-    
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
         return "homepage.html";
