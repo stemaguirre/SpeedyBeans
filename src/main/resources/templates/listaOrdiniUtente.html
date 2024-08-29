@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei ordini</title>
-    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <table>
@@ -19,10 +20,16 @@
             <tr th:each="ordine : ${listaOrdini}">
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
-                <td th:text="${ordine.iva}"></td>
+                <td th:text="${ordine.iva == true} ? Sì : No"></td>
+                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
             </tr>
         </tbody>
     </table>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
     
 </body>

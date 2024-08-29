@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
-import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -28,16 +27,17 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     private final String readAllMacchinette = "SELECT p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean";
     private final String readMacchinettaById = "SELECT p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean WHERE p.id_ean = ?";
+    private final String readMacchinettaByIdOrdine = "SELECT p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio FROM macchinette m JOIN prodotti p ON m.id_ean = p.id_ean WHERE p.id_ean IN (SELECT id_ean FROM ordini_prodotti WHERE id_ordine = ?)";
 
     private final String updateProdotto = "update prodotti set genere = ?, brand = ?, prezzo = ?, disponibilita = ?, peso = ? where id_ean = ?";
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
     private final String deleteMacchinetta = "DELETE FROM macchinette WHERE id_ean = ?";
 
-    private final String findByUtilizzoLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where p.utilizzo like(concat('%', ?, '%'))";
+    private final String findByUtilizzoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.utilizzo like(concat('%', ?, '%'))";
 
-    private final String findByColoreLike = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
+    private final String findByColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select m.*, p.* from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
+    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
 
 
 
@@ -102,9 +102,11 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
-        if(colore == null) {
+        if(utilizzo == null && colore == null) {
+            result = database.executeQuery(readAllMacchinette);
+        } else if(colore == null & utilizzo != null) {
             result = database.executeQuery(findByUtilizzoLike, utilizzo);
-        } else if (utilizzo == null) {
+        } else if (utilizzo == null & colore != null) {
             result = database.executeQuery(findByColoreLike, colore); 
         }else {
             result = database.executeQuery(findByFilters, utilizzo, colore);
@@ -129,6 +131,18 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         }
 
         return m;
+    }
+
+    public Map<Integer, Entity> readByIdOrdine(int idOrdine) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readMacchinettaByIdOrdine, String.valueOf(idOrdine));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
+            ris.put(m.getId(), m);
+        }
+
+        return ris;
     }
 
   

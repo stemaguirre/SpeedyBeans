@@ -5,10 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Admin</title>
-    
-    
-    <link rel="stylesheet" href="/src/main/resources/static/css/admin.css">
-    <link rel="stylesheet" href="/src/main/resources/static/css/main.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 
 
@@ -44,9 +42,8 @@
         <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area admin</h2>
     </div>
     <div>
-        <form action="/area-admin-search" method="get">
-            <label for="search">Cerca</label>
-            <input type="text" name="search" id="search" placeholder="Cerca ordine, utente o prodotto">
+        <form action="/prodotto/cerca-prodotti" method="get">
+            <input type="text" name="genere" id="src-adm-genere" placeholder="Cerca ordine, utente o prodotto">
             <input type="submit" value="Cerca">
             <a href="/area-admin">Annulla ricerca</a>
         </form>
@@ -88,7 +85,11 @@
         <div class="row"></div>
         <div class="row"></div>
     </div>
-</div>
+    <!-- <div>
+       <a href="/admin/utenti-registrati">
+        <button>Utenti registrati</button>
+       </a>
+    </div> -->
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>

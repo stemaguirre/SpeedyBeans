@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettaglio prodotto</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <table>
@@ -14,31 +16,39 @@
                 <th>Prezzo</th>
                 <th>Disponibilità</th>
                 <th>Peso</th>
-                <th>Tipologia</th>
-                <th>Data Produzione</th>
-                <th>Data Scadenza</th>
-                <th>Formato</th>
-                <th>Utilizzo</th>
-                <th>Colore</th>
-                <th>Modello</th>
-                <th>Serbatoio</th>       
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Tipologia</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Data Produzione</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Data Scadenza</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Formato</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Utilizzo</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Colore</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Modello</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Serbatoio</th>       
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td th:text="${prodotto.genere}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>
                 <td th:text="${prodotto.peso}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.tipologia : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataProduzione : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.dataScadenza : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe) ? prodotto.formato : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.utilizzo : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.colore : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.modello : '-'}"></td>
-                <td th:text="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta) ? prodotto.serbatoio : '-'}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
+                th:text="${prodotto.tipologia}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
+                th:text="${prodotto.dataProduzione}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
+                th:text="${prodotto.dataScadenza}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
+                th:text="${prodotto.formato}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
+                th:text="${prodotto.utilizzo}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
+                th:text="${prodotto.colore}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
+                th:text="${prodotto.modello}"></td>
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
+                th:text="${prodotto.serbatoio}"></td>
             </tr>
         </tbody>
     </table>

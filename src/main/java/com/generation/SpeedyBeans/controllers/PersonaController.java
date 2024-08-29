@@ -71,7 +71,7 @@ public class PersonaController {
         if(role != null && role.equals("A") && p instanceof Admin){
             model.addAttribute("persona", (Admin)p);
             model.addAttribute("listaUtenti", utenteService.readAll());
-            model.addAttribute("utentiRegistrati", utenteService.utentiRegistrati());
+            // model.addAttribute("utentiRegistrati", utenteService.utentiRegistrati());
             model.addAttribute("listaOrdini", ordineService.readAll());
             model.addAttribute("listaProdotti", prodottoService.readAll());
 
@@ -91,8 +91,8 @@ public class PersonaController {
     public String areaAdmin(@RequestParam(name = "username", defaultValue = "") String username,
                             @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,        
                             @RequestParam(name = "cognome", defaultValue = "") String cognome,
-                            @RequestParam(name = "minOrdine", defaultValue = "0") double minOrdine,
-                            @RequestParam(name = "maxOrdine", defaultValue = "0") double maxOrdine,
+                            @RequestParam(name = "minOrdine", defaultValue = "0") int minOrdine,
+                            @RequestParam(name = "maxOrdine", defaultValue = "0") int maxOrdine,
                             @RequestParam(name = "nome", defaultValue = "") String nome,
                             @RequestParam(name = "genere", defaultValue = "") String genere,
                             @RequestParam(name = "brand", defaultValue = "") String brand,
@@ -110,7 +110,7 @@ public class PersonaController {
             model.addAttribute("persona", (Admin)p);
             model.addAttribute("utentiFiltri", utenteService.findByFilters(partitaIva, cognome));
             model.addAttribute("utenteUsername", utenteService.findByUsername(username));
-            model.addAttribute("ordiniRange", ordineService.findyByRangeTotale(minOrdine, maxOrdine));
+            model.addAttribute("ordiniRange", ordineService.findByRangeTotale(minOrdine, maxOrdine));
             model.addAttribute("ordiniPersona", ordineService.findByNomeCognomePersona(nome, cognome));
             model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
             model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));

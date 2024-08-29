@@ -26,25 +26,25 @@ public class AdminController {
     @Autowired
     UtenteService utenteService;
     
-    @GetMapping("/utenti-registrati")
-    public String userUtenti(HttpSession session, Model model) {
+    // @GetMapping("/utenti-registrati")
+    // public String userUtenti(HttpSession session, Model model) {
 
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
-        AppService as = context.getBean(AppService.class);
+    //     Persona p = (Persona)session.getAttribute("persona");
+    //     String role = (String)session.getAttribute("role");
+    //     AppService as = context.getBean(AppService.class);
 
-        if(role != null && role.equals("A") && p != null){
-            List<Utente> utentList = utenteService.utentiRegistrati();
-            if(utentList.isEmpty()){
-                as.setMessage("Nessun utente trovato");
-                return "redirect:/area-admin";
-            }
-            model.addAttribute("listaUtenti", utentList);
-            return "listaUtentiRegistrati.html";
-        }
-        as.setMessage("Errore: richiesta non autorizzata");
-        session.invalidate();
-        return "loginpage.html";
+    //     if(role != null && role.equals("A") && p != null){
+    //         List<Utente> utentList = utenteService.utentiRegistrati();
+    //         if(utentList.isEmpty()){
+    //             as.setMessage("Nessun utente trovato");
+    //             return "redirect:/area-admin";
+    //         }
+    //         model.addAttribute("listaUtenti", utentList);
+    //         return "listaUtentiRegistrati.html";
+    //     }
+    //     as.setMessage("Errore: richiesta non autorizzata");
+    //     session.invalidate();
+    //     return "loginpage.html";
 
-    }
+    // }
 }

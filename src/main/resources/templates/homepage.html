@@ -15,7 +15,8 @@
     <link href="https://db.onlinewebfonts.com/c/066ce24dae3730ed6c648b09efaea93a?family=Acumin+Variable+Concept" rel="stylesheet">
 
      <!-- Main CSS File -->
-     <link rel="stylesheet" href="css/main.css">
+     <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
   
 
 </head>
@@ -30,8 +31,9 @@
                 <img src="/img/logo/logo-speedybeans.png" alt="Logo">
             </div>
             <div class="search-bar">
-                <form action="/search" method="get">
-                    <input type="text" name="search" placeholder="Search...">
+                <form action="/prodotto/cerca-prodotti" method="get">
+                    <input type="text" name="genere" id="src-hmp-genere" placeholder="Cerca prodotti">
+                    <input type="submit" value="Cerca" hidden>
                 </form>
             </div>
         </div>

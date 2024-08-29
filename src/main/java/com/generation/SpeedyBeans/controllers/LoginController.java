@@ -1,6 +1,5 @@
 package com.generation.SpeedyBeans.controllers;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Admin;
-import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.LoginService;
-import com.generation.SpeedyBeans.services.OrdineService;
+
 import com.generation.SpeedyBeans.services.PersonaService;
 import com.generation.SpeedyBeans.services.UtenteService;
 
@@ -77,7 +75,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "homepage.html";
+        return "redirect:/loginpage";
     }
 
     @GetMapping("/signuppage")
@@ -100,8 +98,7 @@ public class LoginController {
         String partitaIva = params.get("p-iva");
         String codiceSdi = params.get("codice-sdi");
         String indirizzo = params.get("indirizzo");
-        int cap = (capStr != null && !capStr.isEmpty()) ? Integer.parseInt(capStr) : 0;
-    
+        int cap = Integer.parseInt(params.get("cap"));
         String citta = params.get("citta");
         String provincia = params.get("provincia");
         String nazione = params.get("nazione");
@@ -146,6 +143,7 @@ public class LoginController {
         return "loginpage.html";
         
     }
+
 
 
     

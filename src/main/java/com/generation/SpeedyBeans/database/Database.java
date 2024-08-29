@@ -65,7 +65,7 @@ public class Database implements IDatabase
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String[] colonne = {"id","id_ean"};
+            String[] colonne = {"id","id_ean", "id_persona", "id_ordine"};
             ps = connection.prepareStatement(query,colonne);
             for(int i = 0; i < params.length;i++){
                 ps.setString(i+1, params[i]);
@@ -99,7 +99,7 @@ public class Database implements IDatabase
                 
                 ps.setString(i+1, params[i]);
             }
-            
+            // System.out.println(ps);
             rs = ps.executeQuery();
             Map<String,String> mappaProprietà;
             while(rs.next()){

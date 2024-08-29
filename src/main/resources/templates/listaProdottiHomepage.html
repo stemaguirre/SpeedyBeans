@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrello</title>
+    <title>Tutti i Prodotti</title>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/main.js"></script>
 </head>
-<body></body>
-    <a href="/prodotto/tutti-i-prodotti">Indietro</a>
+<body>
     <table>
         <thead>
             <tr>
                 <th>Genere</th>
                 <th>Brand</th>
-                <th>Prezzo</th>
+                <th>Disponibilità</th>
+                <th>Dettaglio</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="prodotto : ${carrello}">
+            <tr th:each="prodotto : ${listaProdotti}">
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
-                <td th:text="${prodotto.prezzo}"></td>
+                <td th:text="${prodotto.disponibilita}"></td>
+                <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <td>Totale</td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tfoot>
     </table>
-
-
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
 </body>
 </html>

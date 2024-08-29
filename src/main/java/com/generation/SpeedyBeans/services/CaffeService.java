@@ -12,6 +12,12 @@ import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
 public class CaffeService extends GenericService<Caffe, CaffeDAO> {
+
+    public List<Caffe> findByIdOrdine(int idOrdine) {
+        Map<Integer, Entity> caffes = getRepository().readByIdOrdine(idOrdine);
+
+        return caffes.values().stream().map(e -> (Caffe)e).toList();
+    }
     
     public List<Caffe> findByFilters(String formato, String tipologia) {
         List<Caffe> ris = new ArrayList<>();

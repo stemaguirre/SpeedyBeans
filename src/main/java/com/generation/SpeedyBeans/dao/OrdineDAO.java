@@ -28,21 +28,21 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale) VALUES (?, ?, ?, ?)";
 
-    private final String readAllOrdini = "SELECT * FROM ordini";
+    private final String readAllOrdini = "SELECT id_ordine as id, id_persona, quantita, iva, totale FROM ordini";
 
     private final String updateOrdine = "UPDATE ordini SET id_persona = ?, quantita = ?, iva = ?, totale = ? WHERE id_ordine = ?";
 
     private final String deleteOrdine = "DELETE FROM ordini WHERE id_ordine = ?";
 
-    private final String readByIdProdotto = "select o.* from ordini d join ordini_prodotti op on o.id_ordine = od.id_ordine join prodotti p on od.id_ean = p.id_ean where p.id_ean = ?";
+    private final String readByIdProdotto = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale from ordini o join ordini_prodotti op on o.id_ordine = od.id_ordine join prodotti p on od.id_ean = p.id_ean where p.id_ean = ?";
 
-    private final String readByRange = "SELECT * FROM ordini WHERE totale BETWEEN ? AND ?";
+    private final String readByRange = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale FROM ordini o WHERE totale BETWEEN ? AND ?";
     
-    private final String findByNomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%'))";
-    private final String findByCognomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
-    private final String findByNomeOrCognomeLike = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%')) or p.cognome like(concat('%', ?, '%'))";
+    private final String findByNomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%'))";
+    private final String findByCognomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
+    private final String findByNomeCognomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%')) AND p.cognome like(concat('%', ?, '%'))";
 
-    private final String readByIdPersona = "select o.*, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.id_persona = ?";
+    private final String readByIdPersona = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.id_persona = ?";
 
     @Override
     public int create(Ordine o) {
@@ -106,7 +106,7 @@ public class OrdineDAO implements IDAO<Ordine> {
         return ris;
     }
 
-    public Map<Integer,Entity> readByRangeTotale(double min, double max){
+    public Map<Integer,Entity> readByRangeTotale(int min, int max){
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = database.executeQuery(readByRange, String.valueOf(min), String.valueOf(max));
 
@@ -122,12 +122,12 @@ public class OrdineDAO implements IDAO<Ordine> {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
 
-        if(nome != null && cognome != null){
-            result = database.executeQuery(findByNomeOrCognomeLike, nome, cognome);
-        } else if(nome == null){
+        if(nome.equals("")){
             result = database.executeQuery(findByCognomeLike, cognome);
-        } else if(cognome == null){
+        } else if(cognome.equals("")) {
             result = database.executeQuery(findByNomeLike, nome);
+        } else {
+            result = database.executeQuery(findByNomeCognomeLike, nome, cognome);
         }
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
             Ordine o = context.getBean(Ordine.class, coppia.getValue());

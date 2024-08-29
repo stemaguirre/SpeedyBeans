@@ -1,6 +1,7 @@
 package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -12,13 +13,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.generation.SpeedyBeans.entities.Caffe;
+import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
+import com.generation.SpeedyBeans.services.CaffeService;
 import com.generation.SpeedyBeans.services.LoginService;
+import com.generation.SpeedyBeans.services.MacchinettaService;
 import com.generation.SpeedyBeans.services.OrdineService;
 import com.generation.SpeedyBeans.services.PersonaService;
+import com.generation.SpeedyBeans.services.ProdottoService;
 import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +42,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/utente")  
 public class UtenteController {
     
+
+    @Autowired
+    private ProdottoService prodottoService;
+
     @Autowired
     private UtenteService utenteService;
 
@@ -49,6 +60,12 @@ public class UtenteController {
 
     @Autowired
     private ApplicationContext context;
+
+    @Autowired
+    private CaffeService caffeService;
+
+    @Autowired
+    private MacchinettaService macchinettaService;
 
     @PostMapping("/insert")
     public String insertUtente(@RequestParam Map<String,String> params, HttpSession session) {
@@ -99,61 +116,6 @@ public class UtenteController {
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "homepage.html";
-    }
-
-    @PostMapping("/register")
-    public String registerUser(@RequestParam Map<String,String> params){
-       
-        String nome = params.get("nome");
-        String cognome = params.get("cognome"); 
-        String ragioneSociale = params.get("ragione-sociale");
-        String partitaIva = params.get("p-iva");
-        String codiceSdi = params.get("codice-sdi");
-        String indirizzo = params.get("indirizzo");
-        int cap = Integer.parseInt(params.get("cap"));
-        String citta = params.get("citta");
-        String provincia = params.get("provincia");
-        String nazione = params.get("nazione");
-        int telefono = Integer.parseInt(params.get("telefono"));
-        String email = params.get("email");
-        String username = params.get("username");
-        String password = params.get("password");
-        String confermaPassword = params.get("conferma-password");
-
-        
-        AppService as = context.getBean(AppService.class);
-        
-        if (personaService.usernameExists(username)) {
-            as.setMessage("Username gia' in uso");
-            return "registrazione.html";
-        }
-        
-        if (!password.equals(confermaPassword)) {
-            as.setMessage("Le password non corrispondono");
-            return "registrazione.html";
-        }
-
-        Utente u = context.getBean(Utente.class);
-        u.setNome(nome);
-        u.setCognome(cognome);
-        u.setRagioneSociale(ragioneSociale);
-        u.setPartitaIva(partitaIva);
-        u.setCodiceSdi(codiceSdi);
-        u.setIndirizzo(indirizzo);
-        u.setCap(cap);
-        u.setCitta(citta);
-        u.setProvincia(provincia);
-        u.setNazione(nazione);
-        u.setTelefono(telefono);
-        u.setEmail(email);
-        u.setUsername(username);
-        u.setPassword(password);
-
-        utenteService.create(u);
-
-        as.setMessage("User registrato correttamente");
-        return "loginpage.html";
-        
     }
 
     @GetMapping("/createUser/{idUtente}")
@@ -219,7 +181,6 @@ public class UtenteController {
 
     @GetMapping("/ordini")
     public String userOrdini(HttpSession session, Model model) {
-        Logger logger = Logger.getLogger(UtenteController.class.getName());
 
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
@@ -227,7 +188,6 @@ public class UtenteController {
 
         if(role != null && role.equals("U") && p != null){
             List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
-            logger.info("LEGGENDO: " + p.getId());
             if(ordini.isEmpty()){
                 as.setMessage("Nessun ordine effettuato");
                 return "redirect:/area-utente";
@@ -265,13 +225,111 @@ public class UtenteController {
         AppService as = context.getBean(AppService.class);  
 
         if(role != null && role.equals("A") && p != null){
+            List<Persona> persone = new ArrayList<>();
             List<Utente> utenti = utenteService.readAll();
-            model.addAttribute("listaUtenti", utenti);
+            persone.addAll(utenti);
+            model.addAttribute("listaUtenti", persone);
             return "listaUtenti.html";
         }
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
         return "homepage.html";
+    }
+
+    @GetMapping("/cerca-utenti")
+    public String cercaProdotto(Model model,
+        @RequestParam(name = "cognome", defaultValue = "") String cognome,
+        @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,
+        @RequestParam(name = "username", defaultValue = "") String username,
+        HttpSession session
+        ){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+        
+        List<Utente> utenti = new ArrayList<>();
+        Utente u = null;
+
+        if(cognome != "" || partitaIva != "" || username != ""){
+            utenti = utenteService.findByFilters(partitaIva, cognome);
+            u = utenteService.findByUsername(username);
+            if(u != null){
+                utenti.add(u);
+            }
+        }
+       
+        if(utenti.isEmpty()){
+            as.setMessage("Nessun prodotto trovato");
+        }
+
+        model.addAttribute("listaUtenti", utenti);
+
+        if(role != null && role.equals("A") && p != null){
+            return "listaUtenti.html";
+        } else {
+            as.setMessage("Errore richiesta non autorizzata");
+            session.invalidate();
+            return "loginpage.html";
+        }
+    }
+
+    @GetMapping("/aggiungi-al-carrello")
+    public String carrello(HttpSession session, 
+                           Model model,
+                           @RequestParam(name = "id", defaultValue = "0") int id) {
+        Persona p = (Persona) session.getAttribute("persona");
+        String role = (String) session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+    
+        if (role != null && role.equals("U") && p != null) {
+            // Recupera il carrello dalla sessione (se esiste)
+            List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
+            if (carrello == null) {
+                carrello = new ArrayList<>(); // crea una nuova lista se il carrello è vuoto
+            }
+    
+            Prodotto c = caffeService.readById(id);
+            Prodotto m = macchinettaService.readById(id);
+            
+            if (c != null) {
+                carrello.add(c);
+                session.setAttribute("carrello", carrello); // aggiorna il carrello nella sessione
+                as.setMessage("Prodotto aggiunto al carrello");
+                return "redirect:/prodotto/tutti-i-prodotti";
+            } else if (m != null) {
+                carrello.add(m);
+                session.setAttribute("carrello", carrello); // aggiorna il carrello nella sessione
+                as.setMessage("Prodotto aggiunto al carrello");
+                return "redirect:/prodotto/tutti-i-prodotti";
+            }
+    
+            as.setMessage("Prodotto non trovato");
+            return "redirect:/loginpage";
+        }
+    
+        return "loginpage.html";
+    }
+    
+
+    @GetMapping("/vai-al-carrello")
+    public String carrello(HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            List<Prodotto> carrello = new ArrayList<>();
+            carrello = (List<Prodotto>)session.getAttribute("carrello");
+            if(carrello == null){
+                as.setMessage("Carrello vuoto");
+                return "redirect:/area-utente";
+            }
+            model.addAttribute("carrello", carrello);
+            return "carrello.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "redirect:/loginpage";
     }
     
     

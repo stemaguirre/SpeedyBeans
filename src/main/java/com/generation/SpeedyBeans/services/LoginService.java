@@ -38,8 +38,6 @@ public class LoginService {
                 return a;
             }
         }
-        
-        System.out.println("id: " + id);
 
         return null;
     }
