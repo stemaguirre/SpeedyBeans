@@ -92,17 +92,20 @@ public class LoginController {
     @PostMapping("/register")
     public String registerUser(@RequestParam Map<String,String> params){
        
+        String capStr = params.get("cap");
         String nome = params.get("nome");
-        String cognome = params.get("cognome"); 
+        String cognome = params.get("cognome");
+        String telefonoStr = params.get("telefono"); 
         String ragioneSociale = params.get("ragione-sociale");
         String partitaIva = params.get("p-iva");
         String codiceSdi = params.get("codice-sdi");
         String indirizzo = params.get("indirizzo");
-        int cap = Integer.parseInt(params.get("cap"));
+        int cap = (capStr != null && !capStr.isEmpty()) ? Integer.parseInt(capStr) : 0;
+    
         String citta = params.get("citta");
         String provincia = params.get("provincia");
         String nazione = params.get("nazione");
-        int telefono = Integer.parseInt(params.get("telefono"));
+        int telefono = (telefonoStr != null && !telefonoStr.isEmpty()) ? Integer.parseInt(telefonoStr) : 0;
         String email = params.get("email");
         String username = params.get("username");
         String password = params.get("password");
