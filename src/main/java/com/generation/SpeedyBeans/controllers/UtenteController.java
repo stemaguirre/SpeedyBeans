@@ -275,36 +275,41 @@ public class UtenteController {
 
     @GetMapping("/aggiungi-al-carrello")
     public String carrello(HttpSession session, 
-    Model model,
-    @RequestParam(name = "id", defaultValue = "0") int id
-    ) {
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
+                           Model model,
+                           @RequestParam(name = "id", defaultValue = "0") int id) {
+        Persona p = (Persona) session.getAttribute("persona");
+        String role = (String) session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
-
-        if(role != null && role.equals("U") && p != null){
-
+    
+        if (role != null && role.equals("U") && p != null) {
+            // Recupera il carrello dalla sessione (se esiste)
+            List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
+            if (carrello == null) {
+                carrello = new ArrayList<>(); // crea una nuova lista se il carrello è vuoto
+            }
+    
             Prodotto c = caffeService.readById(id);
             Prodotto m = macchinettaService.readById(id);
-            List<Prodotto> carrello = new ArrayList<>();
-            if(c != null){
+            
+            if (c != null) {
                 carrello.add(c);
-                session.setAttribute("carrello", carrello);
+                session.setAttribute("carrello", carrello); // aggiorna il carrello nella sessione
                 as.setMessage("Prodotto aggiunto al carrello");
                 return "redirect:/prodotto/tutti-i-prodotti";
-            }
-            else if(m != null){
+            } else if (m != null) {
                 carrello.add(m);
-                session.setAttribute("carrello", carrello);
+                session.setAttribute("carrello", carrello); // aggiorna il carrello nella sessione
                 as.setMessage("Prodotto aggiunto al carrello");
                 return "redirect:/prodotto/tutti-i-prodotti";
             }
-            System.out.println(carrello);
+    
             as.setMessage("Prodotto non trovato");
             return "redirect:/loginpage";
         }
+    
         return "loginpage.html";
     }
+    
 
     @GetMapping("/vai-al-carrello")
     public String carrello(HttpSession session, Model model) {
