@@ -11,12 +11,15 @@
     <div class="search-bar">
         <form action="/ordine/cerca-ordini" method="get">
             <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cognome committente">
+            <input type="text" name="minTotale" id="src-hmp-mintotale" placeholder="Totale minimo">
+            <input type="text" name="maxTotale" id="src-hmp-maxtotale" placeholder="Totale massimo">
             <input type="submit" value="Cerca" hidden>
         </form>
     </div>
     <div>
         <button onclick="toggleInsert()">Inserisci</button>
     </div>
+    <a href="/area-admin">Indietro</a>
     <table>
         <thead>
             <tr>

@@ -13,9 +13,8 @@
     </div>
     <div>
         <form action="/prodotto/cerca-prodotti" method="get">
-            <input type="text" name="genere" id="src-adm-genere" placeholder="Cerca ordine, utente o prodotto">
+            <input type="text" name="genere" id="src-adm-genere" size="40" placeholder="Cerca ordine, utente o prodotto">
             <input type="submit" value="Cerca">
-            <a href="/area-admin">Annulla ricerca</a>
         </form>
     </div>
     <div>
@@ -43,5 +42,6 @@
         <hr>
         <p th:text="${message}"></p>
     </div>
+    <a href="/loginpage">Indietro</a>
 </body>
 </html>

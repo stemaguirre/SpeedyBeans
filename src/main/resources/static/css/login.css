@@ -124,3 +124,15 @@ body {
     width: 45px;
     height: 35px;
 }
+
+#message-modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 130, 236);
+    padding: 15px;
+    border: 2px solid rgb(50, 50, 50);
+    border-radius: 5px;
+    z-index: 9999;
+}

@@ -4,10 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <div>
-        <h2>Grazie per il tuo acquisto! Il tuo ordine è in buone mani e stiamo lavorando per fartelo arrivare il prima possibile.</h2>
+        <h2>Grazie per il tuo acquisto! Ecco il riepilogo del tuo ordine:</h2>
+        <p>N° identificativo: <span th:text="{ordine.id}"></span></p>
+        <p>Totale: <span th:text="${ordine.totale}"></span></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Genere</th>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${carrello}">
+                    <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
         <a href="/area-utente">Torna all'area personale</a>
         <br>
         <a href="/">Torna all'homepage</a>

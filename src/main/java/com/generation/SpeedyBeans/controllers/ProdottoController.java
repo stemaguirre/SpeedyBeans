@@ -80,17 +80,27 @@ public class ProdottoController {
             prodotti.addAll(caffes);
             prodotti.addAll(macchinette);
 
-            // prodotti.forEach(System.out::println);
-
             model.addAttribute("listaProdotti", prodotti);
 
             if (role.equals("A")) {
+                if(as.getMessage() != null){
+                    model.addAttribute("message", as.getMessage());
+                    as.setMessage(null);
+                }
                 return "listaProdottiAdmin.html";
-            } else {
+            } else if (role.equals("U")) {
+                if(as.getMessage() != null){
+                    model.addAttribute("message", as.getMessage());
+                    System.out.println(as.getMessage());
+                    as.setMessage(null);
+                }
                 return "listaProdottiUtente.html"; 
             }
         }
+        
         as.setMessage("Errore richiesta non autorizzata");
+        model.getAttribute("message");
+        as.setMessage(null);
         session.invalidate();
         return "loginpage.html";
         

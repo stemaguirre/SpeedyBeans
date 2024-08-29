@@ -19,6 +19,7 @@
         </div>
     </div>
     <div class="login-container">
+        <a href="/"><button>Homepage</button></a>
         <div class="login-form">
             <form action="/login" method="post">
                 <div class="input-group">
@@ -32,18 +33,20 @@
                         <img src="/img/vevtor/password.png" alt="Password Icon">
                     </div>
                     <input type="password" name="password" id="password" autocomplete="current-password" placeholder="Password">
-                </div>
+                </div> 
                 <button type="submit">L<div class="login-cafe">
                     <img src="/img/vevtor/coffee bean.png" alt="Coffee Bean" class="coffee-bean">
                 </div>GIN</button>
             </form>
         </div>
+
     </div>
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
         <p th:text="${message}"></p>
     </div>
+    
 </body>
 </html>
 

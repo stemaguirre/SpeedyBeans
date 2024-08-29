@@ -3,9 +3,6 @@ package com.generation.SpeedyBeans.controllers;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.logging.Logger;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -13,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.generation.SpeedyBeans.entities.Caffe;
-import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
@@ -24,7 +19,6 @@ import com.generation.SpeedyBeans.services.CaffeService;
 import com.generation.SpeedyBeans.services.LoginService;
 import com.generation.SpeedyBeans.services.MacchinettaService;
 import com.generation.SpeedyBeans.services.OrdineService;
-import com.generation.SpeedyBeans.services.PersonaService;
 import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
@@ -48,9 +42,6 @@ public class UtenteController {
     private OrdineService ordineService;
 
     @Autowired
-    private PersonaService personaService;
-
-    @Autowired
     private LoginService loginService;
 
     @Autowired
@@ -61,6 +52,9 @@ public class UtenteController {
 
     @Autowired
     private MacchinettaService macchinettaService;
+
+    @Autowired
+    private AppService as;
 
     @PostMapping("/insert")
     public String insertUtente(@RequestParam Map<String,String> params, HttpSession session) {
@@ -288,13 +282,15 @@ public class UtenteController {
 
             if(c != null){
                 carrello.add(c);
+                as.setMessage("Prodotto aggiunto al carrello");
             }
             else if(m != null){
                 carrello.add(m);
+                as.setMessage("Prodotto aggiunto al carrello");
             }
             
+            System.out.println(as.getMessage());
             session.setAttribute("carrello", carrello);
-            as.setMessage("Prodotto aggiunto al carrello");
             return "redirect:/prodotto/tutti-i-prodotti";
         }
         return "redirect:/loginpage";
@@ -323,6 +319,7 @@ public class UtenteController {
             model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);
             session.setAttribute("carrello", carrello);
+            session.setAttribute("ordine", o);
             return "carrello.html";
         }
         as.setMessage("Errore richiesta non autorizzata");
@@ -333,13 +330,40 @@ public class UtenteController {
 
     @GetMapping("/checkout")
     public String checkout(HttpSession session, Model model) {
-        Ordine o = (Ordine)session.getAttribute("ordine");
-        return "checkout.html";
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            // List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
+            Ordine o = (Ordine)session.getAttribute("ordine");
+            model.addAttribute("ordine", o);
+            return "checkout.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "redirect:/loginpage";
     }
 
     @GetMapping("/pagamento")
     public String pagamento(HttpSession session, Model model) {
-        return "confermaAcquisto.html";
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
+            Ordine o = (Ordine)session.getAttribute("ordine");
+            model.addAttribute("ordine", o);
+            model.addAttribute("carrello", carrello);
+            o.setPersona((Utente)p);
+            ordineService.create(o);
+            as.setMessage("Pagamento effettuato con successo");
+            return "confermaAcquisto.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "redirect:/loginpage";
     }
     
     

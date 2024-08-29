@@ -18,11 +18,13 @@
         </form>
     </div>
     <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
+    <br>
+    <a href="/area-utente">Indietro</a>
     <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
         <p th:text="${message}"></p>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
+    
     <table>
         <thead>
             <tr>
