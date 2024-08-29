@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Admin</title>
+    
+    
+    <link rel="stylesheet" href="/src/main/resources/static/css/admin.css">
+    <link rel="stylesheet" href="/src/main/resources/static/css/main.css">
 </head>
+
+
 <body>
+    <!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+                <img src="/src/main/resources/static/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+            <div class="search-bar">
+                <form action="/search" method="get">
+                    <input type="text" name="search" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home" class="">Home</a></li>
+                <li><a href="#caffe" class="">Caffè</a></li>
+                <li><a href="#macchinette" class="">Macchinette</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button class="logout-button">LOGOUT</button>
+        </div>
+    </div>
+    
+
+<!-- ======= Hero Section ======= -->
+<section class="bg">
     <div>
         <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area admin</h2>
     </div>
@@ -17,26 +51,44 @@
             <a href="/area-admin">Annulla ricerca</a>
         </form>
     </div>
+
+
+</section>
+
+<div class="content">
+    <!-- Welcome Message -->
     <div>
-        <a href="/prodotto/tutti-i-prodotti">
-            <button>Tutti i prodotti</button>
-        </a>
+        <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area admin</h2>
+    </div> 
+
+    <!-- Unified Navigation -->
+    <div class="nav-buttons">
+        <button class="tab active" onclick="showTab('/utente/tutti-gli-utenti')">UTENTI</button>
+        <button class="tab" onclick="showTab('/prodotto/tutti-i-prodotti')">PRODOTTI</button>
+        <button class="tab" onclick="showTab('/ordine/tutti-gli-ordini')">ORDINI</button>
     </div>
-    <div>
-        <a href="/ordine/tutti-gli-ordini">
-            <button>Tutti gli ordini</button>
-        </a>
+
+    <!-- Message Modal -->
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
     </div>
-    <div>
-        <a href="/utente/tutti-gli-utenti">
-            <button>Tutti gli utenti</button>
-        </a>
+
+    <!-- Table Content Placeholder (Dynamic Content for Tabs) -->
+    <div class="table">
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
     </div>
-    <div>
-       <a href="/admin/utenti-registrati">
-        <button>Lista Utenti Registrati</button>
-       </a>
-    </div>
+</div>
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
