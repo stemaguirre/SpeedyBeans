@@ -165,7 +165,6 @@ public class UtenteController {
 
     @GetMapping("/ordini")
     public String userOrdini(HttpSession session, Model model) {
-        Logger logger = Logger.getLogger(UtenteController.class.getName());
 
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
@@ -173,7 +172,6 @@ public class UtenteController {
 
         if(role != null && role.equals("U") && p != null){
             List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
-            logger.info("LEGGENDO: " + p.getId());
             if(ordini.isEmpty()){
                 as.setMessage("Nessun ordine effettuato");
                 return "redirect:/area-utente";

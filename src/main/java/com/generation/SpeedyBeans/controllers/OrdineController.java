@@ -142,7 +142,23 @@ public class OrdineController {
            
             model.addAttribute("listaProdotti", prodotti);
             model.addAttribute("ordine", o);
-            return "dettaglioOrdine.html";
+            return "dettaglioOrdineAdmin.html";
+            
+        }
+        if(role != null && role.equals("U") && p != null){
+
+            List<Prodotto> prodotti = new ArrayList<>();
+            List<Caffe> caffes = caffeService.findByIdOrdine(idOrdine);
+            List<Macchinetta> macchinette = macchinettaService.findByIdOrdine(idOrdine);
+           
+            prodotti.addAll(caffes);
+            prodotti.addAll(macchinette);
+
+            Ordine o = ordineService.readById(idOrdine);
+
+            model.addAttribute("listaProdotti", prodotti);
+            model.addAttribute("ordine", o);
+            return "dettaglioOrdineUtente.html";
             
         }
         as.setMessage("Errore richiesta non autorizzata");

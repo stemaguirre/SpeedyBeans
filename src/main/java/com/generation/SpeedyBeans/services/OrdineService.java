@@ -120,7 +120,6 @@ public class OrdineService extends GenericService<Ordine, OrdineDAO> {
     }
 
     public List<Ordine> findByIdPersona(int idPersona) {
-        logger.info("findByIdPersona called with idPersona: " + idPersona);
 
         Map<Integer, Entity> ordini = getRepository().readByIdPersona(idPersona);
         List<Ordine> listaOrdini = new ArrayList<>();

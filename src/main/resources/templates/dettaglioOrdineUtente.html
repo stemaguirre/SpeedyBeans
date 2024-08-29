@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Ordine</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Genere</th>
+                <th>Brand</th>
+                <th>Prezzo</th>
+                <th>Disponibilità</th>
+                <th>Peso</th>
+                <th>Tipologia</th>
+                <th>Data Produzione</th>
+                <th>Data Scadenza</th>
+                <th>Formato</th>
+                <th>Utilizzo</th>
+                <th>Colore</th>
+                <th>Modello</th>
+                <th>Serbatoio</th>
+            </tr>
+        </thead>
+        <tbody>   
+            <tr th:each="prodotto : ${listaProdotti}">
+                
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
+                <td th:text="${prodotto.brand}"></td>
+                <td th:text="${prodotto.prezzo}"></td>
+                <td th:text="${prodotto.disponibilita}"></td>
+                <td th:text="${prodotto.peso}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.tipologia : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.dataProduzione : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.dataScadenza : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'C') ? prodotto.formato : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.utilizzo : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.colore : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.modello : '-'}"></td>
+                <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.serbatoio : '-'}"></td>
+            </tr>
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Totale</td>
+                <td th:text="${ordine.totale}"></td>
+            </tr>
+        </tfoot>
+        
+    </table>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
+    
+</body>
+</html>
