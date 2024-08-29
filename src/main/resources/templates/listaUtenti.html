@@ -8,6 +8,12 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
+    <div class="search-bar">
+        <form action="/utente/cerca-utenti" method="get">
+            <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
+            <input type="submit" value="Cerca" hidden>
+        </form>
+    </div>
     <div>
         <button onclick="toggleInsert()">Inserisci</button>
     </div>

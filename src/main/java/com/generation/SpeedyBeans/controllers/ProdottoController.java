@@ -144,9 +144,11 @@ public class ProdottoController {
         @RequestParam(name = "formato", defaultValue = "") String formato,
         @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
         @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
-        @RequestParam(name = "colore", defaultValue = "") String colore
+        @RequestParam(name = "colore", defaultValue = "") String colore,
+        HttpSession session
         ){
-    
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
         
         List<Prodotto> prodotti = new ArrayList<>();
@@ -164,7 +166,13 @@ public class ProdottoController {
         }
 
         model.addAttribute("listaProdotti", prodotti);
-        return "listaProdottiHomepage.html";
-        
+
+        if(role != null && role.equals("A") && p != null){
+            return "listaProdottiAdmin.html";
+        } else if(role != null && role.equals("U") && p != null){
+            return "listaProdottiUtente.html";
+        } else{
+            return "listaProdottiHomepage.html";
+        }
     }
 }
