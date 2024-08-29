@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Utente</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -14,9 +16,9 @@
             <a href="/logout"><button class="btn-logout">Logout</button></a>
         </div>
     </nav>
-    <div>
-        <form action="/area-utente-search" method="get">
-            <input type="text" name="search" id="search" placeholder="Cerca ordine o prodotto">
+    <div class="search-bar">
+        <form action="/prodotto/cerca-prodotti" method="get">
+            <input type="text" name="genere" id="src-utn-genere" placeholder="Cerca prodotti o ordini">
             <input type="submit" value="Cerca">
             <a href="/area-utente">Annulla ricerca</a>
         </form>

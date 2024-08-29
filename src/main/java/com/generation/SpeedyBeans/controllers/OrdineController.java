@@ -193,21 +193,51 @@ public class OrdineController {
         return "loginpage";
     }
 
-    @GetMapping("/i-miei-ordini")
-    public String iMieiOrdini(HttpSession session, Model model) {
-    Persona p = (Persona)session.getAttribute("persona");
-    String role = (String)session.getAttribute("role");
-    AppService as = context.getBean(AppService.class);
+    @GetMapping("/cerca-ordini")
+    public String cercaProdotto(Model model,
+        @RequestParam(name = "nome", defaultValue = "") String nome,
+        @RequestParam(name = "cognome", defaultValue = "") String cognome,
+        @RequestParam(name = "minTotale", defaultValue = "0") int minTotale,
+        @RequestParam(name = "maxTotale", defaultValue = "0") int maxTotale,
+        HttpSession session
+        ){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
 
-    if (role != null && role.equals("U") && p != null) {
-        List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
+        List<Ordine> ordini = new ArrayList<>();
+        
+        if(nome != "" || cognome != "" || (minTotale != 0 || maxTotale != 0)){
+            ordini = ordineService.findByNomeCognomePersona(nome, cognome);
+            ordini.addAll(ordineService.findByRangeTotale(minTotale, maxTotale));
+        }
+
+        for(Ordine o : ordini){
+            Persona u = utenteService.readById(o.getIdPersona());
+            Persona a = adminService.readById(o.getIdPersona());
+            if(u != null){
+                o.setPersona(u);
+            }
+            if(a != null){
+                o.setPersona(a);
+            }
+        }
+        
+        if(ordini.isEmpty()){
+            as.setMessage("Nessun prodotto trovato");
+        }
+
         model.addAttribute("listaOrdini", ordini);
-        return "listaOrdiniUtente.html";
+
+        if(role != null && role.equals("A") && p != null){
+            return "listaOrdiniAdmin.html";
+        } else if(role != null && role.equals("U") && p != null){
+            return "listaOrdiniUtente.html";
+        } else{
+            as.setMessage("accesso non autorizzato");
+            return "listaProdottiHomepage.html";
+        }
     }
-    as.setMessage("Errore richiesta non autorizzata");
-    session.invalidate();
-    return "loginpage.html";
-}
 
     
     

@@ -19,9 +19,6 @@ import com.generation.SpeedyBeans.entities.Prodotto;
 @Service
 public class OrdineService extends GenericService<Ordine, OrdineDAO> {
 
-    private static final Logger logger = Logger.getLogger(OrdineService.class.getName());
-
-
     @Autowired
     private ProdottoDAO prodottoDAO;
 
@@ -87,7 +84,7 @@ public class OrdineService extends GenericService<Ordine, OrdineDAO> {
     }
 
 
-    public List<Ordine> findyByRangeTotale(double min, double max) {
+    public List<Ordine> findByRangeTotale(int min, int max) {
         Map<Integer, Entity> ordini = getRepository().readByRangeTotale(min, max);
         List<Ordine> listaOrdini = new ArrayList<>();
         for (Entity e : ordini.values()) {

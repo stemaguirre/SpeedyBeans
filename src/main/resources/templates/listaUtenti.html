@@ -8,6 +8,12 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
+    <div class="search-bar">
+        <form action="/utente/cerca-utenti" method="get">
+            <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
+            <input type="submit" value="Cerca" hidden>
+        </form>
+    </div>
     <div>
         <button onclick="toggleInsert()">Inserisci</button>
     </div>
@@ -103,6 +109,11 @@
             <input type="email" name="email" id="update-utente-email">
             <input type="submit" value="Modifica">
         </form>
+    </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
     </div>
 </body>
 </html>

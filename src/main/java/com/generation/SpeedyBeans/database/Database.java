@@ -99,7 +99,7 @@ public class Database implements IDatabase
                 
                 ps.setString(i+1, params[i]);
             }
-            
+            // System.out.println(ps);
             rs = ps.executeQuery();
             Map<String,String> mappaProprietà;
             while(rs.next()){

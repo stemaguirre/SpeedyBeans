@@ -8,38 +8,29 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
     <table>
         <thead>
             <tr>
                 <th>Genere</th>
                 <th>Brand</th>
-                <th>Prezzo</th>
                 <th>Disponibilità</th>
-                <th>Peso</th>
                 <th>Dettaglio</th>
-                <th>Aggiungi</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="prodotto : ${listaProdotti}">
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
-                <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>
-                <td th:text="${prodotto.peso}"></td>
                 <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
             </tr>
         </tbody>
     </table>
-    
-    
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
 </body>
 </html>
