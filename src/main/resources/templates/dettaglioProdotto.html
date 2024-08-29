@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettaglio prodotto</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <table>
@@ -14,14 +16,14 @@
                 <th>Prezzo</th>
                 <th>Disponibilità</th>
                 <th>Peso</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}">Tipologia</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}">Data Produzione</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}">Data Scadenza</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}">Formato</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}">Utilizzo</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}">Colore</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}">Modello</th>
-                <th th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}">Serbatoio</th>       
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Tipologia</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Data Produzione</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Data Scadenza</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'C')}">Formato</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Utilizzo</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Colore</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Modello</th>
+                <th th:if="${#strings.equals(prodotto.genere, 'M')}">Serbatoio</th>       
             </tr>
         </thead>
         <tbody>
@@ -31,21 +33,21 @@
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>
                 <td th:text="${prodotto.peso}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
                 th:text="${prodotto.tipologia}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
                 th:text="${prodotto.dataProduzione}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
                 th:text="${prodotto.dataScadenza}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Caffe)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'C')}"
                 th:text="${prodotto.formato}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
                 th:text="${prodotto.utilizzo}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
                 th:text="${prodotto.colore}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
                 th:text="${prodotto.modello}"></td>
-                <td th:if="${prodotto instanceof T(com.generation.SpeedyBeans.entities.Macchinetta)}"
+                <td th:if="${#strings.equals(prodotto.genere, 'M')}"
                 th:text="${prodotto.serbatoio}"></td>
             </tr>
         </tbody>

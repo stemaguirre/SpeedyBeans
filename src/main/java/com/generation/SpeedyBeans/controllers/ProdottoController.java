@@ -133,8 +133,38 @@ public class ProdottoController {
             as.setMessage("Prodotto non trovato");
             
         }
-        as.setMessage("Errore richiesta non autorizzata");
-        session.invalidate();
-        return "loginpage.html";
+        as.setMessage("Fai il login per visualizzare i dettagli");
+        return "redirect:/loginpage";
+    }
+
+
+    @GetMapping("/cerca-prodotti")
+    public String cercaProdotto(Model model,
+        @RequestParam(name = "genere", defaultValue = "") String genere,
+        @RequestParam(name = "formato", defaultValue = "") String formato,
+        @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
+        @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
+        @RequestParam(name = "colore", defaultValue = "") String colore
+        ){
+    
+        AppService as = context.getBean(AppService.class);
+        
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Caffe> caffes = caffeService.findByFilters(formato, tipologia);
+        List<Macchinetta> macchinette = macchinettaService.findByFilters(utilizzo, colore);
+        
+        if(genere.equalsIgnoreCase("Caffè") || genere.equalsIgnoreCase("Caffe")){
+            prodotti.addAll(caffes);
+        } else if(genere.equalsIgnoreCase("Macchinette") || genere.equalsIgnoreCase("Macchinetta")){
+            prodotti.addAll(macchinette);
+        }
+
+        if(prodotti.isEmpty()){
+            as.setMessage("Nessun prodotto trovato");
+        }
+
+        model.addAttribute("listaProdotti", prodotti);
+        return "listaProdottiHomepage.html";
+        
     }
 }

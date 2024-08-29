@@ -34,11 +34,11 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     private final String deleteProdotto = "delete from prodotti where id_ean = ?";
 
-    private final String findByFormatoLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%'))";
+    private final String findByFormatoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%'))";
 
-    private final String findByTipologiaLike = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.tipologia like(concat('%', ?, '%'))";
+    private final String findByTipologiaLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.tipologia like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select c.*, p.* from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
+    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
 
 
     @Override
@@ -83,9 +83,11 @@ public class CaffeDAO implements IDAO<Caffe>{
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
-        if(tipologia == null) {
+        if(formato == null && tipologia == null) {
+            result = database.executeQuery(readAllCaffes);
+        } else if (tipologia == null && formato != null) {
             result = database.executeQuery(findByFormatoLike, formato);
-        } else if (formato == null) {
+        } else if (formato == null && tipologia != null) {
             result = database.executeQuery(findByTipologiaLike, tipologia);
         } else {
             result = database.executeQuery(findByFilters, formato, tipologia);

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/signin.css">
+    <link rel="stylesheet" href="/css/signin.css">
+    <script src="/js/main.js"></script>
     <title>Speedy Beans Sign-In</title>
 </head>
 
@@ -22,7 +23,7 @@
             <form>
                 <input type="text" id="nome" name="nome" placeholder="Nome" required>
                 <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
-                <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Regione sociale" required>
+                <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Ragione sociale" required>
                 <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
                 <div class="city-province">
                     <input type="text"  id="citta" name="citta" placeholder="Città" required>
@@ -48,5 +49,10 @@
     </div>
     <button class="sign-in-button">SIGN-IN</button>
 </body>
+<div id="message-modal" th:if="${message} != null">
+    <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+    <hr>
+    <p th:text="${message}"></p>
+</div>
 
 </html>

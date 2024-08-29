@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.generation.SpeedyBeans.dao.CaffeDAO;
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Macchinetta;
 
 @Service
 public class CaffeService extends GenericService<Caffe, CaffeDAO> {
