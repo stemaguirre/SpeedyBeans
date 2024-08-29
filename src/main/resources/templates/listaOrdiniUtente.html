@@ -20,6 +20,8 @@
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva}"></td>
+                <td><a th:href="|/ordine/dettaglio/?id=${ordine.id}|"><button>Dettagli</button></a></td> 
+
             </tr>
         </tbody>
     </table>

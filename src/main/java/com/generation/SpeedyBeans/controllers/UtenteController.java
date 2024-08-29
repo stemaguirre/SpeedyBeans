@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.LoginService;
 import com.generation.SpeedyBeans.services.OrdineService;
 import com.generation.SpeedyBeans.services.PersonaService;
+import com.generation.SpeedyBeans.services.ProdottoService;
 import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +38,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/utente")  
 public class UtenteController {
     
+
+    @Autowired
+    private ProdottoService prodottoService;
+
     @Autowired
     private UtenteService utenteService;
 
@@ -276,8 +282,27 @@ public class UtenteController {
         session.invalidate();
         return "homepage.html";
     }
+
+    @GetMapping("/dettaglio-ordini")
+    public String dettaglioOrdine(@RequestParam(name = "id", defaultValue = "0") int idOrdine, HttpSession session, Model model){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
     
+        if (p != null && idOrdine > 0) {
+            Ordine o = ordineService.readById(idOrdine);
+            List<Prodotto> prodotti = prodottoService.findByIdOrdine(idOrdine);
     
+            model.addAttribute("ordine", o);
+            model.addAttribute("listaProdotti", prodotti);
     
-    
+            if ("U".equals(role) && o.getPersona().getId() == p.getId()) {
+                return "dettaglioOrdineUtente.html"; // Pagina di dettaglio per l'utente
+            }
+        }
+
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "homepage.html";
+    }
 }

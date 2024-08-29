@@ -110,28 +110,26 @@ public class OrdineController {
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
-
-        if(role != null && role.equals("A") && p != null){
-
-            List<Prodotto> prodotti = new ArrayList<>();
-            List<Caffe> caffes = caffeService.findByIdOrdine(idOrdine);
-            List<Macchinetta> macchinette = macchinettaService.findByIdOrdine(idOrdine);
-           
-            prodotti.addAll(caffes);
-            prodotti.addAll(macchinette);
-
+    
+        if (p != null && idOrdine > 0) {
             Ordine o = ordineService.readById(idOrdine);
-            
-           
-            model.addAttribute("listaProdotti", prodotti);
+            List<Prodotto> prodotti = prodottoService.findByIdOrdine(idOrdine);
+    
             model.addAttribute("ordine", o);
-            return "dettaglioOrdine.html";
-            
+            model.addAttribute("listaProdotti", prodotti);
+    
+            if ("A".equals(role)) {
+                return "dettaglioOrdineAdmin.html"; // Pagina di dettaglio per l'admin
+            } else if ("U".equals(role) && o.getPersona().getId() == p.getId()) {
+                return "dettaglioOrdineUtente.html"; // Pagina di dettaglio per l'utente
+            }
         }
+    
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
         return "homepage.html";
     }
+    
 
     @GetMapping("/tutti-gli-ordini")
     public String tuttiGliOrdini(HttpSession session, Model model) {
@@ -148,6 +146,22 @@ public class OrdineController {
         session.invalidate();
         return "loginpage";
     }
+
+    @GetMapping("/i-miei-ordini")
+    public String iMieiOrdini(HttpSession session, Model model) {
+    Persona p = (Persona)session.getAttribute("persona");
+    String role = (String)session.getAttribute("role");
+    AppService as = context.getBean(AppService.class);
+
+    if (role != null && role.equals("U") && p != null) {
+        List<Ordine> ordini = ordineService.findByIdPersona(p.getId());
+        model.addAttribute("listaOrdini", ordini);
+        return "listaOrdiniUtente.html";
+    }
+    as.setMessage("Errore richiesta non autorizzata");
+    session.invalidate();
+    return "loginpage.html";
+}
 
     
     
