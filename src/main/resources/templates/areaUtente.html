@@ -5,45 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
     <script src="/js/main.js"></script>
+    <script src="/js/carousel.js"></script>
 </head>
-<body>
-    <nav class="navbar">
-        <div>
-            <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area utente</h2>
+
+
+    <body>
+        <!-- ======= Header ======= -->
+        <div class="header">
+            <div class="left-side">
+                <div class="logo">
+                 <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+                </div>
+                <div class="search-bar">
+                    <form action="/prodotto/cerca-prodotti" method="get">
+                        <input type="text" name="genere" id="src-utn-genere" placeholder="Cerca prodotti">
+                    </form>
+                </div>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                    <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+                    <li><a href="/utente/profile" class="">I miei dati</a></li>
+                </ul>
+            </nav>
+
+            <div class="right-side">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello">CARRELLO<img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div class="auth-buttons">
+                    <div>
+                        <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+                    </div>
+                </div>
+            </div> 
+        </div> <!-- ======= Chiusura Header ======= -->
+
+        <!-- ======= Hero Section ======= -->
+        <main>
+            <h1>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span></h1>
+            <div class="carousel-container">
+                <button class="carousel-btn prev" onclick="prevSlide()">&lt;</button>
+                <div class="carousel">
+                    <div class="slide">
+                        <div class="product">
+                            <img src="/img/carousel/type-capsule.png" alt="Prodotto 1">
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="product">
+                            <img src="/img/carousel/type-macchina-caffe.png" alt="Prodotto 2">
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="product">
+                            <img src="/img/carousel/type-chicchi.png" alt="Prodotto 3">
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn next" onclick="nextSlide()">&gt;</button>
+            </div>
+        </main>
+
+        <div id="message-modal" th:if="${message} != null">
+            <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+            <hr>
+            <p th:text="${message}"></p>
         </div>
-        <div>
-            <a href="/logout"><button class="btn-logout">Logout</button></a>
-        </div>
-    </nav>
-    <div class="search-bar">
-        <form action="/prodotto/cerca-prodotti" method="get">
-            <input type="text" name="genere" id="src-utn-genere" placeholder="Cerca prodotti">
-            <input type="submit" value="Cerca">
-        </form>
-    </div>
-    <div>
-        <a href="/prodotto/tutti-i-prodotti">
-            <button>Tutti i prodotti</button>
-        </a>
-    </div>
-    <div>
-        <a href="/utente/ordini">
-            <button>I miei ordini</button>
-        </a>
-    </div>
-    <div>
-        <a href="/utente/profile">
-            <button>I miei dati</button>
-        </a>
-    </div>
-    <a href="/loginpage">Indietro</a>
-    
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
-    
-</body>
+    </body>
 </html>

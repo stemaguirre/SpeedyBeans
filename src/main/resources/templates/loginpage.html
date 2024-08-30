@@ -12,14 +12,17 @@
 <body>
     <div class="logo">
         <div class="logo-uno">
-            <img src="/img/logo/logo-speedybeans.png" alt="Logo 1">
+            <a href="/">
+                <img src="/img/logo/logo-speedybeans.png" alt="Logo 1">
+            </a>
         </div>
         <div class="logo-due">
-            <img src="/img/logo/nome-inconrniciato.png" alt="Logo 2" class="logo-text">
+            <a href="/">
+                <img src="/img/logo/nome-inconrniciato.png" alt="Logo 2" class="logo-text">
+            </a>
         </div>
     </div>
     <div class="login-container">
-        <a href="/"><button>Homepage</button></a>
         <div class="login-form">
             <form action="/login" method="post">
                 <div class="input-group">
@@ -41,10 +44,11 @@
         </div>
 
     </div>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
+    <div class="error-message">
+        <div id="message-modal" th:if="${message} != null">
+            <p th:text="${message}"></p>
+            <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        </div>
     </div>
     
 </body>

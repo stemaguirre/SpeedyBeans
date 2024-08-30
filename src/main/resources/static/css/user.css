@@ -1,0 +1,157 @@
+/* Font */
+@import url(https://db.onlinewebfonts.com/c/066ce24dae3730ed6c648b09efaea93a?family=Acumin+Variable+Concept);
+
+@font-face {
+  font-family: "Acumin Variable Concept Extra Condensed Medium Italic";
+  src: url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.eot");
+  src: url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.eot?#iefix") format("embedded-opentype"),
+       url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.woff2") format("woff2"),
+       url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.woff") format("woff"),
+       url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.ttf") format("truetype"),
+       url("https://db.onlinewebfonts.com/t/066ce24dae3730ed6c648b09efaea93a.svg#Acumin Variable Concept Extra Condensed Medium Italic") format("svg");
+}
+
+:root {
+  --default-font: "Acumin Variable Concept Extra Condensed Medium Italic", sans-serif;
+  --heading-font: "Acumin Variable Concept Extra Condensed Medium Italic", sans-serif;
+  --nav-font: "Acumin Variable Concept Extra Condensed Medium Italic", sans-serif;
+  --foot-font: "Acumin Variable Concept Extra Condensed Medium Italic", sans-serif;
+}
+
+/*Colori globali*/
+:root{
+    --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
+    --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
+    --interaction-color: #A1450B; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
+    --active-color: #A1450B; /*Colore attivo. Viene utilizzato per evidenziare gli elementi attivi o selezionati*/
+    --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
+    --bg-color: #DDD0AE;
+}
+
+/*Nav Menu Color*/
+:root {
+    --nav-bg-color:#D4AB73;
+    --nav-botton-color: #723C1A;
+    --interaction-botton-color: #36251E; 
+}
+
+.icon-button {
+    color: white;
+    font-family: var(--default-font);
+    font-size: 18px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: var(--interaction-button-color);
+}
+
+.icon-button:hover {
+    background-color: var(--interaction-button-hover-color); /* Aggiungi una variabile per il colore di hover */
+}
+
+.cart img {
+    height: 55px;
+    width: 55px;
+}
+
+
+.logout-button {
+    flex-direction: linear ;
+    background-color: var(--nav-botton-color);
+    color: white;
+    font-family: var(--default-font);
+    font-size: 18px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: var(--interaction-button-color);
+}
+
+h1 {
+    font-family: var(--default-font);
+    color: var(--default-text-color);
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+/* Stile del carosello */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: var(--default-font);
+    color: var(--defoult-text-color); /*colore testo*/
+    background-image: url("/img/background-home-page.png"); /* Specifica il percorso dell'immagine */
+    background-size: cover; /* Rende l'immagine coprire tutto l'elemento */
+    background-position: center; /* Centra l'immagine all'interno dell'elemento */
+    background-repeat: no-repeat; /* Impedisce che l'immagine si ripeta */    
+}
+
+.carousel-container {
+    position: relative;
+    width: 80%;
+    margin: 50px auto;
+}
+
+.carousel {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.slide {
+    min-width: 100%;
+    transition: transform 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #3a2c1d;
+}
+
+/* Container per le immagini */
+.product {
+    width: 1200px; /* Larghezza fissa del container */
+    height: 400px; /* Altezza fissa del container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Adatta l'immagine senza distorcerla */
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(218, 218, 218, 0.5); /* Corretto il valore del colore */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.carousel-btn:hover {
+    background-color: #DADADA;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
