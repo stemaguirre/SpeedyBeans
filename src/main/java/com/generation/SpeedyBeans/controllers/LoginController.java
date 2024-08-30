@@ -91,10 +91,7 @@ public class LoginController {
     public String registerUser(@RequestParam Map<String,String> params){
        
         String capStr = params.get("cap");
-        String capStr = params.get("cap");
         String nome = params.get("nome");
-        String cognome = params.get("cognome");
-        String telefonoStr = params.get("telefono"); 
         String cognome = params.get("cognome");
         String telefonoStr = params.get("telefono"); 
         String ragioneSociale = params.get("ragione-sociale");
@@ -105,9 +102,7 @@ public class LoginController {
         String citta = params.get("citta");
         String provincia = params.get("provincia");
         String nazione = params.get("nazione");
-        int telefono = (telefonoStr != null && !telefonoStr.isEmpty()) ? Integer.parseInt(telefonoStr) : 0;
-        int telefono = (telefonoStr != null && !telefonoStr.isEmpty()) ? Integer.parseInt(telefonoStr) : 0;
-        String email = params.get("email");
+        int telefono = (telefonoStr != null && !telefonoStr.isEmpty()) ? Integer.parseInt(telefonoStr) : 0;        String email = params.get("email");
         String username = params.get("username");
         String password = params.get("password");
         String confermaPassword = params.get("conferma-password");
