@@ -80,3 +80,51 @@ function openUpdateUtente(id, nome, cognome, ragioneSociale, partitaIva, codiceS
 
 
 }
+
+// Questa porzione di codice implementa i controlli nel form di registrazione
+document.getElementById('signup-form').addEventListener('submit', function(event) {
+    let partitaIVA = document.getElementById('partita-iva').value;
+    let codiceSDI = document.getElementById('codice-sdi').value;
+    let numeroTelefono = document.getElementById('numero-telefono').value;
+    let password = document.getElementById('password').value;
+    
+
+    // Validazione Partita IVA
+    let partitaIVAPattern = /^\d{10}$/;
+    if (!partitaIVAPattern.test(partitaIVA)) {
+        alert("La Partita IVA deve essere un numero di 10 cifre.");
+        event.preventDefault();
+        return;
+    }
+
+    // Validazione Codice SDI
+    let codiceSDIPattern = /^[A-Za-z0-9]{10}$/;
+    if (!codiceSDIPattern.test(codiceSDI)) {
+        alert("Il Codice SDI deve essere lungo esattamente 10 caratteri e contenere solo lettere e numeri.");
+        event.preventDefault();
+        return;
+    }
+
+    // Validazione Numero di Telefono
+    let numeroTelefonoPattern = /^\d{10}$/;
+    if (!numeroTelefonoPattern.test(numeroTelefono)) {
+        alert("Il Numero di Telefono deve essere lungo esattamente 10 cifre.");
+        event.preventDefault();
+        return;
+    }
+
+    // Validazione Password
+    if (password.length < 6) {
+        alert("La password deve contenere almeno 6 caratteri.");
+        event.preventDefault();
+        return;
+    }
+
+  
+
+    // Se tutte le condizioni sono soddisfatte, mostra il messaggio di successo e reindirizza
+    document.getElementById('message-modal').style.display = 'block';
+    setTimeout(function() {
+        window.location.href = '/'; // Cambia l'URL se la homepage si trova in un'altra posizione
+    }, 2000); // 2000 millisecondi = 2 secondi
+});
