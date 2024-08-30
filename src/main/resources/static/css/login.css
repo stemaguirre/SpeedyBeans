@@ -20,12 +20,13 @@
 
 /*Colori globali*/
 :root{
-    --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
-    --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
-    --interaction-color: #A1450B; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
-    --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
+    --defoult-text-color: #36251E;
+    --heading-color: #BD8544;
+    --interaction-color: #A1450B;
+    --contrast-color: #ffffff;
     --body-color: #AC773A;
     --bg-color: #DDD0AE;
+    --botton-color: #723C1A;
 }
 
 /* General styling */
@@ -109,12 +110,12 @@ body {
 
 .login-form button {
     display: flex;
-    flex-direction: linear;
     justify-content: center;
     width: 150px;
     height: 50px;
+    border-color: black;
     border-radius: 15px;
-    margin: 50px auto 0; /* Distanza dal secondo text box */
+    margin: 50px auto 0;
     font-family: var(--default-font);
     font-size: 30px;
     padding-top: 10px;
