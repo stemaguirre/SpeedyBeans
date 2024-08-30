@@ -46,8 +46,8 @@ body {
     border-radius: 30px;
     padding: 40px 30px;
     text-align: center;
-    width: 560px;
-    height: 490px;
+    width: 450px;
+    height: 300px;
 }
 
 
@@ -57,7 +57,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -82,20 +82,20 @@ body {
 }
 
 .input-group input {
-    width: 470px;
-    height: 75px;
+    width: 300px;
+    height: 55px;
     border-radius: 15px;
-    padding-left: 85px; /* Spazio per l'icona */
+    padding-left: 70px; /* Spazio per l'icona */
     font-size: 20px;
     font-style: italic;
 }
 
 .input-group .icon {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 75px;
-    height: 75px;
+    left: 40px;
+    top: 3.5px;
+    width: 55px;
+    height: 55px;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -103,24 +103,24 @@ body {
 }
 
 .input-group .icon img {
-    width: 55px;
-    height: 55px;
+    width: 40px;
+    height: 40px;
 }
 
 .login-form button {
     display: flex;
     flex-direction: linear;
     justify-content: center;
-    width: 235px;
-    height: 75px;
+    width: 150px;
+    height: 50px;
     border-radius: 15px;
-    margin: 140px auto 0; /* Distanza dal secondo text box */
+    margin: 50px auto 0; /* Distanza dal secondo text box */
     font-family: var(--default-font);
-    font-size: 40px;
-    padding-top: 16px;
+    font-size: 30px;
+    padding-top: 10px;
 }
 
 .login-form .login-cafe img {
-    width: 45px;
-    height: 35px;
+    width: 35px;
+    height: 25px;
 }
