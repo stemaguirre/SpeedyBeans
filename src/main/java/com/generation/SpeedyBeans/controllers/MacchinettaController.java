@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.MacchinettaService;
 

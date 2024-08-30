@@ -165,7 +165,6 @@ public class OrdineController {
         session.invalidate();
         return "homepage.html";
     }
-    
 
     @GetMapping("/tutti-gli-ordini")
     public String tuttiGliOrdini(HttpSession session, Model model) {

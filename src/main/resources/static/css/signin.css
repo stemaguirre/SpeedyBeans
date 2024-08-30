@@ -43,9 +43,24 @@ body {
 }
 
 
+
 /* -- Container styling -- */
 .container {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -71,14 +86,17 @@ form {
     flex-direction: column;
     align-items: center;
     flex: 1;
+    flex: 1;
 }
 
 input {
+    width: 270px;
     width: 270px;
     padding: 10px;
     border: none;
     border-radius: 10px;
     font-size: 16px;
+    margin: 5px;
     margin: 5px;
 }
 
@@ -141,6 +159,19 @@ input {
 
 .logo-due img {
     margin-left: 150px;
+    margin-left: 150px;
     width: 447px;
     height: 87px;
+}
+
+#message-modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 130, 236);
+    padding: 15px;
+    border: 2px solid rgb(50, 50, 50);
+    border-radius: 5px;
+    z-index: 9999;
 }
