@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei ordini</title>
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js" defer></script>
 </head>
 <body>
     <div class="search-bar">
@@ -14,6 +14,13 @@
             <input type="text" name="maxTotale" id="src-hmp-maxtotale" placeholder="Massimo">
             <input type="submit" value="Cerca">
         </form>
+    </div>
+    <div class="order-controls">
+        <label for="sort-order">Ordina per:</label>
+        <select id="sort-order" name="sort-order">
+            <option value="totale">Totale</option>
+            <option value="quantita">Quantità</option>
+        </select>
     </div>
     <table class="orders-table">
         <thead>
@@ -43,3 +50,4 @@
     <a href="/area-utente">Indietro</a>
 </body>
 </html>
+

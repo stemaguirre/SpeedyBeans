@@ -128,3 +128,6 @@ document.getElementById('signup-form').addEventListener('submit', function(event
         window.location.href = '/'; // Cambia l'URL se la homepage si trova in un'altra posizione
     }, 2000); // 2000 millisecondi = 2 secondi
 });
+
+//Ordinamento degli ordini in listaOrdiniUtente
+
