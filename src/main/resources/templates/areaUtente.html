@@ -5,39 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
     <script src="/js/main.js"></script>
 </head>
+
+
 <body>
+ <!-- ======= Header ======= -->
+ <div class="header">
+    <div class="left-side">
+        <div class="logo">
+            <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+        </div>
+            <div class="search-bar">
+                <form action="/prodotto/cerca-prodotti" method="get">
+                    <input type="text" name="genere" id="src-utn-genere" placeholder="Cerca prodotti o ordini">
+                </form>
+            </div>
+    </div>
     <nav class="navbar">
+        <ul>
+            <li><a href="/" class="">Home</a></li>
+            <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+            <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+            <li><a href="/utente/profile" class="">I miei dati</a></li>
+        </ul>
+    </nav>
+    <div class="auth-buttons">
+        <div>
+            <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+        </div>
+    </div>
+</div>
+
+
         <div>
             <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area utente</h2>
         </div>
-        <div>
-            <a href="/logout"><button class="btn-logout">Logout</button></a>
-        </div>
-    </nav>
-    <div class="search-bar">
-        <form action="/prodotto/cerca-prodotti" method="get">
-            <input type="text" name="genere" id="src-utn-genere" placeholder="Cerca prodotti o ordini">
-            <input type="submit" value="Cerca">
-            <a href="/area-utente">Annulla ricerca</a>
-        </form>
-    </div>
-    <div>
-        <a href="/prodotto/tutti-i-prodotti">
-            <button>Tutti i prodotti</button>
-        </a>
-    </div>
-    <div>
-        <a href="/utente/ordini">
-            <button>I miei ordini</button>
-        </a>
-    </div>
-    <div>
-        <a href="/utente/profile">
-            <button>I miei dati</button>
-        </a>
-    </div>
+        
+
     
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
