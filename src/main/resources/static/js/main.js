@@ -77,6 +77,18 @@ function openUpdateUtente(id, nome, cognome, ragioneSociale, partitaIva, codiceS
     document.getElementById('update-utente-telefono').value = telefono;
     document.getElementById('update-utente-email').value = email;
 
+}
 
+function ricercaCaffes(){
+    document.querySelector('#ricerca-caffes').hidden=false;
+    document.querySelector('#tabella-caffes').hidden=false;
+    document.querySelector('#ricerca-macchinette').hidden=true;
+    document.querySelector('#tabella-macchinette').hidden=true;
+}
 
+function ricercaMacchinette(){
+    document.querySelector('#ricerca-macchinette').hidden=false;
+    document.querySelector('#tabella-macchinette').hidden=false;
+    document.querySelector('#ricerca-caffes').hidden=true;
+    document.querySelector('#tabella-caffes').hidden=true;
 }

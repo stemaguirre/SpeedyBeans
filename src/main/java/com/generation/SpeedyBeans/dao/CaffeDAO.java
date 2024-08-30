@@ -38,7 +38,15 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     private final String findByTipologiaLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.tipologia like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
+    private final String findByBrandLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
+
+    private final String findByFormatoTipologiaLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%'))";
+
+    private final String findByFormatoBrandLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND p.brand like(concat('%', ?, '%'))";
+
+    private final String findByTipologiaBrandLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.tipologia like(concat('%', ?, '%')) AND p.brand like(concat('%', ?, '%'))";
+
+    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%')) AND p.brand like(concat('%', ?, '%'))";
 
 
     @Override
@@ -79,20 +87,43 @@ public class CaffeDAO implements IDAO<Caffe>{
     }
 
     
-    public Map<Integer, Entity> findByFilters(String formato, String tipologia) {
+    public Map<Integer, Entity> findByFilters(String brand, String formato, String tipologia) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
-        if(formato == null && tipologia == null) {
+        if(formato.equals("") && tipologia.equals("") && brand.equals("")) {
             result = database.executeQuery(readAllCaffes);
-        } else if (tipologia == null && formato != null) {
+        } else if (tipologia.equals("") && !formato.equals("")  && brand.equals("")) {
             result = database.executeQuery(findByFormatoLike, formato);
-        } else if (formato == null && tipologia != null) {
+        } else if (formato.equals("") && !tipologia.equals("") && brand.equals("")) {
             result = database.executeQuery(findByTipologiaLike, tipologia);
+        } else if (formato.equals("") && tipologia.equals("") && !brand.equals("")) {
+            result = database.executeQuery(findByBrandLike, brand);
+        } else if (!formato.equals("") && !tipologia.equals("") && brand.equals("")) {
+            result = database.executeQuery(findByFormatoTipologiaLike, formato, tipologia);
+        } else if (!formato.equals("") && tipologia.equals("") && !brand.equals("")) {
+            result = database.executeQuery(findByFormatoBrandLike, formato, brand);
+        } else if (formato.equals("") && !tipologia.equals("") && !brand.equals("")) {
+            result = database.executeQuery(findByTipologiaBrandLike, tipologia, brand);
         } else {
-            result = database.executeQuery(findByFilters, formato, tipologia);
+            result = database.executeQuery(findByFilters, formato, tipologia, brand);
         }
 
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Caffe c = context.getBean(Caffe.class, coppia.getValue());
+            ris.put(c.getId(), c);
+        }
+
+        return ris;
+
+    }
+
+    public Map<Integer, Entity> findByFilters(String brand) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+
+        result = database.executeQuery(findByBrandLike, brand);
+        
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             Caffe c = context.getBean(Caffe.class, coppia.getValue());
             ris.put(c.getId(), c);

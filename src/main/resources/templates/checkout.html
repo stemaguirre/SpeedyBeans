@@ -9,26 +9,33 @@
 </head>
 <body>
     <h1>Checkout</h1>
+    <p>Scegli la modalità di pagamento: </p>
+    <p><button onclick="document.querySelector('#carta-di-credito').hidden=false">Carta di Credito</button></p>
+    <p><button>Bonifico Bancario</button></p>
+    <p><button>Contrassegno</button></p>
 
-    <form action="/pagamento" th:object="${ordine}" method="post">
-        <label for="cardNumber">Numero Carta:</label>
-        <input type="text" id="cardNumber" name="cardNumber"><br>
-
-        <label for="cardHolder">Titolare Carta:</label>
-        <input type="text" id="cardHolder" name="cardHolder"><br>
-
-        <label for="expiryDate">Data di Scadenza:</label>
-        <input type="date" id="expiryDate" name="expiryDate"><br>
-
-        <label for="cvv">CVV:</label>
-        <input type="text" id="cvv" name="cvv"><br>
-
-        <label for="totalAmount">Importo Totale:</label>
-        <input type="number" id="totalAmount" name="totalAmount" th:field="*{totale + (totale > 500 ? 0 : 49.00)}" readonly><br>
-        
-    </form>
-    <a href="/utente/pagamento"><button>Paga Ora</button></a>
-    <br>
-    <a href="/area-utente">Indietro</a>
+    <div id="carta-di-credito" hidden>
+        <form action="/pagamento" th:object="${ordine}" method="post">
+            <label for="cardNumber">Numero Carta:</label>
+            <input type="text" id="cardNumber" name="cardNumber"><br>
+    
+            <label for="cardHolder">Titolare Carta:</label>
+            <input type="text" id="cardHolder" name="cardHolder"><br>
+    
+            <label for="expiryDate">Data di Scadenza:</label>
+            <input type="date" id="expiryDate" name="expiryDate"><br>
+    
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv"><br>
+    
+            <label for="totalAmount">Importo Totale:</label>
+            <input type="number" id="totalAmount" name="totalAmount" th:field="*{totale}" readonly><br>
+            
+        </form>
+        <a href="/utente/pagamento"><button>Paga Ora</button></a>
+        <br>
+    </div>
+    
+    <a href="/prodotto/tutti-i-prodotti">Indietro</a>
 </body>
 </html>

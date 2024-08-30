@@ -114,8 +114,8 @@ public class PersonaController {
             model.addAttribute("ordiniPersona", ordineService.findByNomeCognomePersona(nome, cognome));
             model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
             model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
-            model.addAttribute("caffeFiltri", caffeService.findByFilters(formato, tipologia));
-            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(utilizzo, colore));
+            model.addAttribute("caffeFiltri", caffeService.findByFilters(brand, formato, tipologia));
+            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(brand, utilizzo, colore));
             
             
             AppService as = context.getBean(AppService.class);
@@ -148,8 +148,8 @@ public class PersonaController {
             model.addAttribute("persona", (Utente)p);
             model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
             model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
-            model.addAttribute("caffeFiltri", caffeService.findByFilters(formato, tipologia));
-            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(utilizzo, colore));
+            model.addAttribute("caffeFiltri", caffeService.findByFilters(brand, formato, tipologia));
+            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(brand, utilizzo, colore));
             
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){

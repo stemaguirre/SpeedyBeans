@@ -4,20 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.generation.SpeedyBeans.dao.OrdineDAO;
 import com.generation.SpeedyBeans.dao.ProdottoDAO;
 import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Prodotto;
 
 @Service
 public class ProdottoService extends GenericService<Prodotto, ProdottoDAO> {
-
-    @Autowired
-    private OrdineDAO ordineDAO;
 
     public List<Prodotto> findByIdOrdine(int idOrdine) {
         Map<Integer, Entity> prodotti = getRepository().readByIdOrdine(idOrdine);

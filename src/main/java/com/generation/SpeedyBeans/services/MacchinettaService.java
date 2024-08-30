@@ -20,10 +20,22 @@ public class MacchinettaService extends GenericService<Macchinetta, MacchinettaD
         return macchinette.values().stream().map(e -> (Macchinetta)e).toList();
     }
     
-    public List<Macchinetta> findByFilters(String utilizzo, String colore) {
+    public List<Macchinetta> findByFilters(String brand, String utilizzo, String colore) {
         List<Macchinetta> ris = new ArrayList<>();
 
-        Map<Integer, Entity> macchinette = getRepository().findByFilters(utilizzo, colore);
+        Map<Integer, Entity> macchinette = getRepository().findByFilters(brand, utilizzo, colore);
+
+        for (Entity e : macchinette.values()) {
+            ris.add((Macchinetta) e);
+        }
+
+        return ris;
+    }
+
+    public List<Macchinetta> findByFilters(String brand) {
+        List<Macchinetta> ris = new ArrayList<>();
+
+        Map<Integer, Entity> macchinette = getRepository().findByFilters(brand);
 
         for (Entity e : macchinette.values()) {
             ris.add((Macchinetta) e);

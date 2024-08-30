@@ -335,8 +335,10 @@ public class UtenteController {
         AppService as = context.getBean(AppService.class);
 
         if(role != null && role.equals("U") && p != null){
-            // List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
+            List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             Ordine o = (Ordine)session.getAttribute("ordine");
+            o.setTotale(o.getTotale() + (o.getTotale() > 500 ? 0 : 49.00));
+
             model.addAttribute("ordine", o);
             return "checkout.html";
         }
