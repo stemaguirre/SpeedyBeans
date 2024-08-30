@@ -126,16 +126,12 @@ document.getElementById('signup-form').addEventListener('submit', function(event
     }, 2000); // 2000 millisecondi = 2 secondi
 });
 
-function ricercaCaffes(){
-    document.querySelector('#ricerca-caffes').hidden=false;
+function apriTabellaCaffes(){
     document.querySelector('#tabella-caffes').hidden=false;
-    document.querySelector('#ricerca-macchinette').hidden=true;
     document.querySelector('#tabella-macchinette').hidden=true;
 }
 
-function ricercaMacchinette(){
-    document.querySelector('#ricerca-macchinette').hidden=false;
+function apriTabellaMacchinette(){
     document.querySelector('#tabella-macchinette').hidden=false;
-    document.querySelector('#ricerca-caffes').hidden=true;
     document.querySelector('#tabella-caffes').hidden=true;
 }

@@ -202,6 +202,38 @@ public class ProdottoController {
         as.setMessage("Fai il login per visualizzare i dettagli");
         return "redirect:/loginpage";
     }
+
+    @GetMapping("/cerca-prodotti")
+    public String cercaProdotti(Model model,
+        @RequestParam(name = "brand", defaultValue = "") String brand,
+        HttpSession session
+        ){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+        
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Caffe> caffes = caffeService.findByFilters(brand);
+        List<Macchinetta> macchinette = macchinettaService.findByFilters(brand);
+        prodotti.addAll(caffes);
+        prodotti.addAll(macchinette);
+
+        if(prodotti.isEmpty()){
+            as.setMessage("Nessun prodotto trovato");
+            model.addAttribute("message", as.getMessage());
+            return "redirect:/prodotto/tutti-i-prodotti";
+        }
+
+        model.addAttribute("listaProdotti", prodotti);
+
+        if(role != null && role.equals("A") && p != null){
+            return "listaProdottiAdmin.html";
+        } else if(role != null && role.equals("U") && p != null){
+            return "listaProdottiUtente.html";
+        } else{
+            return "listaProdottiHomepage.html";
+        }
+    }
     
     @GetMapping("/cerca-prodotti/caffes")
     public String cercaCaffes(Model model,
