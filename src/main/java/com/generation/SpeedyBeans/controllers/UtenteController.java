@@ -307,15 +307,15 @@ public class UtenteController {
             List<Prodotto> carrello = new ArrayList<>();
             Ordine o = new Ordine();
             carrello = (List<Prodotto>)session.getAttribute("carrello");
+            if(carrello == null){
+                as.setMessage("Carrello vuoto");
+                return "redirect:prodotto/tutti-i-prodotti";
+            }
             for(Prodotto prodotto : carrello){
                 o.setTotale(o.getTotale() + prodotto.getPrezzo());
             }
             o.setTotale(Math.round(o.getTotale() * 100.0) / 100.0);
 
-            if(carrello == null){
-                as.setMessage("Carrello vuoto");
-                return "redirect:/area-utente";
-            }
             model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);
             session.setAttribute("carrello", carrello);

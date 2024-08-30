@@ -21,9 +21,9 @@
 /* -- Colori globali -- */
 :root{
     --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
-    --heading-color: #BD8544; 
-    --interaction-color: #A1450B; 
-    --contrast-color: #ffffff; 
+    --heading-color: #BD8544;
+    --interaction-color: #A1450B;
+    --contrast-color: #ffffff;
     --botton-color: #723C1A;
     --body-color: #AC773A;
     --bg-color: #DDD0AE;
@@ -43,24 +43,9 @@ body {
 }
 
 
-
 /* -- Container styling -- */
 .container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-}
-
-.form-row {
-    display: flex;
-    justify-content: space-between;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -86,17 +71,14 @@ form {
     flex-direction: column;
     align-items: center;
     flex: 1;
-    flex: 1;
 }
 
 input {
-    width: 270px;
     width: 270px;
     padding: 10px;
     border: none;
     border-radius: 10px;
     font-size: 16px;
-    margin: 5px;
     margin: 5px;
 }
 
@@ -109,7 +91,7 @@ input {
     width: 115px;
 }
 
-/*- Botton Style -*/
+/* -- Button styling -- */
 
 .sign-in-button {
     padding: 10px 20px;
@@ -159,7 +141,6 @@ input {
 
 .logo-due img {
     margin-left: 150px;
-    margin-left: 150px;
     width: 447px;
     height: 87px;
 }
@@ -169,9 +150,9 @@ input {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgb(0, 130, 236);
+    background-color: red;
     padding: 15px;
-    border: 2px solid rgb(50, 50, 50);
+    border: 2px solid black;
     border-radius: 5px;
     z-index: 9999;
 }
