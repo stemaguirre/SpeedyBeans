@@ -8,7 +8,7 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <table>
+    <table class="order-detail-table">
         <thead>
             <tr>
                 <th>Genere</th>
@@ -28,7 +28,6 @@
         </thead>
         <tbody>   
             <tr th:each="prodotto : ${listaProdotti}">
-                
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
@@ -43,21 +42,18 @@
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.modello : '-'}"></td>
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.serbatoio : '-'}"></td>
             </tr>
-            
         </tbody>
         <tfoot>
             <tr>
-                <td>Totale</td>
+                <td colspan="12" style="text-align: right;">Totale</td>
                 <td th:text="${ordine.totale}"></td>
             </tr>
         </tfoot>
-        
     </table>
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
         <p th:text="${message}"></p>
     </div>
-    
 </body>
 </html>
