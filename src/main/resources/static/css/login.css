@@ -125,17 +125,14 @@ body {
     height: 25px;
 }
 
-/* Stile del messaggio di errore */
-.error-message {
+#message-modal{
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border: 2px solid red;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Assicurarsi che il messaggio di errore sia sopra altri elementi */
-    text-align: center; /* Centrare il testo all'interno del contenitore */
-}
+    background-color: red;
+    padding: 15px;
+    border: 2px solid black;
+    border-radius: 5px;
+    z-index: 9999;
+  }
