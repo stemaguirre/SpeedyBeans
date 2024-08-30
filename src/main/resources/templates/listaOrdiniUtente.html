@@ -5,29 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei ordini</title>
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js" defer></script>
 </head>
 <body>
     <div class="search-bar">
         <form action="/ordine/cerca-ordini" method="get">
             <input type="text" name="minTotale" id="src-hmp-mintotale" placeholder="Minimo">
             <input type="text" name="maxTotale" id="src-hmp-maxtotale" placeholder="Massimo">
-            <input type="submit" value="Cerca" hidden>
+            <input type="submit" value="Cerca">
         </form>
     </div>
-    <table>
+    <div class="order-controls">
+        <label for="sort-order">Ordina per:</label>
+        <select id="sort-order" name="sort-order">
+            <option value="totale">Totale</option>
+            <option value="quantita">Quantità</option>
+        </select>
+    </div>
+    <table class="orders-table">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Totale</th>
-                <th>Quantita'</th>
+                <th>Quantità</th>
                 <th>Iva</th>
+                <th>Dettaglio</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="ordine : ${listaOrdini}">
+                <td th:text="${ordine.id}"></td>
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
-                <td th:text="${ordine.iva == true} ? Sì : No"></td>
+                <td th:text="${ordine.iva == true} ? 'Sì' : 'No'"></td>
                 <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
             </tr>
         </tbody>
@@ -38,7 +48,6 @@
         <p th:text="${message}"></p>
     </div>
     <a href="/area-utente">Indietro</a>
-    
-    
 </body>
 </html>
+

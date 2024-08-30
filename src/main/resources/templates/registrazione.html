@@ -5,66 +5,65 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/signin.css">
         <title>Speedy Beans Sign-In</title>
         <link rel="stylesheet" href="css/signin.css">
+        <script src="js/main.js" defer></script>
     </head>
 
-    <body>
-        <div class="logo">
-            <div class="logo-uno">
-                <a href="/">
+<body>
+    <div class="logo">
+        <div class="logo-uno">
+            <a href="/">
                 <img src="/img/logo/logo-speedybeans.png" alt="Coffee Truck Icon" class="icon">
-                </a>
-            </div>
-            <div class="logo-due">
-                <a href="/">
+            </a>
+        </div>
+        <div class="logo-due">
+            <a href="/">
                 <img src="/img/logo/nome-inconrniciato.png" alt="Speedy Beans Logo" class="logo">
-                </a>
+            </a>
+        </div>
+    </div>
+
+    <!-- ===Unico form=== -->
+    <form id="signup-form" action="/register" method="post">
+        <div class="container">
+            <div class="form-row">
+                <div class="form-left">
+                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                    <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
+                    <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Regione sociale" required>
+                    <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
+                    <div class="city-province">
+                        <input type="text" id="citta" name="citta" placeholder="Città" required>
+                        <input type="text" id="provincia" name="provincia" placeholder="Provincia" required>
+                    </div>
+                    <div class="cap-country">
+                        <input type="text" id="cap" name="cap" placeholder="CAP" required>
+                        <input type="text" id="nazione" name="nazione" placeholder="Nazione" required>
+                    </div>
+                </div>
+
+                <div class="form-right">
+                    <input type="text" id="partita-iva" name="partita-iva" placeholder="Partita IVA" required>
+                    <input type="text" id="codice-sdi" name="codice-sdi" placeholder="Codice SDI" required>
+                    <input type="text" id="numero-telefono" name="numero-telefono" placeholder="Numero di telefono" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="username" id="username" name="username" placeholder="Username" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+            </div>
+            
+            <div class="form-button">
+                <button type="submit" class="sign-in-button">SIGN-IN</button>
             </div>
         </div>
+    </form>
 
-<!-- ===Unico form=== -->
-        <form id="signup-form" action="/register" method="post">
-            <div class="container">
-                <div class="form-row">
-                    <div class="form-left">
-                    
-                        <input type="text" id="nome" name="nome" placeholder="Nome" required>
-                        <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
-                        <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Regione sociale" required>
-                        <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
-                        <div class="city-province">
-                            <input type="text"  id="citta" name="citta" placeholder="Città" required>
-                            <input type="text"  id="provincia" name="provincia" placeholder="Provincia" required>
-                        </div>
-                        <div class="cap-country">
-                            <input type="text" placeholder="CAP" required>
-                            <input type="text" placeholder="Nazione" required>
-                        </div>
-                    </div>
-
-                    <div class="form-right">
-                    
-                        <input type="text" id="partita-iva" name="partita-iva" placeholder="Partita IVA" required>
-                        <input type="text" id="codice-sdi" name="codice-sdi" placeholder="Codice SDI" required>
-                        <input type="text" id="numero-telefono" name="numero-telefono" placeholder="Numero di telefono"required>
-                        <input type="email" id="email" name="email" placeholder="Email" required>
-                        <input type="user" id="user" name="user" placeholder="Username"required>
-                        <input type="password" id="password" name="password" placeholder="Password" required>
-                    
-                    </div>
-                </div>
-                
-                <div class="form-button">
-                <button class="sign-in-button">SIGN-IN</button>
-                </div>
-            </div>
-        </form>
-    </body>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+    <!-- Elemento per visualizzare il messaggio di successo -->
+    <div id="message-modal" style="display: none; color: green; margin-top: 20px;">
+        <button onclick="document.querySelector('#message-modal').style.display='none'">Chiudi</button>
         <hr>
-        <p th:text="${message}"></p>
+        <p>Iscrizione avvenuta con successo</p>
     </div>
+</body>
 </html>
