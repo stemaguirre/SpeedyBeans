@@ -21,9 +21,9 @@
 /* -- Colori globali -- */
 :root{
     --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
-    --heading-color: #BD8544; 
-    --interaction-color: #A1450B; 
-    --contrast-color: #ffffff; 
+    --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
+    --interaction-color: #A1450B; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
+    --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
     --botton-color: #723C1A;
     --body-color: #AC773A;
     --bg-color: #DDD0AE;
@@ -43,24 +43,9 @@ body {
 }
 
 
-
 /* -- Container styling -- */
 .container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-}
-
-.form-row {
-    display: flex;
-    justify-content: space-between;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -86,17 +71,14 @@ form {
     flex-direction: column;
     align-items: center;
     flex: 1;
-    flex: 1;
 }
 
 input {
-    width: 270px;
     width: 270px;
     padding: 10px;
     border: none;
     border-radius: 10px;
     font-size: 16px;
-    margin: 5px;
     margin: 5px;
 }
 
@@ -109,7 +91,7 @@ input {
     width: 115px;
 }
 
-/*- Botton Style -*/
+/* - Botton Style - */
 
 .sign-in-button {
     padding: 10px 20px;
@@ -158,7 +140,6 @@ input {
 }
 
 .logo-due img {
-    margin-left: 150px;
     margin-left: 150px;
     width: 447px;
     height: 87px;
