@@ -3,9 +3,6 @@ package com.generation.SpeedyBeans.controllers;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.logging.Logger;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -13,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.generation.SpeedyBeans.entities.Caffe;
-import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
@@ -24,8 +19,6 @@ import com.generation.SpeedyBeans.services.CaffeService;
 import com.generation.SpeedyBeans.services.LoginService;
 import com.generation.SpeedyBeans.services.MacchinettaService;
 import com.generation.SpeedyBeans.services.OrdineService;
-import com.generation.SpeedyBeans.services.PersonaService;
-import com.generation.SpeedyBeans.services.ProdottoService;
 import com.generation.SpeedyBeans.services.UtenteService;
 
 import jakarta.servlet.http.HttpSession;
@@ -42,18 +35,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/utente")  
 public class UtenteController {
     
-
-    @Autowired
-    private ProdottoService prodottoService;
-
     @Autowired
     private UtenteService utenteService;
 
     @Autowired
     private OrdineService ordineService;
-
-    @Autowired
-    private PersonaService personaService;
 
     @Autowired
     private LoginService loginService;
@@ -66,6 +52,9 @@ public class UtenteController {
 
     @Autowired
     private MacchinettaService macchinettaService;
+
+    @Autowired
+    private AppService as;
 
     @PostMapping("/insert")
     public String insertUtente(@RequestParam Map<String,String> params, HttpSession session) {
@@ -274,58 +263,103 @@ public class UtenteController {
     }
 
     @GetMapping("/aggiungi-al-carrello")
-    public String carrello(HttpSession session, 
-                           Model model,
-                           @RequestParam(name = "id", defaultValue = "0") int id) {
-        Persona p = (Persona) session.getAttribute("persona");
-        String role = (String) session.getAttribute("role");
-        AppService as = context.getBean(AppService.class);
-    
-        if (role != null && role.equals("U") && p != null) {
-            // Recupera il carrello dalla sessione (se esiste)
-            List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
-            if (carrello == null) {
-                carrello = new ArrayList<>(); // crea una nuova lista se il carrello è vuoto
-            }
-    
-            Prodotto c = caffeService.readById(id);
-            Prodotto m = macchinettaService.readById(id);
-            
-            if (c != null) {
-                carrello.add(c);
-                session.setAttribute("carrello", carrello); // aggiorna il carrello nella sessione
-                as.setMessage("Prodotto aggiunto al carrello");
-                return "redirect:/prodotto/tutti-i-prodotti";
-            } else if (m != null) {
-                carrello.add(m);
-                session.setAttribute("carrello", carrello); // aggiorna il carrello nella sessione
-                as.setMessage("Prodotto aggiunto al carrello");
-                return "redirect:/prodotto/tutti-i-prodotti";
-            }
-    
-            as.setMessage("Prodotto non trovato");
-            return "redirect:/loginpage";
-        }
-    
-        return "loginpage.html";
-    }
-    
-
-    @GetMapping("/vai-al-carrello")
-    public String carrello(HttpSession session, Model model) {
+    public String aggiungiCarrello(HttpSession session, 
+    Model model,
+    @RequestParam(name = "id", defaultValue = "0") int id
+    ) 
+    {
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
         if(role != null && role.equals("U") && p != null){
+            List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
+            if(carrello == null){
+                carrello = new ArrayList<>();
+            }
+            Prodotto c = caffeService.readById(id);
+            Prodotto m = macchinettaService.readById(id);
+
+            if(c != null){
+                carrello.add(c);
+                as.setMessage("Prodotto aggiunto al carrello");
+            }
+            else if(m != null){
+                carrello.add(m);
+                as.setMessage("Prodotto aggiunto al carrello");
+            }
+            
+            System.out.println(as.getMessage());
+            session.setAttribute("carrello", carrello);
+            return "redirect:/prodotto/tutti-i-prodotti";
+        }
+        return "redirect:/loginpage";
+    }
+
+    @GetMapping("/vai-al-carrello")
+    public String vaiCarrello(HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            
             List<Prodotto> carrello = new ArrayList<>();
+            Ordine o = new Ordine();
             carrello = (List<Prodotto>)session.getAttribute("carrello");
             if(carrello == null){
                 as.setMessage("Carrello vuoto");
-                return "redirect:/area-utente";
+                return "redirect:prodotto/tutti-i-prodotti";
             }
+            for(Prodotto prodotto : carrello){
+                o.setTotale(o.getTotale() + prodotto.getPrezzo());
+            }
+            o.setTotale(Math.round(o.getTotale() * 100.0) / 100.0);
+
             model.addAttribute("carrello", carrello);
+            model.addAttribute("ordine", o);
+            session.setAttribute("carrello", carrello);
+            session.setAttribute("ordine", o);
             return "carrello.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "redirect:/loginpage";
+    }
+
+
+    @GetMapping("/checkout")
+    public String checkout(HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            // List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
+            Ordine o = (Ordine)session.getAttribute("ordine");
+            model.addAttribute("ordine", o);
+            return "checkout.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "redirect:/loginpage";
+    }
+
+    @GetMapping("/pagamento")
+    public String pagamento(HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && role.equals("U") && p != null){
+            List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
+            Ordine o = (Ordine)session.getAttribute("ordine");
+            model.addAttribute("ordine", o);
+            model.addAttribute("carrello", carrello);
+            o.setPersona((Utente)p);
+            ordineService.create(o);
+            as.setMessage("Pagamento effettuato con successo");
+            return "confermaAcquisto.html";
         }
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();

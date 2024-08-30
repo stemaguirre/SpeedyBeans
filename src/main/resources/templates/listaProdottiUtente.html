@@ -8,12 +8,23 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
+    <div class="search-bar">
+        <form action="/prodotto/cerca-prodotti" method="get">
+            <input type="text" name="formato" id="src-hmp-formato" placeholder="Formato caffè">
+            <input type="text" name="tipologia" id="src-hmp-tipologia" placeholder="Tipologia caffè">
+            <input type="text" name="utilizzo" id="src-hmp-utilizzo" placeholder="Utilizzo macchinetta">
+            <input type="text" name="colore" id="src-hmp-colore" placeholder="Colore macchinetta">
+            <input type="submit" value="Cerca" hidden>
+        </form>
     </div>
+    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
+    <br>
+    <a href="/area-utente">Indietro</a>
+    <div id="message-modal" th:if="${message} != null">
+        <p th:text="${message}"></p>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+    </div>
+    
     <table>
         <thead>
             <tr>
