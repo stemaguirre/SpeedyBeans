@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Macchinetta;
-import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
-import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.CaffeService;
 import com.generation.SpeedyBeans.services.MacchinettaService;
@@ -44,9 +42,6 @@ public class ProdottoController {
     @Autowired
     private ApplicationContext context;
 
-    @Autowired
-    private ProdottoService ProdottoService;
-
      @PostMapping("/insert")
     public String insertProdotto(@RequestParam Map<String, String> params, HttpSession session) {
         Persona p = (Persona)session.getAttribute("persona");
@@ -66,43 +61,46 @@ public class ProdottoController {
     
     
     @GetMapping("/tutti-i-prodotti")
-    public String tuttiProdotti(HttpSession session, Model model) {
+    public String tuttiProdotti(HttpSession session, Model model,
+    @RequestParam(name = "caf", defaultValue = "") String caf,
+    @RequestParam(name = "mac", defaultValue = "") String mac){
         
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
-        if(role != null && (role.equals("A") || role.equals("U")) && p != null){
-            List<Prodotto> prodotti = new ArrayList<>();
-            List<Caffe> caffes = caffeService.readAll();
-            List<Macchinetta> macchinette = macchinettaService.readAll();
-           
-            prodotti.addAll(caffes);
-            prodotti.addAll(macchinette);
-
-            model.addAttribute("listaProdotti", prodotti);
-
-            if (role.equals("A")) {
-                if(as.getMessage() != null){
-                    model.addAttribute("message", as.getMessage());
-                    as.setMessage(null);
-                }
-                return "listaProdottiAdmin.html";
-            } else if (role.equals("U")) {
-                if(as.getMessage() != null){
-                    model.addAttribute("message", as.getMessage());
-                    System.out.println(as.getMessage());
-                    as.setMessage(null);
-                }
-                return "listaProdottiUtente.html"; 
-            }
-        }
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Caffe> caffes = caffeService.readAll();
+        List<Macchinetta> macchinette = macchinettaService.readAll();
         
-        as.setMessage("Errore richiesta non autorizzata");
-        model.getAttribute("message");
+        prodotti.addAll(caffes);
+        prodotti.addAll(macchinette);
+
+        model.addAttribute("listaProdotti", prodotti);
+
+        if (role != null && role.equals("A") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiAdmin.html";
+        } else if (role != null && role.equals("U") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiUtente.html"; 
+        }
+        if(caf.equalsIgnoreCase("caffè")){
+            prodotti.removeAll(macchinette);
+        }
+        if(mac.equalsIgnoreCase("macchinette")){
+            prodotti.removeAll(caffes);
+        }
+        as.setMessage("Accedi per vedere più dettagli");
+        model.addAttribute("message");
         as.setMessage(null);
-        session.invalidate();
-        return "loginpage.html";
+        return "listaProdottiHomepage.html";
         
     }
 
