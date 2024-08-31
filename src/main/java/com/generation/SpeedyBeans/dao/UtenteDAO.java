@@ -48,7 +48,6 @@ public class UtenteDAO implements IDAO<Utente> {
 
     private final String findByName = "select u.*, p* from utenti u join persone p on u.id_persona =p.id_persona where p.nome like(concat('%, ?, '%'))";
 
-    private final String findByQuery = "SELECT u.*, p.* FROM utenti u " +"JOIN persone p ON u.id_persona = p.id_persona " +"WHERE p.nome LIKE CONCAT('%', ?, '%') " +"OR p.cognome LIKE CONCAT('%', ?, '%') " +"OR u.partita_iva LIKE CONCAT('%', ?, '%')";
     // private final String readRegistrati = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username is not null";    
 
     @Override

@@ -3,28 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutti i Prodotti</title>
+    <title>Tutti i Prodotti - Admin</title>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/main.js"></script>
+    <style>
+        .filter-bar {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-right: 20px;
+        }
+
+        .filter-item label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-item input, .filter-item select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 150px;
+        }
+
+        .filter-bar button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            align-self: center;
+        }
+
+        .filter-bar button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="search-bar">
-        <form action="/prodotto/cerca-prodotti" method="get">
-            <input type="text" name="formato" id="src-hmp-formato" placeholder="Formato caffè">
-            <input type="text" name="tipologia" id="src-hmp-tipologia" placeholder="Tipologia caffè">
-            <input type="text" name="utilizzo" id="src-hmp-utilizzo" placeholder="Utilizzo macchinetta">
-            <input type="text" name="colore" id="src-hmp-colore" placeholder="Colore macchinetta">
-            <input type="submit" value="Cerca" hidden>
+    <div class="filter-bar">
+        <form action="/prodotto/filtra-prodotti" method="get">
+            <div class="filter-item">
+                <label for="formato">Formato caffè:</label>
+                <input type="text" name="formato" id="formato" placeholder="Formato caffè">
+            </div>
+
+            <div class="filter-item">
+                <label for="tipologia">Tipologia caffè:</label>
+                <input type="text" name="tipologia" id="tipologia" placeholder="Tipologia caffè">
+            </div>
+
+            <div class="filter-item">
+                <label for="utilizzo">Utilizzo macchinetta:</label>
+                <input type="text" name="utilizzo" id="utilizzo" placeholder="Utilizzo macchinetta">
+            </div>
+
+            <div class="filter-item">
+                <label for="colore">Colore macchinetta:</label>
+                <input type="text" name="colore" id="colore" placeholder="Colore macchinetta">
+            </div>
+
+            <div class="filter-item">
+                <label for="genere">Genere:</label>
+                <select name="genere" id="genere">
+                    <option value="">Tutti</option>
+                    <option value="M">Macchinetta</option>
+                    <option value="C">Caffè</option>
+                </select>
+            </div>
+
+            <div class="filter-item">
+                <label for="brand">Brand:</label>
+                <input type="text" name="brand" id="brand" placeholder="Brand">
+            </div>
+
+            <div class="filter-item">
+                <label for="minPrezzo">Prezzo Minimo:</label>
+                <input type="number" name="minPrezzo" id="minPrezzo" placeholder="Prezzo Minimo">
+            </div>
+
+            <div class="filter-item">
+                <label for="maxPrezzo">Prezzo Massimo:</label>
+                <input type="number" name="maxPrezzo" id="maxPrezzo" placeholder="Prezzo Massimo">
+            </div>
+
+            <div class="filter-item">
+                <label for="disponibilita">Disponibilità:</label>
+                <input type="number" name="disponibilita" id="disponibilita" placeholder="Disponibilità">
+            </div>
+
+            <div class="filter-item">
+                <label for="peso">Peso:</label>
+                <input type="number" name="peso" id="peso" placeholder="Peso">
+            </div>
+
+            <button type="submit">Applica Filtri</button>
         </form>
     </div>
-    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
-    <br>
-    <a href="/area-utente">Indietro</a>
+    
+    <a href="/area-admin">Indietro</a>
     <div id="message-modal" th:if="${message} != null">
         <p th:text="${message}"></p>
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
-    
+
     <table>
         <thead>
             <tr>
@@ -34,7 +127,8 @@
                 <th>Disponibilità</th>
                 <th>Peso</th>
                 <th>Dettaglio</th>
-                <th>Aggiungi</th>
+                <th>Elimina</th>
+                <th>Modifica</th>
             </tr>
         </thead>
         <tbody>
@@ -45,12 +139,10 @@
                 <td th:text="${prodotto.disponibilita}"></td>
                 <td th:text="${prodotto.peso}"></td>
                 <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                <td><a th:href="|/prodotto/delete?id=${prodotto.id}|"><button>Elimina</button></a></td>
+                <td><a th:href="|/prodotto/modifica?id=${prodotto.id}|"><button>Modifica</button></a></td>
             </tr>
         </tbody>
     </table>
-    
-    
-    
 </body>
 </html>
