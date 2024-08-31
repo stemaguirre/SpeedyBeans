@@ -11,7 +11,7 @@
     <a href="/">Indietro</a>
     <table>
         <thead>
-            <tr>
+            <tr th:if="${#lists.isEmpty(listaProdotti)} == false">
                 <th>Genere</th>
                 <th>Brand</th>
                 <th>Disponibilità</th>

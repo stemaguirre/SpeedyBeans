@@ -19,10 +19,22 @@ public class CaffeService extends GenericService<Caffe, CaffeDAO> {
         return caffes.values().stream().map(e -> (Caffe)e).toList();
     }
     
-    public List<Caffe> findByFilters(String formato, String tipologia) {
+    public List<Caffe> findByFilters(String brand, String formato, String tipologia) {
         List<Caffe> ris = new ArrayList<>();
 
-        Map<Integer, Entity> caffes = getRepository().findByFilters(formato, tipologia);
+        Map<Integer, Entity> caffes = getRepository().findByFilters(brand, formato, tipologia);
+
+        for (Entity e : caffes.values()) {
+            ris.add((Caffe) e);
+        }
+
+        return ris;
+    }
+
+    public List<Caffe> findByFilters(String brand) {
+        List<Caffe> ris = new ArrayList<>();
+
+        Map<Integer, Entity> caffes = getRepository().findByFilters(brand);
 
         for (Entity e : caffes.values()) {
             ris.add((Caffe) e);

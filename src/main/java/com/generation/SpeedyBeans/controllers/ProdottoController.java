@@ -61,9 +61,7 @@ public class ProdottoController {
     
     
     @GetMapping("/tutti-i-prodotti")
-    public String tuttiProdotti(HttpSession session, Model model,
-    @RequestParam(name = "caf", defaultValue = "") String caf,
-    @RequestParam(name = "mac", defaultValue = "") String mac){
+    public String tuttiProdotti(HttpSession session, Model model){
         
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
@@ -91,17 +89,75 @@ public class ProdottoController {
             }
             return "listaProdottiUtente.html"; 
         }
-        if(caf.equalsIgnoreCase("caffè")){
-            prodotti.removeAll(macchinette);
-        }
-        if(mac.equalsIgnoreCase("macchinette")){
-            prodotti.removeAll(caffes);
-        }
         as.setMessage("Accedi per vedere più dettagli");
         model.addAttribute("message");
         as.setMessage(null);
         return "listaProdottiHomepage.html";
         
+    }
+
+    @GetMapping("/tutti-i-prodotti/caffes")
+    public String tuttiCaffes(HttpSession session, Model model){
+        
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Caffe> caffes = caffeService.readAll();
+        prodotti.addAll(caffes);
+
+        model.addAttribute("listaProdotti", prodotti);
+
+        if (role != null && role.equals("A") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiAdmin.html";
+        } else if (role != null && role.equals("U") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiUtente.html"; 
+        }
+        as.setMessage("Accedi per vedere più dettagli");
+        model.addAttribute("message");
+        as.setMessage(null);
+        return "listaProdottiHomepage.html";
+    }
+
+    @GetMapping("/tutti-i-prodotti/macchinette")
+    public String tutteMacchinette(HttpSession session, Model model){
+        
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Macchinetta> macchinette = macchinettaService.readAll();
+        prodotti.addAll(macchinette);
+
+        model.addAttribute("listaProdotti", prodotti);
+
+        if (role != null && role.equals("A") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiAdmin.html";
+        } else if (role != null && role.equals("U") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiUtente.html"; 
+        }
+        as.setMessage("Accedi per vedere più dettagli");
+        model.addAttribute("message");
+        as.setMessage(null);
+        return "listaProdottiHomepage.html";
     }
 
     @GetMapping("/delete/{idProdotto}")
@@ -132,27 +188,24 @@ public class ProdottoController {
             System.out.println(m);
             if(c != null){
                 model.addAttribute("prodotto", c);
-                return "dettaglioProdotto.html";
             }
             else if(m != null){
                 model.addAttribute("prodotto", m);
-                return "dettaglioProdotto.html";
+            }
+            if(role.equals("A")){
+                return "dettaglioProdottoAdmin.html";
+            } else if(role.equals("U")){
+                return "dettaglioProdottoUtente.html";
             }
             as.setMessage("Prodotto non trovato");
-            
         }
         as.setMessage("Fai il login per visualizzare i dettagli");
         return "redirect:/loginpage";
     }
 
-
     @GetMapping("/cerca-prodotti")
-    public String cercaProdotto(Model model,
-        @RequestParam(name = "genere", defaultValue = "") String genere,
-        @RequestParam(name = "formato", defaultValue = "") String formato,
-        @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
-        @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
-        @RequestParam(name = "colore", defaultValue = "") String colore,
+    public String cercaProdotti(Model model,
+        @RequestParam(name = "brand", defaultValue = "") String brand,
         HttpSession session
         ){
         Persona p = (Persona)session.getAttribute("persona");
@@ -160,17 +213,15 @@ public class ProdottoController {
         AppService as = context.getBean(AppService.class);
         
         List<Prodotto> prodotti = new ArrayList<>();
-        List<Caffe> caffes = caffeService.findByFilters(formato, tipologia);
-        List<Macchinetta> macchinette = macchinettaService.findByFilters(utilizzo, colore);
-        
-        if(genere.equalsIgnoreCase("Caffè") || genere.equalsIgnoreCase("Caffe")){
-            prodotti.addAll(caffes);
-        } else if(genere.equalsIgnoreCase("Macchinette") || genere.equalsIgnoreCase("Macchinetta")){
-            prodotti.addAll(macchinette);
-        }
+        List<Caffe> caffes = caffeService.findByFilters(brand);
+        List<Macchinetta> macchinette = macchinettaService.findByFilters(brand);
+        prodotti.addAll(caffes);
+        prodotti.addAll(macchinette);
 
         if(prodotti.isEmpty()){
             as.setMessage("Nessun prodotto trovato");
+            model.addAttribute("message", as.getMessage());
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
 
         model.addAttribute("listaProdotti", prodotti);
@@ -183,4 +234,70 @@ public class ProdottoController {
             return "listaProdottiHomepage.html";
         }
     }
+    
+    @GetMapping("/cerca-prodotti/caffes")
+    public String cercaCaffes(Model model,
+        @RequestParam(name = "brand", defaultValue = "") String brand,
+        @RequestParam(name = "formato", defaultValue = "") String formato,
+        @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
+        HttpSession session
+        ){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+        
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Caffe> caffes = caffeService.findByFilters(brand, formato, tipologia);
+        prodotti.addAll(caffes);
+
+        if(prodotti.isEmpty()){
+            as.setMessage("Nessun prodotto trovato");
+            model.addAttribute("message", as.getMessage());
+            return "redirect:/prodotto/tutti-i-prodotti";
+        }
+
+        model.addAttribute("listaProdotti", prodotti);
+
+        if(role != null && role.equals("A") && p != null){
+            return "listaProdottiAdmin.html";
+        } else if(role != null && role.equals("U") && p != null){
+            return "listaProdottiUtente.html";
+        } else{
+            return "listaProdottiHomepage.html";
+        }
+    }
+
+    @GetMapping("/cerca-prodotti/macchinette")
+    public String cercaMacchinette(Model model,
+        @RequestParam(name = "brand", defaultValue = "") String brand,
+        @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
+        @RequestParam(name = "colore", defaultValue = "") String colore,
+        HttpSession session
+        ){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+        
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Macchinetta> macchinette = macchinettaService.findByFilters(brand, utilizzo, colore);
+        prodotti.addAll(macchinette);
+
+        if(prodotti.isEmpty()){
+            as.setMessage("Nessun prodotto trovato");
+            model.addAttribute("message", as.getMessage());
+            return "redirect:/prodotto/tutti-i-prodotti";
+        }
+
+        model.addAttribute("listaProdotti", prodotti);
+
+        if(role != null && role.equals("A") && p != null){
+            return "listaProdottiAdmin.html";
+        } else if(role != null && role.equals("U") && p != null){
+            return "listaProdottiUtente.html";
+        } else{
+            return "listaProdottiHomepage.html";
+        }
+    }
+
+
 }

@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.generation.SpeedyBeans.entities.Admin;
 import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.entities.Prodotto;
-import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AdminService;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.CaffeService;

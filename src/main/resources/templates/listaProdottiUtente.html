@@ -10,11 +10,47 @@
 <body>
     <div class="search-bar">
         <form action="/prodotto/cerca-prodotti" method="get">
-            <input type="text" name="formato" id="src-hmp-formato" placeholder="Formato caffè">
-            <input type="text" name="tipologia" id="src-hmp-tipologia" placeholder="Tipologia caffè">
-            <input type="text" name="utilizzo" id="src-hmp-utilizzo" placeholder="Utilizzo macchinetta">
-            <input type="text" name="colore" id="src-hmp-colore" placeholder="Colore macchinetta">
-            <input type="submit" value="Cerca" hidden>
+            <!-- Dropdown for Formato caffè -->
+            <select name="formato" id="src-hmp-formato">
+                <option value="" disabled selected>Formato caffè</option>
+                <option value="espresso">Espresso</option>
+                <option value="americano">Americano</option>
+                <option value="cappuccino">Cappuccino</option>
+                <option value="ristretto">Ristretto</option>
+                <option value="lungo">Lungo</option>
+            </select>
+        
+            <!-- Dropdown for Tipologia caffè -->
+            <select name="tipologia" id="src-hmp-tipologia">
+                <option value="" disabled selected>Tipologia caffè</option>
+                <option value="arabica">Arabica</option>
+                <option value="robusta">Robusta</option>
+                <option value="liberica">Liberica</option>
+                <option value="blend">Blend</option>
+            </select>
+        
+            <!-- Dropdown for Utilizzo macchinetta -->
+            <select name="utilizzo" id="src-hmp-utilizzo">
+                <option value="" disabled selected>Utilizzo macchinetta</option>
+                <option value="manuale">Manuale</option>
+                <option value="automatica">Automatica</option>
+                <option value="semi-automatica">Semi-automatica</option>
+                <option value="super-automatica">Super-automatica</option>
+                <option value="a-cialde">A cialde</option>
+            </select>
+        
+            <!-- Dropdown for Colore macchinetta -->
+            <select name="colore" id="src-hmp-colore">
+                <option value="" disabled selected>Colore macchinetta</option>
+                <option value="nero">Nero</option>
+                <option value="bianco">Bianco</option>
+                <option value="rosso">Rosso</option>
+                <option value="argento">Argento</option>
+                <option value="oro">Oro</option>
+            </select>
+        
+            <!-- Submit Button -->
+            <input type="submit" value="Cerca">
         </form>
     </div>
     <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
@@ -24,31 +60,65 @@
         <p th:text="${message}"></p>
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
+    <button onclick="apriTabellaCaffes()">Caffè</button>
+    <button onclick="apriTabellaMacchinette()">Macchinette</button>
+    <div id="tabella-caffes" hidden>
+        <table>
+            <thead>
+                <tr>Caffè</tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                    <th>Tipologia</th>
+                    <th>Formato</th>
+                    <th>Dettaglio</th>
+                    <th>Aggiungi al carrello</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'C'">
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.tipologia}"></td>
+                    <td th:text="${prodotto.formato}"></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="tabella-macchinette" hidden>
+        <table>
+            <thead>
+                <tr>Macchinette</tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                    <th>Utilizzo</th>
+                    <th>Colore</th>
+                    <th>Dettaglio</th>
+                    <th>Aggiungi al carrello</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'M'">
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.utilizzo}"></td>
+                    <td th:text="${prodotto.colore}"></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     
-    <table>
-        <thead>
-            <tr>
-                <th>Genere</th>
-                <th>Brand</th>
-                <th>Prezzo</th>
-                <th>Disponibilità</th>
-                <th>Peso</th>
-                <th>Dettaglio</th>
-                <th>Aggiungi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="prodotto : ${listaProdotti}">
-                <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
-                <td th:text="${prodotto.brand}"></td>
-                <td th:text="${prodotto.prezzo}"></td>
-                <td th:text="${prodotto.disponibilita}"></td>
-                <td th:text="${prodotto.peso}"></td>
-                <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
-            </tr>
-        </tbody>
-    </table>
+    
     
     
     

@@ -37,7 +37,9 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
 
     private final String findByColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
+    private final String findByBrandLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
+
+    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%')) AND p.brand like(concat('%', ?, '%'))";
 
 
 
@@ -98,20 +100,37 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         database.executeUpdate(deleteMacchinetta, String.valueOf(id));
     }
 
-    public Map<Integer, Entity> findByFilters(String utilizzo, String colore) {
+    public Map<Integer, Entity> findByFilters(String brand, String utilizzo, String colore) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
-        if(utilizzo == null && colore == null) {
+        if(utilizzo == null && colore == null && brand == null) {
             result = database.executeQuery(readAllMacchinette);
-        } else if(colore == null & utilizzo != null) {
+        } else if(colore == null & utilizzo != null & brand == null) {
             result = database.executeQuery(findByUtilizzoLike, utilizzo);
-        } else if (utilizzo == null & colore != null) {
-            result = database.executeQuery(findByColoreLike, colore); 
+        } else if (utilizzo == null & colore != null & brand == null) {
+            result = database.executeQuery(findByColoreLike, colore);
+        } else if (utilizzo == null & colore == null & brand != null) {
+            result = database.executeQuery(findByBrandLike, brand); 
         }else {
-            result = database.executeQuery(findByFilters, utilizzo, colore);
+            result = database.executeQuery(findByFilters, brand, utilizzo, colore);
         }
 
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
+            ris.put(m.getId(), m);
+        }
+
+        return ris;
+
+    }
+
+    public Map<Integer, Entity> findByFilters(String brand) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+        
+        result = database.executeQuery(findByBrandLike, brand);
+        
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
             ris.put(m.getId(), m);

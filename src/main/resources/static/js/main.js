@@ -76,9 +76,6 @@ function openUpdateUtente(id, nome, cognome, ragioneSociale, partitaIva, codiceS
     document.getElementById('update-utente-nazione').value = nazione;
     document.getElementById('update-utente-telefono').value = telefono;
     document.getElementById('update-utente-email').value = email;
-
-
-
 }
 
 // Questa porzione di codice implementa i controlli nel form di registrazione
@@ -87,7 +84,7 @@ document.getElementById('signup-form').addEventListener('submit', function(event
     let codiceSDI = document.getElementById('codice-sdi').value;
     let numeroTelefono = document.getElementById('numero-telefono').value;
     let password = document.getElementById('password').value;
-    
+
 
     // Validazione Partita IVA
     let partitaIVAPattern = /^\d{10}$/;
@@ -120,7 +117,7 @@ document.getElementById('signup-form').addEventListener('submit', function(event
         return;
     }
 
-  
+
 
     // Se tutte le condizioni sono soddisfatte, mostra il messaggio di successo e reindirizza
     document.getElementById('message-modal').style.display = 'block';
@@ -129,5 +126,12 @@ document.getElementById('signup-form').addEventListener('submit', function(event
     }, 2000); // 2000 millisecondi = 2 secondi
 });
 
-//Ordinamento degli ordini in listaOrdiniUtente
+function apriTabellaCaffes(){
+    document.querySelector('#tabella-caffes').hidden=false;
+    document.querySelector('#tabella-macchinette').hidden=true;
+}
 
+function apriTabellaMacchinette(){
+    document.querySelector('#tabella-macchinette').hidden=false;
+    document.querySelector('#tabella-caffes').hidden=true;
+}
