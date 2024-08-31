@@ -1,6 +1,10 @@
 package com.generation.SpeedyBeans.dao;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -43,6 +47,8 @@ public class OrdineDAO implements IDAO<Ordine> {
     private final String findByNomeCognomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%')) AND p.cognome like(concat('%', ?, '%'))";
 
     private final String readByIdPersona = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.id_persona = ?";
+
+    private final String findByDateRange = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE o.data_ordine BETWEEN ? AND ?";
 
     @Override
     public int create(Ordine o) {
@@ -150,12 +156,28 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     }
 
+    public Map<Integer, Entity> findByDateRange(Date startDate, Date endDate) {
+
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(findByDateRange, startDate.toString(), endDate.toString());
+        
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            if (coppia.getValue().get("data_ordine") != null) {
+                o.setDataOrdine(Date.valueOf(coppia.getValue().get("data_ordine")));
+            }
+            ris.put(o.getId(), o);
+        }
+        return ris;
+    }
 
     @Override
     public Ordine readById(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'readById'");
     }
+    
+
 
 
 }

@@ -11,12 +11,7 @@
     <div>
         <h2>Benvenuto <span th:text="|${persona.nome} ${persona.cognome}|"></span> nell'area admin</h2>
     </div>
-    <div>
-        <form action="/prodotto/cerca-prodotti" method="get">
-            <input type="text" name="genere" id="src-adm-genere" size="40" placeholder="Cerca ordine, utente o prodotto">
-            <input type="submit" value="Cerca">
-        </form>
-    </div>
+
     <div>
         <a href="/prodotto/tutti-i-prodotti">
             <button>Tutti i prodotti</button>

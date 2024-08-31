@@ -1,5 +1,7 @@
 package com.generation.SpeedyBeans.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.crypto.Mac;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Admin;
+import com.generation.SpeedyBeans.entities.Caffe;
+import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Persona;
+import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Utente;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.CaffeService;
@@ -87,47 +92,49 @@ public class PersonaController {
     }
 
   
-    @GetMapping("area-admin-search")
-    public String areaAdmin(@RequestParam(name = "username", defaultValue = "") String username,
-                            @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,        
-                            @RequestParam(name = "cognome", defaultValue = "") String cognome,
-                            @RequestParam(name = "minOrdine", defaultValue = "0") int minOrdine,
-                            @RequestParam(name = "maxOrdine", defaultValue = "0") int maxOrdine,
-                            @RequestParam(name = "nome", defaultValue = "") String nome,
-                            @RequestParam(name = "genere", defaultValue = "") String genere,
-                            @RequestParam(name = "brand", defaultValue = "") String brand,
-                            @RequestParam(name = "minProdotto", defaultValue = "0") double minProdotto,
-                            @RequestParam(name = "max", defaultValue = "0") double maxProdotto,
-                            @RequestParam(name = "formato", defaultValue = "") String formato,
-                            @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
-                            @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
-                            @RequestParam(name = "colore", defaultValue = "") String colore,
-                            HttpSession session, Model model) {
+    @GetMapping("/cerca-prodotti")
+public String cercaProdotto(Model model,
+    @RequestParam(name = "genere", defaultValue = "") String genere,
+    @RequestParam(name = "formato", defaultValue = "") String formato,
+    @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
+    @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
+    @RequestParam(name = "colore", defaultValue = "") String colore,
+    @RequestParam(name = "brand", defaultValue = "") String brand, // aggiungi il parametro brand
+    HttpSession session) {
 
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
-        if(role != null && role.equals("A") && p instanceof Admin){
-            model.addAttribute("persona", (Admin)p);
-            model.addAttribute("utentiFiltri", utenteService.findByFilters(partitaIva, cognome));
-            model.addAttribute("utenteUsername", utenteService.findByUsername(username));
-            model.addAttribute("ordiniRange", ordineService.findByRangeTotale(minOrdine, maxOrdine));
-            model.addAttribute("ordiniPersona", ordineService.findByNomeCognomePersona(nome, cognome));
-            model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
-            model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
-            model.addAttribute("caffeFiltri", caffeService.findByFilters(formato, tipologia));
-            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(utilizzo, colore));
-            
-            
-            AppService as = context.getBean(AppService.class);
-            if(as.getMessage() != null){
-                model.addAttribute("message", as.getMessage());
-                as.setMessage(null);
-            }
-            return "areaAdmin.html";
-        }
-        session.invalidate();
-        return "homepage.html";
+    Persona p = (Persona) session.getAttribute("persona");
+    String role = (String) session.getAttribute("role");
+    AppService as = context.getBean(AppService.class);
+    String activeSection = ""; // Variabile per la sezione attiva
+
+    List<Prodotto> prodotti = new ArrayList<>();
+
+    if (genere.equalsIgnoreCase("Caffè") || genere.equalsIgnoreCase("Caffe")) {
+        List<Caffe> caffes = caffeService.findByFilters(formato, tipologia); // aggiungi il brand
+        prodotti.addAll(caffes);
+        activeSection = "caffe";
+    } else if (genere.equalsIgnoreCase("Macchinette") || genere.equalsIgnoreCase("Macchinetta")) {
+        List<Macchinetta> macchinette = macchinettaService.findByFilters(utilizzo, colore, brand); // aggiungi il brand
+        prodotti.addAll(macchinette);
+        activeSection = "macchinette";
     }
+
+    if (prodotti.isEmpty()) {
+        as.setMessage("Nessun prodotto trovato");
+    }
+
+    model.addAttribute("listaProdotti", prodotti);
+    model.addAttribute("activeSection", activeSection);
+
+    if (role != null && role.equals("A") && p != null) {
+        return "listaProdottiAdmin.html";
+    } else if (role != null && role.equals("U") && p != null) {
+        return "listaProdottiUtente.html";
+    } else {
+        return "listaProdottiHomepage.html";
+    }
+}
+
 
     @GetMapping("area-utente-search")
     public String areaUtente(@RequestParam(name = "genere", defaultValue = "") String genere,
@@ -149,7 +156,7 @@ public class PersonaController {
             model.addAttribute("prodottiFiltri", prodottoService.findByFilters(genere, brand));
             model.addAttribute("prodottiRange", prodottoService.findyByRangePrezzo(minProdotto, maxProdotto));
             model.addAttribute("caffeFiltri", caffeService.findByFilters(formato, tipologia));
-            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(utilizzo, colore));
+            model.addAttribute("macchinettaFiltri", macchinettaService.findByFilters(utilizzo, colore, brand));
             
             AppService as = context.getBean(AppService.class);
             if(as.getMessage() != null){

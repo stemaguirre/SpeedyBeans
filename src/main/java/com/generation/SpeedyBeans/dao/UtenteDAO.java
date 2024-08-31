@@ -1,6 +1,8 @@
 package com.generation.SpeedyBeans.dao;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -44,6 +46,9 @@ public class UtenteDAO implements IDAO<Utente> {
 
     private final String findByUsername = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username = ?";
 
+    private final String findByName = "select u.*, p* from utenti u join persone p on u.id_persona =p.id_persona where p.nome like(concat('%, ?, '%'))";
+
+    private final String findByQuery = "SELECT u.*, p.* FROM utenti u " +"JOIN persone p ON u.id_persona = p.id_persona " +"WHERE p.nome LIKE CONCAT('%', ?, '%') " +"OR p.cognome LIKE CONCAT('%', ?, '%') " +"OR u.partita_iva LIKE CONCAT('%', ?, '%')";
     // private final String readRegistrati = "select u.*, p.* from utenti u join persone p on u.id_persona = p.id_persona where p.username is not null";    
 
     @Override
@@ -97,23 +102,25 @@ public class UtenteDAO implements IDAO<Utente> {
     public Map<Integer, Entity> findByFilters(String partitaIva, String cognome) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
-
-        if(cognome == null) {
+    
+        if (cognome == null || cognome.isEmpty()) {
             result = database.executeQuery(findByPartitaIvaLike, partitaIva);
-        } else if (partitaIva == null) {
+        } else if (partitaIva == null || partitaIva.isEmpty()) {
             result = database.executeQuery(findByCognomeLike, cognome); 
-        }else {
+        } else {
             result = database.executeQuery(findByFilters, partitaIva, cognome);
         }
-
+    
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             Utente u = context.getBean(Utente.class, coppia.getValue());
             ris.put(u.getId(), u);
         }
-
+    
         return ris;
-
     }
+    
+
+    
 
 
     public Utente readByUsername(String username) {
@@ -128,6 +135,39 @@ public class UtenteDAO implements IDAO<Utente> {
         return ris;
     
     }
+
+    public Utente readByNome (String nome){
+        Utente ris = null;
+        Map<Integer, Map<String, String>> result = database.executeQuery(findByName, nome);
+
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            ris = context.getBean(Utente.class, coppia.getValue());
+
+        }
+
+        return ris;
+
+    }
+
+    public List<Utente> findByQuery(String query) {
+        String sql = "SELECT u.*, p.* FROM utenti u JOIN persone p ON u.id_persona = p.id_persona " +
+                     "WHERE p.nome LIKE CONCAT('%', ?, '%') " +
+                     "OR p.cognome LIKE CONCAT('%', ?, '%') " +
+                     "OR u.partita_iva LIKE CONCAT('%', ?, '%')";
+        
+        List<Utente> ris = new ArrayList<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(sql, query, query, query);
+    
+        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Utente u = context.getBean(Utente.class, coppia.getValue());
+            ris.add(u);
+        }
+    
+        return ris;
+    }
+    
+    
+
 
     // public Map<Integer, Entity> readRegistrati()
     // {

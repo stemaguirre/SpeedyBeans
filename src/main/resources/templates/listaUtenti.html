@@ -10,8 +10,8 @@
 <body>
     <div class="search-bar">
         <form action="/utente/cerca-utenti" method="get">
-            <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
-            <input type="submit" value="Cerca" hidden>
+            <input type="text" name="query" id="src-hmp-query" placeholder="Cerca per nome, cognome o partita IVA">
+            <input type="submit" value="Cerca">
         </form>
     </div>
     <div>
@@ -24,6 +24,7 @@
                 <th>Nome</th>
                 <th>Cognome</th>
                 <th>Email</th>
+                <th>Partita Iva</th>
                 <th>Dettaglio</th>
                 <th>Elimina</th>
                 <th>Modifica</th>
@@ -34,6 +35,7 @@
                 <td th:text="${utente.nome}"></td>
                 <td th:text="${utente.cognome}"></td>
                 <td th:text="${utente.email}"></td>
+                <td th:text="${utente.partitaIva}"></td>
                 <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
                 <td><button th:attr="onclick=|openUpdateUtente(`${utente.id}`,

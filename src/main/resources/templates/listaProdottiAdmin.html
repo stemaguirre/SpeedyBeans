@@ -8,15 +8,40 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <div class="search-bar">
+    <div class="filter-bar">
         <form action="/prodotto/cerca-prodotti" method="get">
-            <input type="text" name="formato" id="src-hmp-formato" placeholder="Formato caffè">
-            <input type="text" name="tipologia" id="src-hmp-tipologia" placeholder="Tipologia caffè">
-            <input type="text" name="utilizzo" id="src-hmp-utilizzo" placeholder="Utilizzo macchinetta">
-            <input type="text" name="colore" id="src-hmp-colore" placeholder="Colore macchinetta">
-            <input type="submit" value="Cerca" hidden>
+            <!-- Filtro per Genere -->
+            <label for="genere">Genere</label>
+            <select name="genere" id="filter-genere" onchange="toggleFilters()">
+                <option value="">-- Seleziona Genere --</option>
+                <option value="Caffe">Caffè</option>
+                <option value="Macchinetta">Macchinetta</option>
+            </select>
+    
+            <!-- Filtri per Caffè -->
+            <div id="filter-caffe" style="display: none;">
+                <label for="formato">Formato</label>
+                <input type="text" name="formato" id="filter-caffe-formato" placeholder="Grani, Capsule o Macinato">
+                <label for="tipologia">Tipologia</label>
+                <input type="text" name="tipologia" id="filter-caffe-tipologia" placeholder="Arabica o Robusta">
+                <label for="brand">Brand</label>
+                <input type="text" name="brand" id="filter-macchinetta-brand" placeholder="Lavazza, Illy, Segafredo..">
+            </div>
+    
+            <!-- Filtri per Macchinetta -->
+            <div id="filter-macchinetta" style="display: none;">
+                <label for="utilizzo">Utilizzo</label>
+                <input type="text" name="utilizzo" id="filter-macchinetta-utilizzo" placeholder="Utilizzo macchinetta">
+                <label for="colore">Colore</label>
+                <input type="text" name="colore" id="filter-macchinetta-colore" placeholder="Colore macchinetta">
+                <label for="brand">Brand</label>
+                <input type="text" name="brand" id="filter-macchinetta-brand" placeholder="Brand macchinetta">
+            </div>
+    
+            <input type="submit" value="Filtra">
         </form>
     </div>
+    
     <div>
         <button onclick="toggleInsert()">Inserisci</button>
     </div>
@@ -159,7 +184,28 @@
         <hr>
         <p th:text="${message}"></p>
     </div>
+
+    
+    <script>
+        function toggleFilters() {
+            var genere = document.getElementById("filter-genere").value;
+            var caffeFilters = document.getElementById("filter-caffe");
+            var macchinettaFilters = document.getElementById("filter-macchinetta");
+
+            if (genere === "Caffe") {
+                caffeFilters.style.display = "block";
+                macchinettaFilters.style.display = "none";
+            } else if (genere === "Macchinetta") {
+                caffeFilters.style.display = "none";
+                macchinettaFilters.style.display = "block";
+            } else {
+                caffeFilters.style.display = "none";
+                macchinettaFilters.style.display = "none";
+            }
+        }
+    </script>
     
     
 </body>
 </html>
+

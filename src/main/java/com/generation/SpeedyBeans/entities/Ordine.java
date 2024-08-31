@@ -1,5 +1,7 @@
 package com.generation.SpeedyBeans.entities;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.Data;
@@ -16,4 +18,5 @@ public class Ordine extends Entity{
     private double totale;
     private Persona persona;
     private List<Prodotto> prodotti;
+    private Date dataOrdine;
 }

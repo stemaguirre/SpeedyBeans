@@ -153,34 +153,45 @@ public class ProdottoController {
         @RequestParam(name = "tipologia", defaultValue = "") String tipologia,
         @RequestParam(name = "utilizzo", defaultValue = "") String utilizzo,
         @RequestParam(name = "colore", defaultValue = "") String colore,
-        HttpSession session
-        ){
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
-        AppService as = context.getBean(AppService.class);
-        
-        List<Prodotto> prodotti = new ArrayList<>();
+        @RequestParam(name = "brand", defaultValue = "") String brand,
+
+        HttpSession session) {
+
+    Persona p = (Persona) session.getAttribute("persona");
+    String role = (String) session.getAttribute("role");
+    AppService as = context.getBean(AppService.class);
+    String activeSection = ""; // Variabile per la sezione attiva
+
+    List<Prodotto> prodotti = new ArrayList<>();
+
+    if (genere.equalsIgnoreCase("Caffè") || genere.equalsIgnoreCase("Caffe")) {
         List<Caffe> caffes = caffeService.findByFilters(formato, tipologia);
-        List<Macchinetta> macchinette = macchinettaService.findByFilters(utilizzo, colore);
-        
-        if(genere.equalsIgnoreCase("Caffè") || genere.equalsIgnoreCase("Caffe")){
-            prodotti.addAll(caffes);
-        } else if(genere.equalsIgnoreCase("Macchinette") || genere.equalsIgnoreCase("Macchinetta")){
-            prodotti.addAll(macchinette);
-        }
+        prodotti.addAll(caffes);
+        activeSection = "caffe";
+    } else if (genere.equalsIgnoreCase("Macchinette") || genere.equalsIgnoreCase("Macchinetta")) {
+        List<Macchinetta> macchinette = macchinettaService.findByFilters(utilizzo, colore, brand);
+        prodotti.addAll(macchinette);
+        activeSection = "macchinette";
+    }
 
-        if(prodotti.isEmpty()){
-            as.setMessage("Nessun prodotto trovato");
-        }
+    if (prodotti.isEmpty()) {
+        as.setMessage("Nessun prodotto trovato");
+    }
 
-        model.addAttribute("listaProdotti", prodotti);
+    model.addAttribute("listaProdotti", prodotti);
+    model.addAttribute("activeSection", activeSection);
 
-        if(role != null && role.equals("A") && p != null){
-            return "listaProdottiAdmin.html";
-        } else if(role != null && role.equals("U") && p != null){
-            return "listaProdottiUtente.html";
-        } else{
-            return "listaProdottiHomepage.html";
-        }
+    if (role != null && role.equals("A") && p != null) {
+        return "listaProdottiAdmin.html";
+    } else if (role != null && role.equals("U") && p != null) {
+        return "listaProdottiUtente.html";
+    } else {
+        return "listaProdottiHomepage.html";
     }
 }
+
+
+
+
+    }
+

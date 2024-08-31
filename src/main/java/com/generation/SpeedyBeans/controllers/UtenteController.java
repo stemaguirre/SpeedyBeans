@@ -226,41 +226,35 @@ public class UtenteController {
     }
 
     @GetMapping("/cerca-utenti")
-    public String cercaProdotto(Model model,
-        @RequestParam(name = "cognome", defaultValue = "") String cognome,
-        @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,
-        @RequestParam(name = "username", defaultValue = "") String username,
-        HttpSession session
-        ){
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
-        AppService as = context.getBean(AppService.class);
-        
-        List<Utente> utenti = new ArrayList<>();
-        Utente u = null;
+public String cercaUtenti(Model model,
+    @RequestParam(name = "query", defaultValue = "") String query,
+    HttpSession session
+    ){
+    Persona p = (Persona)session.getAttribute("persona");
+    String role = (String)session.getAttribute("role");
+    AppService as = context.getBean(AppService.class);
 
-        if(cognome != "" || partitaIva != "" || username != ""){
-            utenti = utenteService.findByFilters(partitaIva, cognome);
-            u = utenteService.findByUsername(username);
-            if(u != null){
-                utenti.add(u);
-            }
-        }
-       
-        if(utenti.isEmpty()){
-            as.setMessage("Nessun prodotto trovato");
-        }
+    List<Utente> utenti = utenteService.findByQuery(query);
 
-        model.addAttribute("listaUtenti", utenti);
-
-        if(role != null && role.equals("A") && p != null){
-            return "listaUtenti.html";
-        } else {
-            as.setMessage("Errore richiesta non autorizzata");
-            session.invalidate();
-            return "loginpage.html";
-        }
+    if(utenti.isEmpty()){
+        as.setMessage("Nessun utente trovato");
     }
+
+    model.addAttribute("listaUtenti", utenti);
+
+    if(role != null && role.equals("A") && p != null){
+        return "listaUtenti.html";
+    } else {
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "loginpage.html";
+    }
+}
+
+
+
+
+
 
     @GetMapping("/aggiungi-al-carrello")
     public String aggiungiCarrello(HttpSession session, 

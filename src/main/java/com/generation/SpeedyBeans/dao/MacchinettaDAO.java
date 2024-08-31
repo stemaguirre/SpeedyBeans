@@ -1,6 +1,8 @@
 package com.generation.SpeedyBeans.dao;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -98,28 +100,38 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         database.executeUpdate(deleteMacchinetta, String.valueOf(id));
     }
 
-    public Map<Integer, Entity> findByFilters(String utilizzo, String colore) {
-        Map<Integer, Entity> ris = new LinkedHashMap<>();
-        Map<Integer, Map<String, String>> result = null;
+    public Map<Integer, Entity> findByFilters(String utilizzo, String colore, String brand) {
+    Map<Integer, Entity> ris = new LinkedHashMap<>();
+    Map<Integer, Map<String, String>> result = null;
 
-        if(utilizzo == null && colore == null) {
-            result = database.executeQuery(readAllMacchinette);
-        } else if(colore == null & utilizzo != null) {
-            result = database.executeQuery(findByUtilizzoLike, utilizzo);
-        } else if (utilizzo == null & colore != null) {
-            result = database.executeQuery(findByColoreLike, colore); 
-        }else {
-            result = database.executeQuery(findByFilters, utilizzo, colore);
-        }
+    // Costruisci dinamicamente la query in base ai parametri presenti
+    StringBuilder queryBuilder = new StringBuilder("select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where 1=1");
+    List<String> parameters = new ArrayList<>();
 
-        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-            Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
-            ris.put(m.getId(), m);
-        }
 
-        return ris;
+if (utilizzo != null && !utilizzo.isEmpty()) {
+    queryBuilder.append(" and m.utilizzo like(concat('%', ?, '%'))");
+    parameters.add(utilizzo);
+}
 
+if (colore != null && !colore.isEmpty()) {
+    queryBuilder.append(" and m.colore like(concat('%', ?, '%'))");
+    parameters.add(colore);
+}
+
+
+
+    // Esegui la query con i parametri raccolti
+    result = database.executeQuery(queryBuilder.toString(), parameters.toArray(new String[0]));
+
+    for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+        Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
+        ris.put(m.getId(), m);
     }
+
+    return ris;
+}
+
 
     @Override
     public Macchinetta readById(int id) {
