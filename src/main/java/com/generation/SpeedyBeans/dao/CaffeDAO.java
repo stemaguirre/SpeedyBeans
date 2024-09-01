@@ -105,7 +105,7 @@ public class CaffeDAO implements IDAO<Caffe>{
             result = database.executeQuery(findByFormatoBrandLike, formato, brand);
         } else if (formato.equals("") && !tipologia.equals("") && !brand.equals("")) {
             result = database.executeQuery(findByTipologiaBrandLike, tipologia, brand);
-        } else {
+        } else if(!formato.equals("") && !tipologia.equals("") && !brand.equals("")){
             result = database.executeQuery(findByFilters, formato, tipologia, brand);
         }
 

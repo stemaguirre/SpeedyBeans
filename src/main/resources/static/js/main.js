@@ -126,26 +126,39 @@ document.getElementById('signup-form').addEventListener('submit', function(event
     }, 2000); // 2000 millisecondi = 2 secondi
 });
 
-function apriTabellaCaffes(){
+function apriRicercaCaffes(){
+    document.querySelector('#tabella-macchinette').hidden=true;
     var ricerca = document.querySelector("#tabella-caffes");
     ricerca.hidden = !ricerca.hidden;
-    // document.querySelector('#tabella-caffes').hidden=false;
-    document.querySelector('#tabella-macchinette').hidden=true;
+    var filtri = document.querySelector("#filtri-caffes");
+    filtri.hidden = !filtri.hidden;
+    document.querySelector('#filtri-macchinette').hidden=true;
+    var applica = document.querySelector("#applica-filtri");
+    applica.hidden = !applica.hidden;
+    
 }
 
-function apriTabellaMacchinette(){
+function apriRicercaMacchinette(){
+    document.querySelector('#tabella-caffes').hidden=true;
     var ricerca = document.querySelector("#tabella-macchinette");
     ricerca.hidden = !ricerca.hidden;
-    // document.querySelector('#tabella-macchinette').hidden=false;
-    document.querySelector('#tabella-caffes').hidden=true;
+    var filtri = document.querySelector("#filtri-macchinette");
+    filtri.hidden = !filtri.hidden;
+    document.querySelector('#filtri-caffes').hidden=true;
+    var applica = document.querySelector("#applica-filtri");
+    applica.hidden = !applica.hidden;
 }
 
 function mostraRisultati(){
-    var ricercaCaffes = document.querySelector("#tabella-caffes");
-    var ricercaMacchinette = document.querySelector("#tabella-macchinette");
-    if(ricercaCaffes.hidden == true){
-        apriTabellaCaffes;
-    }else if(ricercaMacchinette.hidden  == true){
-        apriTabellaMacchinette;
+    var tabellaCaffes = document.querySelector("#tabella-caffes");
+    var tabellaMacchinette = document.querySelector("#tabella-macchinette");
+    var filtriCaffes = document.querySelector("#filtri-caffes");
+    var filtriMacchinette = document.querySelector("#filtri-macchinette");
+    if(filtriCaffes.hidden == true){
+        tabellaCaffes.hidden = true;
+        tabellaMacchinette.hidden  = false;
+    }else if(filtriMacchinette  == true){
+        tabellaMacchinette.hidden  = true;
+        tabellaCaffes.hidden = false;
     }
 }

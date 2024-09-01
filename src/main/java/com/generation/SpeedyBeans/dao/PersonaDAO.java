@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Entity;
 import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.entities.Utente;
 
 @Service
 public class PersonaDAO implements IDAO<Persona>
