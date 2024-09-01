@@ -24,46 +24,106 @@
         </div>
     </div>
 
-    <!-- ===Unico form=== -->
-    <form id="signup-form" action="/register" method="post">
-        <div class="container">
-            <div class="form-row">
-                <div class="form-left">
-                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
-                    <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
-                    <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Regione sociale" required>
-                    <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
-                    <div class="city-province">
-                        <input type="text" id="citta" name="citta" placeholder="Città" required>
-                        <input type="text" id="provincia" name="provincia" placeholder="Provincia" required>
+<!-- ===Unico form=== -->
+        <form id="signup-form" action="/register" method="post">
+            <div class="container">
+                <div class="form-row">
+                    <div class="form-left">
+                    
+                        <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                        <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
+                        <input type="text" id="ragione-sociale" name="ragione-sociale" placeholder="Ragione sociale" required>
+                        <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
+                        <div class="city-province">
+                            <input type="text"  id="citta" name="citta" placeholder="Città" required>
+                            <input type="text"  id="provincia" name="provincia" placeholder="Provincia" required>
+                        </div>
+                        <div class="cap-country">
+                            <input type="text" id="cap" name="cap" placeholder="CAP" required>
+                            <input type="text" id="nazione" name="nazione" placeholder="Nazione" required>
+                        </div>
                     </div>
-                    <div class="cap-country">
-                        <input type="text" id="cap" name="cap" placeholder="CAP" required>
-                        <input type="text" id="nazione" name="nazione" placeholder="Nazione" required>
-                    </div>
-                </div>
 
-                <div class="form-right">
-                    <input type="text" id="partita-iva" name="partita-iva" placeholder="Partita IVA" required>
-                    <input type="text" id="codice-sdi" name="codice-sdi" placeholder="Codice SDI" required>
-                    <input type="text" id="numero-telefono" name="numero-telefono" placeholder="Numero di telefono" required>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                    <input type="username" id="username" name="username" placeholder="Username" required>
-                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <div class="form-right">
+                    
+                        <input type="text" id="p-iva" name="p-iva" placeholder="Partita IVA" required>
+                        <input type="text" id="codice-sdi" name="codice-sdi" placeholder="Codice SDI" required>
+                        <input type="text" id="telefono" name="telefono" placeholder="Numero di telefono"required>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                        <input type="text" id="username" name="username" placeholder="Username"required>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <input type="password" id="conferma-password" name="conferma-password" placeholder="Conferma password" required>
+                    
+                    </div>
+                </div>
+                
+                <div class="form-button">
+                <button class="sign-in-button">SIGN-IN</button>
                 </div>
             </div>
-            
-            <div class="form-button">
-                <button type="submit" class="sign-in-button">SIGN-IN</button>
-            </div>
+        </form>
+        <div id="message-modal" th:if="${message} != null">
+            <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+            <hr>
+            <p th:if="${message != null}" th:text="${message}">Registrazione avvenuta con successo!</p>
         </div>
-    </form>
+   
+ 
+        <script>
+            // Questa porzione di codice implementa i controlli nel form di registrazione
+            document.getElementById('signup-form').addEventListener('submit', function(event) {
+                let partitaIVA = document.getElementById('p-iva').value;
+                let codiceSDI = document.getElementById('codice-sdi').value;
+                let numeroTelefono = document.getElementById('telefono').value;
+                let password = document.getElementById('password').value;
+                let confermaPassword = document.getElementById('conferma-password').value;
+    
+                // Validazione Partita IVA
+                let partitaIVAPattern = /^\d{11}$/;
+                if (!partitaIVAPattern.test(partitaIVA)) {
+                    alert("La Partita IVA deve essere un numero di 11 cifre.");
+                    event.preventDefault();
+                    return;
+                }
+    
+                // Validazione Codice SDI
+                let codiceSDIPattern = /^[A-Za-z0-9]{7}$/;
+                if (!codiceSDIPattern.test(codiceSDI)) {
+                    alert("Il Codice SDI deve essere lungo esattamente 7 caratteri e contenere solo lettere e numeri.");
+                    event.preventDefault();
+                    return;
+                }
+    
+                // Validazione Numero di Telefono
+                let numeroTelefonoPattern = /^\d{10}$/;
+                if (!numeroTelefonoPattern.test(numeroTelefono)) {
+                    alert("Il Numero di Telefono deve essere lungo esattamente 10 cifre.");
+                    event.preventDefault();
+                    return;
+                }
+    
+                // Validazione Password
+                if (password.length < 6) {
+                    alert("La password deve contenere almeno 6 caratteri.");
+                    event.preventDefault();
+                    return;
+                }
 
-    <!-- Elemento per visualizzare il messaggio di successo -->
-    <div id="message-modal" style="display: none; color: green; margin-top: 20px;">
-        <button onclick="document.querySelector('#message-modal').style.display='none'">Chiudi</button>
-        <hr>
-        <p>Iscrizione avvenuta con successo</p>
-    </div>
-</body>
+                // Validazione Conferma Password
+                if (password !== confermaPassword) {
+                    alert("Le password non coincidono.");
+                    event.preventDefault();
+                    return;
+                }
+    
+                // Se tutte le condizioni sono soddisfatte, mostra il messaggio di successo e reindirizza
+                document.getElementById('message-modal').style.display = 'block';
+                setTimeout(function() {
+                    window.location.href = '/'; // Cambia l'URL se la homepage si trova in un'altra posizione
+                }, 2000); // 2000 millisecondi = 2 secondi
+            });
+        </script>
+                                
+                                
+    </body>
 </html>
