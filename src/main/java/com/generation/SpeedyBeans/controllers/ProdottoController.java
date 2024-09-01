@@ -279,5 +279,41 @@ public class ProdottoController {
         }
     }
 
+    @GetMapping("/ordina")
+    public String ordinaProdotti(HttpSession session, Model model){
+        
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        List<Prodotto> prodotti = new ArrayList<>();
+        List<Caffe> caffes = caffeService.orderByPrezzo();
+        List<Macchinetta> macchinette = macchinettaService.orderByPrezzo();
+        
+        prodotti.addAll(caffes);
+        prodotti.addAll(macchinette);
+
+        model.addAttribute("listaProdotti", prodotti);
+
+        if (role != null && role.equals("A") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiAdmin.html";
+        } else if (role != null && role.equals("U") && p != null) {
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
+            return "listaProdottiUtente.html"; 
+        }
+        as.setMessage("Accedi per vedere più dettagli");
+        model.addAttribute("message");
+        as.setMessage(null);
+        return "listaProdottiHomepage.html";
+        
+    }
+
 
 }

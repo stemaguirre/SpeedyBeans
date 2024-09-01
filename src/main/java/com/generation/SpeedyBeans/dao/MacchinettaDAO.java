@@ -184,7 +184,7 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         Map<Integer, Map<String, String>> result = database.executeQuery(orderByPrezzo);
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-            Caffe c = context.getBean(Caffe.class, coppia.getValue());
+            Macchinetta c = context.getBean(Macchinetta.class, coppia.getValue());
             ris.put(c.getId(), c);
         }
 
