@@ -48,6 +48,8 @@ public class CaffeDAO implements IDAO<Caffe>{
 
     private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean where c.formato like(concat('%', ?, '%')) AND c.tipologia like(concat('%', ?, '%')) AND p.brand like(concat('%', ?, '%'))";
 
+    private final String orderByPrezzo = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, c.tipologia, c.data_produzione, c.data_scadenza, c.formato from caffes c join prodotti p on c.id_ean = p.id_ean order by p.prezzo";
+
 
     @Override
     public int create(Caffe c) {
@@ -148,6 +150,18 @@ public class CaffeDAO implements IDAO<Caffe>{
     public Map<Integer, Entity> readByIdOrdine(int idOrdine) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = database.executeQuery(readCaffesByIdOrdine, String.valueOf(idOrdine));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Caffe c = context.getBean(Caffe.class, coppia.getValue());
+            ris.put(c.getId(), c);
+        }
+
+        return ris;
+    }
+
+    public Map<Integer, Entity> orderByPrezzo() {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(orderByPrezzo);
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             Caffe c = context.getBean(Caffe.class, coppia.getValue());
