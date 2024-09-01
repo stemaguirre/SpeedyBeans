@@ -50,7 +50,7 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     private final String findByDateRange = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE o.data_ordine BETWEEN ? AND ?";
 
-    @Override
+    @Override//nuovo commit
     public int create(Ordine o) {
         int id = database.executeUpdate(insertOrdine, 
             String.valueOf(o.getPersona().getId()), 
