@@ -43,7 +43,7 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     private final String readByIdPersona = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.id_persona = ?";
 
-    @Override
+    @Override//nuovo commit
     public int create(Ordine o) {
         int id = database.executeUpdate(insertOrdine, 
             String.valueOf(o.getPersona().getId()), 
