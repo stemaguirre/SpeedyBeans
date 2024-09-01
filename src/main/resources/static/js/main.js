@@ -2,9 +2,24 @@ function openLoginModal() {
     document.querySelector("#login-modal").hidden = false;
 }
 
-function toggleInsert(){
-    var insert = document.querySelector("#insert");
+function toggleInsertCaffe(){
+    var insert = document.querySelector("#insert-caffe");
     insert.hidden = !insert.hidden;
+}
+
+function toggleInsertMacchinetta(){
+    var insert = document.querySelector("#insert-macchinetta");
+    insert.hidden = !insert.hidden;
+}
+
+function toggleUpdateCaffe(){
+    var update = document.querySelector("#update-caffe");
+    update.hidden = !update.hidden;
+}
+
+function toggleUpdateMacchinetta(){
+    var update = document.querySelector("#update-macchinetta");
+    update.hidden = !update.hidden;
 }
 
 function openInsertCaffe() {
@@ -18,15 +33,13 @@ function openInsertMacchinetta() {
     document.querySelector("#insert-caffe").hidden = true;
 }
 
-function openUpdateProdotto(id, genere, brand, prezzo, disponibilita, peso,
-    tipologia, dataProduzione, dataScadenza, formato,
-    utilizzo, colore, modello, serbatoio) {
-    console.log(genere);
-    if (genere === '0') {
-        document.getElementById('update-caffe').hidden = false;
+function openUpdateCaffe(id, genere, brand, prezzo, disponibilita, peso,
+    tipologia, dataProduzione, dataScadenza, formato)
+{
+    document.getElementById('update-caffe').hidden = false;
         document.getElementById('update-macchinetta').hidden = true;
         document.getElementById('update-caffe-id').value = id;
-        document.getElementById('update-caffe-genere').value = 'C';
+        document.getElementById('update-caffe-genere').value = genere;
         document.getElementById('update-caffe-brand').value = brand;
         document.getElementById('update-caffe-prezzo').value = prezzo;
         document.getElementById('update-caffe-disponibilita').value = disponibilita;
@@ -35,11 +48,15 @@ function openUpdateProdotto(id, genere, brand, prezzo, disponibilita, peso,
         document.getElementById('update-caffe-dataproduzione').value = dataProduzione;
         document.getElementById('update-caffe-datascadenza').value = dataScadenza;
         document.getElementById('update-caffe-formato').value = formato;
-    } else if (genere === '1') {
+}
+
+function openUpdateMacchinetta(id, genere, brand, prezzo, disponibilita, peso,
+    utilizzo, colore, modello, serbatoio) {
+    
         document.getElementById('update-macchinetta').hidden = false;
         document.getElementById('update-caffe').hidden = true;
         document.getElementById('update-macchinetta-id').value = id;
-        document.getElementById('update-macchinetta-genere').value = 'M';
+        document.getElementById('update-macchinetta-genere').value = genere;
         document.getElementById('update-macchinetta-brand').value = brand;
         document.getElementById('update-macchinetta-prezzo').value = prezzo;
         document.getElementById('update-macchinetta-disponibilita').value = disponibilita;
@@ -48,7 +65,6 @@ function openUpdateProdotto(id, genere, brand, prezzo, disponibilita, peso,
         document.getElementById('update-macchinetta-colore').value = colore;
         document.getElementById('update-macchinetta-modello').value = modello;
         document.getElementById('update-macchinetta-serbatoio').value = serbatoio;
-    }
     
 }
 
@@ -135,6 +151,8 @@ function apriRicercaCaffes(){
     document.querySelector('#filtri-macchinette').hidden=true;
     var applica = document.querySelector("#applica-filtri");
     applica.hidden = !applica.hidden;
+    var insert = document.querySelector("#insert");
+    insert.hidden = !insert.hidden;
     
 }
 
@@ -147,6 +165,8 @@ function apriRicercaMacchinette(){
     document.querySelector('#filtri-caffes').hidden=true;
     var applica = document.querySelector("#applica-filtri");
     applica.hidden = !applica.hidden;
+    var insert = document.querySelector("#insert");
+    insert.hidden = !insert.hidden;
 }
 
 function mostraRisultati(){

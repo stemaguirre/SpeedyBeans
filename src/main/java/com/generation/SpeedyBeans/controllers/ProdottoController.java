@@ -22,7 +22,6 @@ import com.generation.SpeedyBeans.services.ProdottoService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -41,24 +40,6 @@ public class ProdottoController {
 
     @Autowired
     private ApplicationContext context;
-
-     @PostMapping("/insert")
-    public String insertProdotto(@RequestParam Map<String, String> params, HttpSession session) {
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
-        AppService as = context.getBean(AppService.class);
-
-        if(role != null && role.equals("A") && p != null){
-            Macchinetta m = context.getBean(Macchinetta.class, params);
-            macchinettaService.create(m);
-            as.setMessage("Macchinetta inserita correttamente");
-            return "redirect:/area-admin";
-        }
-        as.setMessage("Richiesta non autorizzata");
-        session.invalidate();
-        return "homepage.html";
-    }
-    
     
     @GetMapping("/tutti-i-prodotti")
     public String tuttiProdotti(HttpSession session, Model model){
@@ -169,7 +150,7 @@ public class ProdottoController {
         if(role != null && role.equals("A") && p != null){
             prodottoService.delete(idProdotto);
             as.setMessage("Prodotto eliminato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "loginpage.html";

@@ -37,9 +37,10 @@ public class MacchinettaController {
 
         if(role != null && role.equals("A") && p != null){
             Macchinetta m = context.getBean(Macchinetta.class, params);
+            m.setGenere("M");
             macchinettaService.create(m);
             as.setMessage("Macchinetta inserita correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
         as.setMessage("Richiesta non autorizzata");
         session.invalidate();
@@ -55,7 +56,7 @@ public class MacchinettaController {
         if(role != null && role.equals("A") && p != null){
             macchinettaService.delete(idMacchinetta);
             as.setMessage("Macchinetta eliminata correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
         as.setMessage("Richiesta non autorizzata");
         session.invalidate();
@@ -72,7 +73,7 @@ public class MacchinettaController {
             Macchinetta m = context.getBean(Macchinetta.class, params);
             macchinettaService.update(m);
             as.setMessage("Macchinetta modificata correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
         as.setMessage("Richiesta non autorizzata");
         session.invalidate();

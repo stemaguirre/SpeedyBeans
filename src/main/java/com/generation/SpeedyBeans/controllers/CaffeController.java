@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.generation.SpeedyBeans.entities.Caffe;
-import com.generation.SpeedyBeans.entities.Macchinetta;
 import com.generation.SpeedyBeans.entities.Persona;
 import com.generation.SpeedyBeans.services.AppService;
 import com.generation.SpeedyBeans.services.CaffeService;
@@ -38,9 +37,10 @@ public class CaffeController {
 
         if(role != null && role.equals("A") && p != null){
             Caffe c = context.getBean(Caffe.class, params);
+            c.setGenere("C");
             caffeService.create(c);
             as.setMessage("Caffe inserito correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
         as.setMessage("Richiesta non autorizzata");
         session.invalidate();
@@ -56,7 +56,7 @@ public class CaffeController {
         if(role != null && role.equals("A") && p != null){
             caffeService.delete(idCaffe);
             as.setMessage("Caffe eliminato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
         as.setMessage("Richiesta non autorizzata");
         session.invalidate();
@@ -73,7 +73,7 @@ public class CaffeController {
             Caffe m = context.getBean(Caffe.class, params);
             caffeService.update(m);
             as.setMessage("Caffe modificato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/prodotto/tutti-i-prodotti";
         }
         as.setMessage("Richiesta non autorizzata");
         session.invalidate();
