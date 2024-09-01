@@ -127,11 +127,25 @@ document.getElementById('signup-form').addEventListener('submit', function(event
 });
 
 function apriTabellaCaffes(){
-    document.querySelector('#tabella-caffes').hidden=false;
+    var ricerca = document.querySelector("#tabella-caffes");
+    ricerca.hidden = !ricerca.hidden;
+    // document.querySelector('#tabella-caffes').hidden=false;
     document.querySelector('#tabella-macchinette').hidden=true;
 }
 
 function apriTabellaMacchinette(){
-    document.querySelector('#tabella-macchinette').hidden=false;
+    var ricerca = document.querySelector("#tabella-macchinette");
+    ricerca.hidden = !ricerca.hidden;
+    // document.querySelector('#tabella-macchinette').hidden=false;
     document.querySelector('#tabella-caffes').hidden=true;
+}
+
+function mostraRisultati(){
+    var ricercaCaffes = document.querySelector("#tabella-caffes");
+    var ricercaMacchinette = document.querySelector("#tabella-macchinette");
+    if(ricercaCaffes.hidden == true){
+        apriTabellaCaffes;
+    }else if(ricercaMacchinette.hidden  == true){
+        apriTabellaMacchinette;
+    }
 }

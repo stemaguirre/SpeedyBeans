@@ -9,15 +9,14 @@
 </head>
 <body>
     <div class="search-bar">
-        <form action="/prodotto/cerca-prodotti" method="get">
+        <form action="/prodotto/cerca-prodotti/caffes" method="get">
             <!-- Dropdown for Formato caffè -->
             <select name="formato" id="src-hmp-formato">
                 <option value="" disabled selected>Formato caffè</option>
-                <option value="espresso">Espresso</option>
-                <option value="americano">Americano</option>
-                <option value="cappuccino">Cappuccino</option>
-                <option value="ristretto">Ristretto</option>
-                <option value="lungo">Lungo</option>
+                <option value="macinato">Macinato</option>
+                <option value="grani">Grani</option>
+                <option value="capsule">Capsule</option>
+                <option value="istantanep">Istantaneo</option>
             </select>
         
             <!-- Dropdown for Tipologia caffè -->
@@ -50,8 +49,10 @@
             </select>
         
             <!-- Submit Button -->
-            <input type="submit" value="Cerca">
+            <input type="submit" value="Applica filtri">
+            <button onclick="mostraRisultati()">Mostra Risultati</button>
         </form>
+        
     </div>
     <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
     <br>
@@ -60,8 +61,9 @@
         <p th:text="${message}"></p>
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
-    <button onclick="apriTabellaCaffes()">Caffè</button>
-    <button onclick="apriTabellaMacchinette()">Macchinette</button>
+    <button onclick="apriTabellaCaffes()">Mostra Caffè</button>
+    <button onclick="apriTabellaMacchinette()">Mostra Macchinette</button>
+    <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
     <div id="tabella-caffes" hidden>
         <table>
             <thead>
