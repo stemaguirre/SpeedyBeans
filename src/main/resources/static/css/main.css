@@ -60,7 +60,7 @@ nav a:hover {
 
 body {
   font-family: var(--default-font), sans-serif;
-  color: var(--nav-bg-color);
+  color: var(--defoult-text-color);
 }
 
 
