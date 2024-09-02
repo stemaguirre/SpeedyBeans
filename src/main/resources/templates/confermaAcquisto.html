@@ -5,13 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <div>
-        <h2>Grazie per il tuo acquisto! Ecco il riepilogo del tuo ordine:</h2>
+    <!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+             <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+                <li><a href="/utente/profile" class="">I miei dati</a></li>
+            </ul>
+        </nav>
+
+        <div class="right-side">
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div>
+                    <a href="/area-utente">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+                </div>
+            </div>
+        </div> 
+    </div> <!-- ======= Chiusura Header ======= -->
+
+
+    <div class="ck-contanier">
+        <h1>Grazie per il tuo acquisto! Ecco il riepilogo del tuo ordine:</h1>
         <p>Totale: <span th:text="${ordine.totale}"></span></p>
-        <table>
+        <p>Spedizione: <span th:text="${ordine.totale > 500} ? 0 : 49.00"></span></p>
+        <table class="tb-oriz">
             <thead>
                 <tr>
                     <th>Genere</th>
@@ -27,10 +63,11 @@
                 </tr>
             </tbody>
         </table>
-        <br>
-        <a href="/area-utente">Torna all'area personale</a>
-        <br>
-        <a href="/">Torna all'homepage</a>
+    </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
     </div>
 </body>
 </html>

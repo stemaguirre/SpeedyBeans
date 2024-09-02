@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
+    
 </head>
 <body>
 
@@ -22,7 +23,7 @@
     </div>
     <nav class="navbar">
         <ul>
-            <li><a href="/utente/" class="">I miei ordini</a></li>
+            <li><a href="/utente/ordini" class="">I miei ordini</a></li>
             <li><a href="/utente/profile" class="">I mei dati</a></li>
         </ul>
     </nav>
@@ -46,7 +47,7 @@
     </div><!-- ======= Chiusura Header ======= -->
 
     <div id="message-modal" th:if="${message} != null">
-        <button type="submit" onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
         <p th:text="${message}"></p>
     </div>
@@ -57,7 +58,7 @@
         <a href="utente/prodotto/tutti-i-prodotti"><button class="back-button">Annulla ricerca</button></a>
     </div>
 <div class="flex-container">
-    <div class="search-bar">
+    <div class="filter-menu">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
 
             <div id="filtri-caffes" hidden>
@@ -132,7 +133,6 @@
             </div>
         </form>      
     </div>
-</div>
 
    
 
@@ -164,7 +164,7 @@
         </table>
     </div>
     <br>
-    <div id="tabella-macchinette">
+    <div id="tabella-macchinette" th:if="${not listaProdotti.?[genere == 'M'].isEmpty()}">
         <table class="tb-oriz">
             <thead>
                 <tr>

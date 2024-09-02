@@ -3,14 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I miei ordini</title>
+    <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/tabelle.css">
     <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
-    
+    <script src="/js/carousel.js"></script>
+
+
+   
 </head>
 <body>
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+             <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+                <li><a href="/utente/profile" class="">I miei dati</a></li>
+            </ul>
+        </nav>
+
+        <div class="right-side">
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div>
+                    <a href="/area-utente">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+                </div>
+            </div>
+        </div> 
+    </div> <!-- ======= Chiusura Header ======= -->
     <div id="message-modal" th:if="${message} != null">
         <p th:text="${message}"></p>
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
@@ -38,15 +71,17 @@
                 <input type="date" name="data_fine" id="data_fine">
             </div>
 
-            <button type="submit">Applica Filtri</button>
+            <div class="filter-item">
+                <input type="submit" value="Applica filtri">
+            </div>
         </form>
     </div>
 
-    <a href="/area-utente">Indietro</a>
+  
     <br>
     <br>
     
-    <table class = "tb-oriz">
+    <table class="tb-oriz">
         <thead>
             <tr>
                 <th colspan="6">
@@ -69,10 +104,11 @@
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva ? 'Sì' : 'No'}"></td>
                 <td th:text="${ordine.dataOrdine}"></td>
-                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
+                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button class="button-common">Dettaglio</button></a></td>
             </tr>
         </tbody>
     </table>
 
 </body>
 </html>
+

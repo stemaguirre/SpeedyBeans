@@ -1,8 +1,6 @@
 package com.generation.SpeedyBeans.services;
 
-import java.util.logging.Logger;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
