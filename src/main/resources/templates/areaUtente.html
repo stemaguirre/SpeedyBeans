@@ -69,5 +69,11 @@
                 <button class="carousel-btn next" onclick="nextSlide()">&gt;</button>
             </div>
         </main>
+
+        <div id="message-modal" th:if="${message} != null">
+            <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+            <hr>
+            <p th:text="${message}"></p>
+        </div>
     </body>
 </html>

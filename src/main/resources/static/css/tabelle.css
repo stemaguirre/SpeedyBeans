@@ -15,18 +15,12 @@
     --interaction-botton-color: #36251E; 
 }
 
-.section-no-bg {
-    background-size: cover;
-    background-color: var(--bg-color);
-}
-
 /* Stile della tabella dettagli*/
 
 table {
     width: 100%;
     border-collapse: collapse;
     background-color: var(--bg-color);
-    overflow: hidden;
 }
 
 td {
@@ -38,7 +32,6 @@ td:first-child {
     font-weight: bold;
     padding-left: 200px;
 }
-
 
 
 /* Stile specifico per la tabella tb-oriz */
@@ -58,13 +51,13 @@ td:first-child {
 .tb-oriz th {
     background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
     font-weight: bold;
-    padding-left: 100px;
+    padding-left: 50px;
 }
 
 
 .tb-oriz td:first-child {
     font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
-    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+    padding-left: 50px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
 }
 
 .tb-oriz th, .tb-oriz td {
@@ -76,56 +69,14 @@ td:first-child {
 .tb-oriz th {
     background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
     font-weight: bold;
-    padding-left: 100px;
+    padding-left: 50px;
 }
 
 .tb-oriz td:first-child {
     font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
-    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+    padding-left: 50px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
 }
 
-/* Stile specifico per la tabella tb-oriz  e tb-macchinette */
-.tb-oriz {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--bg-color);
-    overflow: hidden;
-}
-
-.tb-oriz th, .tb-oriz td {
-    padding: 15px;
-    border: 1px solid black;
-    text-align: left; /* Allinea il testo a sinistra */
-}
-
-.tb-oriz th {
-    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
-    font-weight: bold;
-    padding-left: 100px;
-}
-
-
-.tb-oriz td:first-child {
-    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
-    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
-}
-
-.tb-oriz th, .tb-oriz td {
-    padding: 15px;
-    border: 1px solid black;
-    text-align: left; /* Allinea il testo a sinistra */
-}
-
-.tb-oriz th {
-    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
-    font-weight: bold;
-    padding-left: 100px;
-}
-
-.tb-oriz td:first-child {
-    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
-    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
-}
 
 /* -- Filtri di ricerca -- */
 .button-menu{
@@ -135,42 +86,98 @@ td:first-child {
     margin-top: 20px;
 }
 
-.search-bar {
+.filter-menu {
     display: flex;
     align-items: center; /* Center items horizontally */
     justify-content: center; /* Center items vertically */
     gap: 20px; /* Add some space between the forms */
     width: 100%; /* Make the search bar take up full width */
+    max-width: 100%; /* Imposta una larghezza massima per evitare che il div si espanda oltre la pagina */
     padding: 20px; /* Add some padding for spacing */
-  }
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    overflow-x: auto; /* Aggiungi il comportamento di scorrimento orizzontale */
+}
+
+.filter-menu form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+    align-items: center; /* Center form elements horizontally */
+    gap: 10px; /* Space between form elements */
+}
+
+.filter-menu select, 
+.filter-menu input[type="submit"] {
+    width: 150px; /* Set a fixed width for dropdowns and buttons */
+    padding: 8px; /* Add some padding for a better appearance */
+    text-align: center; /* Center the text inside the buttons and selects */
+}
+
+.filter-menu span {
+    font-size: 18px; /* Increase the font size of the section title */
+    font-weight: bold; /* Make the section title bold */
+    margin-bottom: 10px; /* Add some space below the title */
+}
   
-  .search-bar form {
-  display: flex;
-  flex-direction: column; /* Stack form elements vertically */
-  align-items: center; /* Center form elements horizontally */
-  gap: 10px; /* Space between form elements */
-  }
-  
-  .search-bar select, 
-  .search-bar input[type="submit"] {
-  width: 100px; /* Set a fixed width for dropdowns and buttons */
-  padding: 8px; /* Add some padding for a better appearance */
-  text-align: center; /* Center the text inside the buttons and selects */
-  }
-  
-  .search-bar span {
-  font-size: 18px; /* Increase the font size of the section title */
-  font-weight: bold; /* Make the section title bold */
-  margin-bottom: 10px; /* Add some space below the title */
-  }
-  
-  .search-bar form input[type="submit"] {
+  .filter-menu form input[type="submit"] {
   cursor: pointer; /* Change cursor to pointer on hover */
-  background-color: #007bff; /* Set background color for the submit button */
+  background-color: var(--nav-botton-color); /* Set background color for the submit button */
   color: white; /* Set text color for the submit button */
   border: none; /* Remove border */
   border-radius: 5px; /* Add rounded corners */
   }
+
+  .filter-menu form input[type="submit"]:hover {
+    background-color: var(--interaction-color); /* Change background color on hover */
+  }
+
+/* Stile per la barra dei filtri */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Spazio tra gli elementi */
+    padding: 20px; /* Spazio interno */
+    width: 100%; /* Imposta una larghezza del 100% per riempire la pagina */
+    max-width: 100%; /* Imposta una larghezza massima per evitare che vada oltre la pagina */
+    box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
+    overflow-x: auto; /* Aggiunge il comportamento di scorrimento orizzontale */
+}
+
+/* Stile per gli elementi del filtro */
+.filter-item {
+    display: flex;
+    flex-direction: row ;
+    gap: 10px; /* Spazio tra l'etichetta e l'input */
+}
+
+/* Stile per le etichette */
+.filter-item label {
+    font-weight: bold; /* Testo in grassetto */
+    font-size: 14px; /* Dimensione del font */
+}
+
+/* Stile per gli input */
+.filter-item input {
+    padding: 10px; /* Spazio interno */
+    border: 1px solid #ccc; /* Bordo grigio chiaro */
+    border-radius: 5px; /* Bordi arrotondati */
+    box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
+}
+
+/* Stile per il pulsante di submit */
+.filter-bar input[type="submit"] {
+    padding: 10px 20px; /* Spazio interno */
+    background-color: var(--nav-botton-color); /* Colore di sfondo blu */
+    color: white; /* Colore del testo bianco */
+    border: none; /* Nessun bordo */
+    border-radius: 10px; /* Bordi arrotondati */
+    cursor: pointer; /* Puntatore a mano */
+    font-size: 16px; /* Dimensione del font */
+}
+
+.filter-bar button[type="submit"]:hover {
+    background-color: var(--interaction-color); /* Colore di sfondo blu scuro al passaggio del mouse */
+}
+
 
 /* Stile generale per il form modale */
 
@@ -265,39 +272,24 @@ td:first-child {
     background-color: var(--interaction-color);
 }
 
-.search-bar {
-    display: flex;
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
-    gap: 20px; /* Add some space between the forms */
-    width: 100%; /* Make the search bar take up full width */
-    padding: 20px; /* Add some padding for spacing */
-  }
-  
-.search-bar form {
-display: flex;
-flex-direction: column; /* Stack form elements vertically */
-align-items: center; /* Center form elements horizontally */
-gap: 10px; /* Space between form elements */
+/* Stile per il div ck-button */
+.ck-button {
+    display: flex; /* Utilizza flexbox per allineare i bottoni */;
+    gap: 10px; /* Spazio tra i bottoni */
 }
 
-.search-bar select, 
-.search-bar input[type="submit"] {
-width: 200px; /* Set a fixed width for dropdowns and buttons */
-padding: 8px; /* Add some padding for a better appearance */
-text-align: center; /* Center the text inside the buttons and selects */
+/* Stile per i bottoni all'interno del div ck-button */
+.ck-button button {
+    padding: 10px 20px; /* Spazio interno per i bottoni */
+    font-size: 16px; /* Dimensione del font */
+    background-color: var(--nav-botton-color); /* Colore di sfondo */
+    color: white; /* Colore del testo */
+    border: none; /* Nessun bordo */
+    border-radius: 5px; /* Bordi arrotondati */
+    cursor: pointer; /* Puntatore a mano */
+    transition: background-color 0.3s; /* Transizione per il cambio di colore */
 }
 
-.search-bar span {
-font-size: 18px; /* Increase the font size of the section title */
-font-weight: bold; /* Make the section title bold */
-margin-bottom: 10px; /* Add some space below the title */
-}
-
-.search-bar form input[type="submit"] {
-cursor: pointer; /* Change cursor to pointer on hover */
-background-color: #007bff; /* Set background color for the submit button */
-color: white; /* Set text color for the submit button */
-border: none; /* Remove border */
-border-radius: 5px; /* Add rounded corners */
+.ck-button button:hover {
+    background-color: var(--interaction-color); /* Colore di sfondo al passaggio del mouse */
 }

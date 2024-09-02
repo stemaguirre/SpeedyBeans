@@ -3,17 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
+    <script src="/js/carousel.js"></script>
 </head>
 <body>
+      <!-- ======= Header ======= -->
+      <div class="header">
+        <div class="left-side">
+            <div class="logo">
+             <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+            <div class="search-bar">
+                <form action="/prodotto/cerca-prodotti" method="get">
+                    <input type="text" name="brand" id="src-utn-brand" placeholder="Cerca prodotti per brand">
+                </form>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+                <li><a href="/utente/profile" class="">I miei dati</a></li>
+            </ul>
+        </nav>
+
+        <div class="right-side">
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div>
+                    <a href="/area-utente">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+                </div>
+            </div>
+        </div> 
+    </div> <!-- ======= Chiusura Header ======= -->
     <h1>Checkout</h1>
     <p>Scegli la modalità di pagamento: </p>
-    <p><button onclick="document.querySelector('#carta-di-credito').hidden=false">Carta di Credito</button></p>
-    <p><button>Bonifico Bancario</button></p>
-    <p><button>Contrassegno</button></p>
+    <div class="ck-button">
+        <button class="button-common"  onclick="document.querySelector('#carta-di-credito').hidden=false">Carta di Credito</button>
+        <button class="button-common" >Bonifico Bancario</button>
+        <button class="button-common" >Contrassegno</button>
+    </div>
+    
 
     <div id="carta-di-credito" hidden>
         <form action="/pagamento" th:object="${ordine}" method="post">
@@ -33,10 +74,10 @@
             <input type="number" id="totalAmount" name="totalAmount" th:field="*{totale}" readonly><br>
             
         </form>
-        <a href="/utente/pagamento"><button>Paga Ora</button></a>
+        <a href="/utente/pagamento"><button class="button-common">Paga Ora</button></a>
         <br>
     </div>
+   
     
-    <a href="/prodotto/tutti-i-prodotti">Indietro</a>
 </body>
 </html>
