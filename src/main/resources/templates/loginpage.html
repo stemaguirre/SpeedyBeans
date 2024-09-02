@@ -44,12 +44,12 @@
         </div>
 
     </div>
-    <div class="error-message">
-        <div id="message-modal" th:if="${message} != null">
-            <p th:text="${message}"></p>
-            <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        </div>
+    
+    <div id="message-modal" th:if="${message} != null">
+        <p th:text="${message}"></p>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
+   
     
 </body>
 </html>

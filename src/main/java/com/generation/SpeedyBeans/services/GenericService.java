@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.generation.SpeedyBeans.dao.IDAO;
 import com.generation.SpeedyBeans.dao.UserDAO;
 import com.generation.SpeedyBeans.entities.Entity;
-import com.generation.SpeedyBeans.entities.Utente;
 
 import lombok.Getter;
 

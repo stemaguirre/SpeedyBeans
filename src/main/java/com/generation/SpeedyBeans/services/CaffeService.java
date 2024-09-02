@@ -42,4 +42,16 @@ public class CaffeService extends GenericService<Caffe, CaffeDAO> {
 
         return ris;
     }
+
+    public List<Caffe> orderByPrezzo() {
+        List<Caffe> ris = new ArrayList<>();
+
+        Map<Integer, Entity> caffes = getRepository().orderByPrezzo();
+
+        for (Entity e : caffes.values()) {
+            ris.add((Caffe) e);
+        }
+
+        return ris;
+    }
 }

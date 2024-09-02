@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
+import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -33,13 +34,21 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
     private final String deleteMacchinetta = "DELETE FROM macchinette WHERE id_ean = ?";
 
-    private final String findByUtilizzoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.utilizzo like(concat('%', ?, '%'))";
+    private final String findByUtilizzoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%'))";
 
     private final String findByColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
 
     private final String findByBrandLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
 
+    private final String findByUtilizzoColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
+
+    private final String findByBrandUtilizzoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.utilizzo like(concat('%', ?, '%'))";;
+
+    private final String findByBrandColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";;
+
     private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%')) AND p.brand like(concat('%', ?, '%'))";
+
+    private final String orderByPrezzo = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean order by p.prezzo";
 
 
 
@@ -104,16 +113,22 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
 
-        if(utilizzo == null && colore == null && brand == null) {
+        if(utilizzo.equals("") && colore.equals("") && brand.equals("")) {
             result = database.executeQuery(readAllMacchinette);
-        } else if(colore == null & utilizzo != null & brand == null) {
+        } else if(colore.equals("") & !utilizzo.equals("") & brand.equals("")) {
             result = database.executeQuery(findByUtilizzoLike, utilizzo);
-        } else if (utilizzo == null & colore != null & brand == null) {
+        } else if (utilizzo.equals("") & !colore.equals("") & brand.equals("")) {
             result = database.executeQuery(findByColoreLike, colore);
-        } else if (utilizzo == null & colore == null & brand != null) {
-            result = database.executeQuery(findByBrandLike, brand); 
-        }else {
-            result = database.executeQuery(findByFilters, brand, utilizzo, colore);
+        } else if (utilizzo.equals("") & colore.equals("") & !brand.equals("")) {
+            result = database.executeQuery(findByBrandLike, brand);
+        } else if(utilizzo.equals("") && !colore.equals("") && !brand.equals("")){
+            result = database.executeQuery(findByBrandColoreLike, brand, colore);
+        } else if(!utilizzo.equals("") && !colore.equals("") && brand.equals("")){
+            result = database.executeQuery(findByUtilizzoColoreLike, utilizzo, colore);
+        } else if(!utilizzo.equals("") && colore.equals("") && !brand.equals("")){
+            result = database.executeQuery(findByBrandUtilizzoLike, brand, utilizzo);
+        } else if(!utilizzo.equals("") && !colore.equals("") && !brand.equals("")){
+            result = database.executeQuery(findByFilters, utilizzo, colore, brand);
         }
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
@@ -159,6 +174,18 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
             ris.put(m.getId(), m);
+        }
+
+        return ris;
+    }
+
+    public Map<Integer, Entity> orderByPrezzo() {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(orderByPrezzo);
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Macchinetta c = context.getBean(Macchinetta.class, coppia.getValue());
+            ris.put(c.getId(), c);
         }
 
         return ris;

@@ -1,7 +1,5 @@
 package com.generation.SpeedyBeans.services;
 
-import java.util.logging.Logger;
-
 
 import java.util.ArrayList;
 import java.util.List;
