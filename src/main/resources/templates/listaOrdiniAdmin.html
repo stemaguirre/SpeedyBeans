@@ -88,6 +88,20 @@
     <a href="/area-admin">Indietro</a>
     <br>
     <br>
+    <!-- Form insert prodotto -->
+    <div id="insert-ordine" hidden>
+        <form action="/ordine/insert" method="post">
+            <label for="totale">Totale</label>
+            <input type="text" name="totale" id="insert-ordine-totale">
+            <label for="quantita">Quantita'</label>
+            <input type="text" name="quantita" id="insert-ordine-quantita">
+            <label for="iva">Iva</label>
+            <input type="text" name="iva" id="insert-ordine-iva">
+            <label for="dataOrdine">Data ordine</label>
+            <input type="date" name="dataOrdine" id="insert-ordine-dataOrdine">
+            <input type="submit" value="Inserisci">
+        </form>
+    </div>
     <!-- Form modifica ordine -->
     <div id="update-ordine" hidden>
         <form action="/ordine/update" method="post">
@@ -142,20 +156,6 @@
             
         </tbody>
     </table>
-    <!-- Form insert prodotto -->
-    <div id="insert-ordine" hidden>
-        <form action="/ordine/insert" method="post">
-            <label for="totale">Totale</label>
-            <input type="text" name="totale" id="insert-ordine-totale">
-            <label for="quantita">Quantita'</label>
-            <input type="text" name="quantita" id="insert-ordine-quantita">
-            <label for="iva">Iva</label>
-            <input type="text" name="iva" id="insert-ordine-iva">
-            <label for="dataOrdine">Data ordine</label>
-            <input type="date" name="dataOrdine" id="insert-ordine-dataOrdine">
-            <input type="submit" value="Inserisci">
-        </form>
-    </div>
 
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>

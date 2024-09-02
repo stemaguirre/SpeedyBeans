@@ -79,7 +79,6 @@ function toggleUpdateUtente(id, nome, cognome, ragioneSociale, partitaIva, codic
 function toggleUpdateOrdine(id, idPersona, totale, quantita, iva, dataOrdine){
     var update = document.querySelector("#update-ordine");
     update.hidden = !update.hidden;
-    document.getElementById('update-ordine').hidden = false;
     document.getElementById('update-ordine-id').value = id;
     document.getElementById('update-ordine-idpersona').value = idPersona;
     document.getElementById('update-ordine-totale').value = totale;
