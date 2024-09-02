@@ -23,7 +23,7 @@
     </div>
     <nav class="navbar">
         <ul>
-            <li><a href="/utente/ordini" class="">Ordini</a></li>
+            <li><a href="/utente/" class="">I miei ordini</a></li>
             <li><a href="/utente/profile" class="">I mei dati</a></li>
         </ul>
     </nav>
@@ -47,15 +47,16 @@
     </div><!-- ======= Chiusura Header ======= -->
 
     <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <button type="submit" onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
         <p th:text="${message}"></p>
     </div>
 
-    <button onclick="apriRicerca()">Filtri</button>
+    <div class="button-menu">
+        <button class="back-button" onclick="apriRicerca()">Filtri</button>
     
-    <a href="utente/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
-
+        <a href="utente/prodotto/tutti-i-prodotti"><button class="back-button">Annulla ricerca</button></a>
+    </div>
 <div class="flex-container">
     <div class="search-bar">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
