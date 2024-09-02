@@ -150,6 +150,52 @@
             <button type="submit">Invia</button>
         </form>
     </div>
+    <!-- Tabella caffes -->
+    <div id="tabella-caffes">
+        <button onclick="toggleInsertCaffe()">Inserisci</button>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6">Caffè</th>
+                </tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                    <th>Tipologia</th>
+                    <th>Formato</th>
+                    <th>Dettaglio</th>
+                    <th>Carrello</th>
+                    <th>Modifica</th>
+                    <th>Elimina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'C'">
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.tipologia}"></td>
+                    <td th:text="${prodotto.formato}"></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                    <td><button onclick="toggleUpdateCaffe()" th:attr="onclick=|toggleUpdateCaffe(`${prodotto.id}`,
+                        `${prodotto.genere}`,
+                        `${prodotto.brand}`,
+                        `${prodotto.prezzo}`,
+                        `${prodotto.disponibilita}`,
+                        `${prodotto.peso}`,
+                        `${prodotto.tipologia}`,
+                        `${prodotto.dataProduzione}`,
+                        `${prodotto.dataScadenza}`,
+                        `${prodotto.formato}`)|">Modifica</button>
+                    </td>
+                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button>Elimina</button></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
     <!-- Form per inserire Macchinetta -->
     <div id="insert-macchinetta" hidden> 
         <form action="/macchinetta/insert" method="post">
@@ -198,52 +244,6 @@
             <button type="submit">Invia</button>
         </form>
     </div> 
-    <!-- Tabella caffes -->
-    <div id="tabella-caffes">
-        <button onclick="toggleInsertCaffe()">Inserisci</button>
-        <br>
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="6">Caffè</th>
-                </tr>
-                <tr>
-                    <th>Brand</th>
-                    <th>Prezzo</th>
-                    <th>Tipologia</th>
-                    <th>Formato</th>
-                    <th>Dettaglio</th>
-                    <th>Carrello</th>
-                    <th>Modifica</th>
-                    <th>Elimina</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'C'">
-                    <td th:text="${prodotto.brand}"></td>
-                    <td th:text="${prodotto.prezzo}"></td>
-                    <td th:text="${prodotto.tipologia}"></td>
-                    <td th:text="${prodotto.formato}"></td>
-                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
-                    <td><button onclick="toggleUpdateCaffe()" th:attr="onclick=|openUpdateCaffe(`${prodotto.id}`,
-                        `${prodotto.genere}`,
-                        `${prodotto.brand}`,
-                        `${prodotto.prezzo}`,
-                        `${prodotto.disponibilita}`,
-                        `${prodotto.peso}`,
-                        `${prodotto.tipologia}`,
-                        `${prodotto.dataProduzione}`,
-                        `${prodotto.dataScadenza}`,
-                        `${prodotto.formato}`)|">Modifica</button>
-                    </td>
-                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button>Elimina</button></a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <br>
     <!-- Tabella macchinette -->
     <div id="tabella-macchinette">
         <button onclick="toggleInsertMacchinetta()">Inserisci</button>
@@ -272,7 +272,7 @@
                     <td th:text="${prodotto.colore}"></td>
                     <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
                     <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
-                    <td><button onclick="toggleUpdateMacchinetta()" th:attr="onclick=|openUpdateMacchinetta(`${prodotto.id}`,
+                    <td><button onclick="toggleUpdateMacchinetta()" th:attr="onclick=|toggleUpdateMacchinetta(`${prodotto.id}`,
                         `${prodotto.genere}`,
                         `${prodotto.brand}`,
                         `${prodotto.prezzo}`,
