@@ -120,11 +120,64 @@ td:first-child {
   
   .filter-menu form input[type="submit"] {
   cursor: pointer; /* Change cursor to pointer on hover */
-  background-color: #007bff; /* Set background color for the submit button */
+  background-color: var(--nav-botton-color); /* Set background color for the submit button */
   color: white; /* Set text color for the submit button */
   border: none; /* Remove border */
   border-radius: 5px; /* Add rounded corners */
   }
+
+  .filter-menu form input[type="submit"]:hover {
+    background-color: var(--interaction-color); /* Change background color on hover */
+  }
+
+/* Stile per la barra dei filtri */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Spazio tra gli elementi */
+    padding: 20px; /* Spazio interno */
+    width: 100%; /* Imposta una larghezza del 100% per riempire la pagina */
+    max-width: 100%; /* Imposta una larghezza massima per evitare che vada oltre la pagina */
+    box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
+    overflow-x: auto; /* Aggiunge il comportamento di scorrimento orizzontale */
+}
+
+/* Stile per gli elementi del filtro */
+.filter-item {
+    display: flex;
+    flex-direction: row ;
+    gap: 10px; /* Spazio tra l'etichetta e l'input */
+}
+
+/* Stile per le etichette */
+.filter-item label {
+    font-weight: bold; /* Testo in grassetto */
+    font-size: 14px; /* Dimensione del font */
+}
+
+/* Stile per gli input */
+.filter-item input {
+    padding: 10px; /* Spazio interno */
+    border: 1px solid #ccc; /* Bordo grigio chiaro */
+    border-radius: 5px; /* Bordi arrotondati */
+    box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
+}
+
+/* Stile per il pulsante di submit */
+.filter-bar input[type="submit"] {
+    padding: 10px 20px; /* Spazio interno */
+    background-color: var(--nav-botton-color); /* Colore di sfondo blu */
+    color: white; /* Colore del testo bianco */
+    border: none; /* Nessun bordo */
+    border-radius: 10px; /* Bordi arrotondati */
+    cursor: pointer; /* Puntatore a mano */
+    font-size: 16px; /* Dimensione del font */
+}
+
+.filter-bar button[type="submit"]:hover {
+    background-color: var(--interaction-color); /* Colore di sfondo blu scuro al passaggio del mouse */
+}
+
 
 /* Stile generale per il form modale */
 
@@ -217,4 +270,26 @@ td:first-child {
 
 .button-common:hover {
     background-color: var(--interaction-color);
+}
+
+/* Stile per il div ck-button */
+.ck-button {
+    display: flex; /* Utilizza flexbox per allineare i bottoni */;
+    gap: 10px; /* Spazio tra i bottoni */
+}
+
+/* Stile per i bottoni all'interno del div ck-button */
+.ck-button button {
+    padding: 10px 20px; /* Spazio interno per i bottoni */
+    font-size: 16px; /* Dimensione del font */
+    background-color: var(--nav-botton-color); /* Colore di sfondo */
+    color: white; /* Colore del testo */
+    border: none; /* Nessun bordo */
+    border-radius: 5px; /* Bordi arrotondati */
+    cursor: pointer; /* Puntatore a mano */
+    transition: background-color 0.3s; /* Transizione per il cambio di colore */
+}
+
+.ck-button button:hover {
+    background-color: var(--interaction-color); /* Colore di sfondo al passaggio del mouse */
 }
