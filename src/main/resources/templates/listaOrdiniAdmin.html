@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutti gli ordini</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
@@ -27,6 +28,7 @@
         <nav class="navbar">
             <ul>
                 <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
                 <li><a href="/utente/tutti-gli-utenti" class="">Utenti</a></li>
             </ul>
         </nav>
@@ -45,7 +47,7 @@
         </div>
     </div><!-- ======= Chiusura Header ======= -->
     <div class="filter-bar">
-        <form action="/ordine/cerca-ordini" method="get">
+        <form action="/ordine/cerca-ordini" method="get" style="display: flex; flex-wrap: wrap; gap: 20px;">
             <div class="filter-item">
                 <label for="src-hmp-cognome">Cognome committente:</label>
                 <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cognome committente">
@@ -72,13 +74,15 @@
                 <input type="date" name="data_fine" id="data_fine">
             </div>
 
-            <button class="button-common" type="submit">Applica Filtri</button>
+            <div class="filter-item">
+                <input type="submit" value="Applica filtri">
+            </div>
         </form>
     </div>
     <br>
     <br>
     <!-- Form insert prodotto -->
-    <div id="insert-ordine" hidden>
+    <div id="insert-ordine" class="modal-form" hidden>
         <form action="/ordine/insert" method="post">
             <label for="totale">Totale</label>
             <input type="text" name="totale" id="insert-ordine-totale">
@@ -88,11 +92,16 @@
             <input type="text" name="iva" id="insert-ordine-iva">
             <label for="dataOrdine">Data ordine</label>
             <input type="date" name="dataOrdine" id="insert-ordine-dataOrdine">
-            <input type="submit" value="Inserisci">
+            <br>
+            <br>
+            <div class="button-container">
+                <button type="submit" value="Invia">INVIA</button>
+                <button type="button" onclick="document.querySelector('#insert-ordine').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div>
     <!-- Form modifica ordine -->
-    <div id="update-ordine" hidden>
+    <div id="update-ordine" class="modal-form" hidden>
         <form action="/ordine/update" method="post">
             <input type="hidden" name="id" id="update-ordine-id">
             <input type="hidden" name="idpersona" id="update-ordine-idpersona">
@@ -104,7 +113,12 @@
             <input type="text" name="iva" id="update-ordine-iva">
             <label for="dataOrdine">Data ordine</label>
             <input type="date" name="dataOrdine" id="update-ordine-dataOrdine">
-            <input type="submit" value="Modifica">
+            <br>
+            <br>
+            <div class="button-container">
+                <button type="submit" value="Invia">INVIA</button>
+                <button type="button" onclick="document.querySelector('#update-ordine').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div>
    
@@ -116,10 +130,9 @@
                     <h2>Ordini</h2>
                 </th>
                 <th>
-                    <button class="button-common" onclick="toggleInsertOrdine()">Inserisci Ordine</button>
+                    <button class="button-common" onclick="toggleInsertOrdine()">Inserisci</button>
                 </th>
-                   <td><button class="button-common" onclick="toggleInsert()">Inserisci</button></td>
-                </tr>
+            </tr>
             <tr>
                 <th>ID</th>
                 <th>Committente</th>

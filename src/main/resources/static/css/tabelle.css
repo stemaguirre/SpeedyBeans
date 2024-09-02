@@ -332,3 +332,7 @@ border: none; /* Remove border */
 border-radius: 5px; /* Add rounded corners */
 }
 
+table h2{
+    text-align: center; 
+}
+
