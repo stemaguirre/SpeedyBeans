@@ -272,24 +272,63 @@ td:first-child {
     background-color: var(--interaction-color);
 }
 
-/* Stile per il div ck-button */
-.ck-button {
-    display: flex; /* Utilizza flexbox per allineare i bottoni */;
-    gap: 10px; /* Spazio tra i bottoni */
+.ck-button{
+    width: 100%;
+    padding: 10px;
+    background-color: var(--nav-botton-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-style: bold;
+    text-align: center;
+    
+}
+.ck-button button{
+    widht: 300px;
+    height: 50px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.ck-button:hover {
+    background-color: var(--interaction-color);
 }
 
-/* Stile per i bottoni all'interno del div ck-button */
-.ck-button button {
-    padding: 10px 20px; /* Spazio interno per i bottoni */
-    font-size: 16px; /* Dimensione del font */
-    background-color: var(--nav-botton-color); /* Colore di sfondo */
-    color: white; /* Colore del testo */
-    border: none; /* Nessun bordo */
-    border-radius: 5px; /* Bordi arrotondati */
-    cursor: pointer; /* Puntatore a mano */
-    transition: background-color 0.3s; /* Transizione per il cambio di colore */
+.search-bar {
+    display: flex;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    gap: 20px; /* Add some space between the forms */
+    width: 100%; /* Make the search bar take up full width */
+    padding: 20px; /* Add some padding for spacing */
+  }
+  
+.search-bar form {
+display: flex;
+flex-direction: column; /* Stack form elements vertically */
+align-items: center; /* Center form elements horizontally */
+gap: 10px; /* Space between form elements */
 }
 
-.ck-button button:hover {
-    background-color: var(--interaction-color); /* Colore di sfondo al passaggio del mouse */
+.search-bar select, 
+.search-bar input[type="submit"] {
+width: 200px; /* Set a fixed width for dropdowns and buttons */
+padding: 8px; /* Add some padding for a better appearance */
+text-align: center; /* Center the text inside the buttons and selects */
 }
+
+.search-bar span {
+font-size: 18px; /* Increase the font size of the section title */
+font-weight: bold; /* Make the section title bold */
+margin-bottom: 10px; /* Add some space below the title */
+}
+
+.search-bar form input[type="submit"] {
+cursor: pointer; /* Change cursor to pointer on hover */
+background-color: #007bff; /* Set background color for the submit button */
+color: white; /* Set text color for the submit button */
+border: none; /* Remove border */
+border-radius: 5px; /* Add rounded corners */
+}
+
