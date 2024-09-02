@@ -7,55 +7,43 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
-    <style>
-        .filter-bar {
-            display: flex;
-            flex-wrap: wrap; /* Permette ai filtri di andare a capo se non c'è abbastanza spazio */
-            gap: 20px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
-
-        .filter-item {
-            display: flex;
-            flex-direction: column; /* Mantiene l'etichetta sopra l'input */
-            flex: 1; /* Assicura che gli elementi si distribuiscano uniformemente */
-            min-width: 150px; /* Imposta una larghezza minima per evitare che gli elementi siano troppo piccoli */
-        }
-
-        .filter-item label {
-            white-space: nowrap; /* Impedisce all'etichetta di andare a capo */
-            margin-right: 10px; /* Aggiunge spazio tra l'etichetta e l'input */
-            font-weight: bold;
-        }
-
-        .filter-item input, .filter-item select {
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 100%; /* Prende tutto lo spazio disponibile all'interno del .filter-item */
-        }
-
-        .filter-bar button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            align-self: flex-end; /* Allinea il pulsante al fondo per uniformità */
-        }
-
-        .filter-bar button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-    
 </head>
 <body>
+    <!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+                <a href="/area-admin">
+                    <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+                </a>
+            </div>
+            <div class="search-bar">
+                <form action="/utente/cerca-utenti" method="get">
+                    <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti per nome, cognome o p.iva">
+                    <input type="submit" value="Cerca" hidden>
+                </form>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/utente/tutti-gli-utenti" class="">Utenti</a></li>
+            </ul>
+        </nav>
+
+        <div class="auth-buttons">
+            <div>
+                <a href="/area-admin">
+                    <button class="button-common">INDIETRO</button>
+                </a>
+            </div>
+            <div>
+                <a href="/logout">
+                    <button class="button-common">LOGOUT</button>
+                </a>
+            </div>
+        </div>
+    </div><!-- ======= Chiusura Header ======= -->
     <div class="filter-bar">
         <div class="filter-item">
             <label for="src-hmp-cognome">Cognome committente:</label>
@@ -82,25 +70,54 @@
             <input type="date" name="data_fine" id="data_fine">
         </div>
 
-        <button type="submit">Applica Filtri</button>
+            <button class="button-common" type="submit">Applica Filtri</button>
+        </form>
     </div>
-
-    <a href="/area-admin">Indietro</a>
     <br>
     <br>
-
-    <div>
-        <button onclick="toggleInsert()">Inserisci</button>
+    <!-- Form insert prodotto -->
+    <div id="insert-ordine" hidden>
+        <form action="/ordine/insert" method="post">
+            <label for="totale">Totale</label>
+            <input type="text" name="totale" id="insert-ordine-totale">
+            <label for="quantita">Quantita'</label>
+            <input type="text" name="quantita" id="insert-ordine-quantita">
+            <label for="iva">Iva</label>
+            <input type="text" name="iva" id="insert-ordine-iva">
+            <label for="dataOrdine">Data ordine</label>
+            <input type="date" name="dataOrdine" id="insert-ordine-dataOrdine">
+            <input type="submit" value="Inserisci">
+        </form>
     </div>
-    
-
-    <table>
+    <!-- Form modifica ordine -->
+    <div id="update-ordine" hidden>
+        <form action="/ordine/update" method="post">
+            <input type="hidden" name="id" id="update-ordine-id">
+            <input type="hidden" name="idpersona" id="update-ordine-idpersona">
+            <label for="totale">Totale</label>
+            <input type="text" name="totale" id="update-ordine-totale">
+            <label for="quantita">Quantita'</label>
+            <input type="text" name="quantita" id="update-ordine-quantita">
+            <label for="iva">Iva</label>
+            <input type="text" name="iva" id="update-ordine-iva">
+            <label for="dataOrdine">Data ordine</label>
+            <input type="date" name="dataOrdine" id="update-ordine-dataOrdine">
+            <input type="submit" value="Modifica">
+        </form>
+    </div>
+   
+    <!-- Tabella di visualizzazione -->
+    <table class="tb-oriz">
         <thead>
             <tr>
-                <th colspan="6">
-                    Ordini
+                <th colspan="8">
+                    <h2>Ordini</h2>
                 </th>
-            </tr>
+                <th>
+                    <button class="button-common" onclick="toggleInsertOrdine()">Inserisci Ordine</button>
+                </th>
+                   <td><button class="button-common" onclick="toggleInsert()">Inserisci</button></td>
+                </tr>
             <tr>
                 <th>ID</th>
                 <th>Committente</th>
@@ -121,39 +138,12 @@
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva ? 'Sì' : 'No'}"></td>
                 <td th:text="${ordine.dataOrdine}"></td> <!-- Mostra la data dell'ordine -->
-                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/ordine/delete/${ordine.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|openUpdateOrdine(${ordine.id}, ${ordine.idPersona}, ${ordine.totale}, ${ordine.quantita}, ${ordine.iva ? 'Sì' : 'No'})|">Modifica</button></td>
+                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button class="button-common">Dettaglio</button></a></td>
+                <td><a th:href="|/ordine/delete/${ordine.id}|"><button class="button-common">Elimina</button></a></td>
+                <td><button class="button-common" th:attr="onclick=|toggleUpdateOrdine('${ordine.id}', '${ordine.idPersona}', '${ordine.totale}', '${ordine.quantita}', '${ordine.iva ? 'Sì' : 'No'}', '${ordine.dataOrdine}')|">Modifica</button></td>
             </tr>
-            
         </tbody>
     </table>
-
-    <div id="insert" hidden>
-        <form action="/ordine/insert" method="post">
-            <label for="totale">Totale</label>
-            <input type="text" name="totale" id="insert-ordine-totale">
-            <label for="quantita">Quantita'</label>
-            <input type="text" name="quantita" id="insert-ordine-quantita">
-            <label for="iva">Iva</label>
-            <input type="text" name="iva" id="insert-ordine-iva">
-            <input type="submit" value="Inserisci">
-        </form>
-    </div>
-
-    <div id="update-ordine" hidden>
-        <form action="/ordine/update" method="post">
-            <input type="hidden" name="id" id="update-ordine-id">
-            <input type="hidden" name="idpersona" id="update-ordine-idpersona">
-            <label for="totale">Totale</label>
-            <input type="text" name="totale" id="update-ordine-totale">
-            <label for="quantita">Quantita'</label>
-            <input type="text" name="quantita" id="update-ordine-quantita">
-            <label for="iva">Iva</label>
-            <input type="text" name="iva" id="update-ordine-iva">
-            <input type="submit" value="Modifica">
-        </form>
-    </div>
 
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>

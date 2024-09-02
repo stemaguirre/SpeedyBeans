@@ -23,7 +23,7 @@
     </div>
     <nav class="navbar">
         <ul>
-            <li><a href="/utente/ordini" class="">Ordini</a></li>
+            <li><a href="/utente/ordini" class="">I miei ordini</a></li>
             <li><a href="/utente/profile" class="">I mei dati</a></li>
         </ul>
     </nav>
@@ -52,12 +52,13 @@
         <p th:text="${message}"></p>
     </div>
 
-    <button onclick="apriRicerca()">Filtri</button>
+    <div class="button-menu">
+        <button class="back-button" onclick="apriRicerca()">Filtri</button>
     
-    <a href="utente/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
-
+        <a href="utente/prodotto/tutti-i-prodotti"><button class="back-button">Annulla ricerca</button></a>
+    </div>
 <div class="flex-container">
-    <div class="search-bar">
+    <div class="filter-menu">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
 
             <div id="filtri-caffes" hidden>
@@ -132,7 +133,6 @@
             </div>
         </form>      
     </div>
-</div>
 
    
 
@@ -164,7 +164,7 @@
         </table>
     </div>
     <br>
-    <div id="tabella-macchinette">
+    <div id="tabella-macchinette" th:if="${not listaProdotti.?[genere == 'M'].isEmpty()}">
         <table class="tb-oriz">
             <thead>
                 <tr>

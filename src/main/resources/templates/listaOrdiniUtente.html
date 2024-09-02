@@ -3,63 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I miei ordini</title>
+    <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
-    <style>
-        .filter-bar {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
+    <script src="/js/carousel.js"></script>
 
-        .filter-item {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-right: 20px;
-        }
 
-        .filter-item label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .filter-item input, .filter-item select {
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 150px;
-        }
-
-        .filter-bar button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            align-self: center;
-        }
-
-        .filter-bar button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+   
 </head>
 <body>
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+             <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+                <li><a href="/utente/profile" class="">I miei dati</a></li>
+            </ul>
+        </nav>
+
+        <div class="right-side">
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div>
+                    <a href="/area-utente">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+                </div>
+            </div>
+        </div> 
+    </div> <!-- ======= Chiusura Header ======= -->
     <div id="message-modal" th:if="${message} != null">
         <p th:text="${message}"></p>
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
     
     <div class="filter-bar">
-        <form action="/ordine/cerca-ordini" method="get">
+        <form action="/ordine/cerca-ordini" method="get" style="display: flex; flex-wrap: wrap; gap: 20px;">
             <div class="filter-item">
                 <label for="src-hmp-mintotale">Totale minimo:</label>
                 <input type="number" name="minTotale" id="src-hmp-mintotale" placeholder="Minimo">
@@ -70,7 +61,6 @@
                 <input type="number" name="maxTotale" id="src-hmp-maxtotale" placeholder="Massimo">
             </div>
 
-            <!-- Nuovi filtri per le date dell'ordine -->
             <div class="filter-item">
                 <label for="data_inizio">Data Inizio:</label>
                 <input type="date" name="data_inizio" id="data_inizio">
@@ -81,15 +71,17 @@
                 <input type="date" name="data_fine" id="data_fine">
             </div>
 
-            <button type="submit">Applica Filtri</button>
+            <div class="filter-item">
+                <input type="submit" value="Applica filtri">
+            </div>
         </form>
     </div>
 
-    <a href="/area-utente">Indietro</a>
+  
     <br>
     <br>
     
-    <table>
+    <table class="tb-oriz">
         <thead>
             <tr>
                 <th colspan="6">
@@ -101,7 +93,7 @@
                 <th>Totale</th>
                 <th>Quantita'</th>
                 <th>Iva</th>
-                <th>Data Ordine</th> <!-- Aggiunta colonna per la data dell'ordine -->
+                <th>Data Ordine</th>
                 <th>Dettaglio</th>
             </tr>
         </thead>
@@ -111,13 +103,12 @@
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva ? 'Sì' : 'No'}"></td>
-                <td th:text="${ordine.dataOrdine}"></td> <!-- Mostra la data dell'ordine -->
-                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
+                <td th:text="${ordine.dataOrdine}"></td>
+                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button class="button-common">Dettaglio</button></a></td>
             </tr>
         </tbody>
     </table>
 
-    
-    
 </body>
 </html>
+

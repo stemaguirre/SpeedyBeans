@@ -1,7 +1,3 @@
-function openLoginModal() {
-    document.querySelector("#login-modal").hidden = false;
-}
-
 function toggleInsertCaffe(){
     var insert = document.querySelector("#insert-caffe");
     insert.hidden = !insert.hidden;
@@ -12,36 +8,21 @@ function toggleInsertMacchinetta(){
     insert.hidden = !insert.hidden;
 }
 
-function toggleUpdateCaffe(){
-    var update = document.querySelector("#update-caffe");
-    update.hidden = !update.hidden;
-}
-
-function toggleUpdateMacchinetta(){
-    var update = document.querySelector("#update-macchinetta");
-    update.hidden = !update.hidden;
-}
-
-function openInsertCaffe() {
-    document.querySelector("#insert-caffe").hidden = false;
-    document.querySelector("#insert-macchinetta").hidden = true;
-
-}
-
-function openInsertMacchinetta() {
-    document.querySelector("#insert-macchinetta").hidden = false;
-    document.querySelector("#insert-caffe").hidden = true;
-}
-
 function toggleInsertUtente(){
     var insert = document.querySelector("#insert-utente");
     insert.hidden = !insert.hidden;
 }
 
+function toggleInsertOrdine(){
+    var insert = document.querySelector("#insert-ordine");
+    insert.hidden = !insert.hidden;
+} 
+
 function toggleUpdateCaffe(id, genere, brand, prezzo, disponibilita, peso,
     tipologia, dataProduzione, dataScadenza, formato)
 {
-    document.getElementById('update-caffe').hidden = false;
+    var update = document.getElementById('update-caffe');
+    update.hidden = !update.hidden;
     document.getElementById('update-macchinetta').hidden = true;
     document.getElementById('update-caffe-id').value = id;
     document.getElementById('update-caffe-genere').value = genere;
@@ -58,7 +39,8 @@ function toggleUpdateCaffe(id, genere, brand, prezzo, disponibilita, peso,
 function toggleUpdateMacchinetta(id, genere, brand, prezzo, disponibilita, peso,
     utilizzo, colore, modello, serbatoio) {
     
-        document.getElementById('update-macchinetta').hidden = false;
+        var update = document.getElementById('update-macchinetta');
+        update.hidden = !update.hidden;
         document.getElementById('update-caffe').hidden = true;
         document.getElementById('update-macchinetta-id').value = id;
         document.getElementById('update-macchinetta-genere').value = genere;
@@ -92,20 +74,17 @@ function toggleUpdateUtente(id, nome, cognome, ragioneSociale, partitaIva, codic
     document.getElementById('update-utente-email').value = email;
 }
 
-function toggleInsertOrdine(){
-    var insert = document.querySelector("#insert-ordine");
-    insert.hidden = !insert.hidden;
-} 
 
-function toggleUpdateOrdine(id, idPersona, totale, quantita, iva){
-    var update = document.querySelector("#update-ordine");
+
+function toggleUpdateOrdine(id, idPersona, totale, quantita, iva, dataOrdine){
+    var update = document.getElementById('update-ordine');
     update.hidden = !update.hidden;
-    document.getElementById('update-ordine').hidden = false;
     document.getElementById('update-ordine-id').value = id;
     document.getElementById('update-ordine-idpersona').value = idPersona;
     document.getElementById('update-ordine-totale').value = totale;
     document.getElementById('update-ordine-quantita').value = quantita;
     document.getElementById('update-ordine-iva').value = iva ? 'Sì' : 'No';
+    document.getElementById('update-ordine-dataOrdine').value = dataOrdine;
 } 
 
 // Questa porzione di codice implementa i controlli nel form di registrazione
@@ -189,11 +168,3 @@ function mostraRisultati(){
     tabellaCaffes.hidden = false;
     tabellaMacchinette.hidden  = false;
 }
-
-$(document).ready(function() {
-    if($('#tabella-caffes > tbody').innerHTML == ""){
-        $('#tabella-caffes > tbody').hide();
-    }
-    
-    $('#tabella-macchinette > tbody > tr').has('td:empty').hide();
-  });
