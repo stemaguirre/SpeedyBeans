@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.services.OrdineService;
+
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -40,7 +40,11 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     private final String readByIdProdotto = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale from ordini o join ordini_prodotti op on o.id_ordine = od.id_ordine join prodotti p on od.id_ean = p.id_ean where p.id_ean = ?";
 
-    private final String readByRange = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE totale BETWEEN ? AND ?";
+    private final String readByRangeTotale = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE totale BETWEEN ? AND ?";
+
+    private final String readByTotaleMinimo = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE totale > ?";
+
+    private final String readByTotaleMassimo = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE totale < ?";
     
     private final String findByNomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%'))";
     private final String findByCognomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
@@ -119,7 +123,31 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     public Map<Integer,Entity> readByRangeTotale(int min, int max){
         Map<Integer, Entity> ris = new LinkedHashMap<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(readByRange, String.valueOf(min), String.valueOf(max));
+        Map<Integer, Map<String, String>> result = database.executeQuery(readByRangeTotale, String.valueOf(min), String.valueOf(max));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            ris.put(o.getId(), o);
+        }
+        return ris;
+
+    }
+
+    public Map<Integer,Entity> readByTotaleMinimo(int min){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readByTotaleMinimo, String.valueOf(min));
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
+            Ordine o = context.getBean(Ordine.class, coppia.getValue());
+            ris.put(o.getId(), o);
+        }
+        return ris;
+
+    }
+
+    public Map<Integer,Entity> readByTotaleMassimo(int max){
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(readByTotaleMassimo, String.valueOf(max));
 
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()){
             Ordine o = context.getBean(Ordine.class, coppia.getValue());

@@ -215,8 +215,12 @@ public class OrdineController {
                 ordini = ordineService.findByNomeCognomePersona(nome, cognome);
             }
 
-            if (minTotale > 0 || maxTotale > 0) {
+            if (minTotale > 0 && maxTotale > 0) {
                 ordini.addAll(ordineService.findByRangeTotale(minTotale, maxTotale));
+            } else if (minTotale > 0 && maxTotale == 0){
+                ordini.addAll(ordineService.findByTotaleMinimo(minTotale));
+            } else if(minTotale == 0 && maxTotale > 0){
+                ordini.addAll(ordineService.findByTotaleMassimo(maxTotale));
             }
 
             if (dataInizio != null && dataFine != null) {

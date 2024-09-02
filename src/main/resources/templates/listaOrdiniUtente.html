@@ -52,6 +52,11 @@
     </style>
 </head>
 <body>
+    <div id="message-modal" th:if="${message} != null">
+        <p th:text="${message}"></p>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+    </div>
+    
     <div class="filter-bar">
         <form action="/ordine/cerca-ordini" method="get">
             <div class="filter-item">
@@ -78,6 +83,10 @@
             <button type="submit">Applica Filtri</button>
         </form>
     </div>
+
+    <a href="/area-utente">Indietro</a>
+    <br>
+    <br>
     
     <table>
         <thead>
@@ -107,12 +116,7 @@
         </tbody>
     </table>
 
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
-    <a href="/area-utente">Indietro</a>
+    
     
 </body>
 </html>

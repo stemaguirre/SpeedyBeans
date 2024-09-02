@@ -100,6 +100,38 @@ public class OrdineService extends GenericService<Ordine, OrdineDAO> {
         return listaOrdini;
     }
 
+    public List<Ordine> findByTotaleMinimo(int min) {
+        Map<Integer, Entity> ordini = getRepository().readByTotaleMinimo(min);
+        List<Ordine> listaOrdini = new ArrayList<>();
+        for (Entity e : ordini.values()) {
+            Ordine o = (Ordine) e;
+            Map<Integer, Entity> prodotti = prodottoDAO.readByIdOrdine(o.getId());
+            List<Prodotto> listaProdotti = new ArrayList<>();
+            for (Entity p : prodotti.values()) {
+                listaProdotti.add((Prodotto) p);
+            }
+            o.setProdotti(listaProdotti);
+            listaOrdini.add(o);
+        }
+        return listaOrdini;
+    }
+
+    public List<Ordine> findByTotaleMassimo(int max) {
+        Map<Integer, Entity> ordini = getRepository().readByTotaleMassimo(max);
+        List<Ordine> listaOrdini = new ArrayList<>();
+        for (Entity e : ordini.values()) {
+            Ordine o = (Ordine) e;
+            Map<Integer, Entity> prodotti = prodottoDAO.readByIdOrdine(o.getId());
+            List<Prodotto> listaProdotti = new ArrayList<>();
+            for (Entity p : prodotti.values()) {
+                listaProdotti.add((Prodotto) p);
+            }
+            o.setProdotti(listaProdotti);
+            listaOrdini.add(o);
+        }
+        return listaOrdini;
+    }
+
     public List<Ordine> findByNomeCognomePersona(String nome, String cognome) {
         Map<Integer, Entity> ordini = getRepository().readByNomeCognomePersona(nome, cognome);
         List<Ordine> listaOrdini = new ArrayList<>();
