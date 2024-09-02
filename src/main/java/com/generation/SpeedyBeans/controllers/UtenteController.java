@@ -312,7 +312,7 @@ public class UtenteController {
             carrello = (List<Prodotto>)session.getAttribute("carrello");
             if(carrello == null){
                 as.setMessage("Carrello vuoto");
-                return "redirect:prodotto/tutti-i-prodotti";
+                return "carrello.html";
             }
             for(Prodotto prodotto : carrello){
                 o.setTotale(o.getTotale() + prodotto.getPrezzo());
@@ -340,8 +340,10 @@ public class UtenteController {
         if(role != null && (role.equals("U") || role.equals("A")) && p != null){
             List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             Ordine o = (Ordine)session.getAttribute("ordine");
-            o.setTotale(o.getTotale() + (o.getTotale() > 500 ? 0 : 49.00));
-
+            if(o != null){
+                o.setTotale(o.getTotale() + (o.getTotale() > 500 ? 0 : 49.00));
+            }
+            
             model.addAttribute("ordine", o);
             return "checkout.html";
         }

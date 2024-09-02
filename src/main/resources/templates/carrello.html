@@ -29,17 +29,14 @@
         <tfoot>
             <tr>
                 <td>Spedizione</td>
-                <td th:text="${ordine.totale > 500} ? 0 : 49.00"></td>
+                <td th:if="${ordine}" th:text="${ordine.totale > 500} ? 0 : 49.00"></td>
                 <td></td>
                 <td>Totale</td>
-                <td th:text="${ordine.totale + (ordine.totale > 500 ? 0 : 49.00)}"></td>
+                <td th:if="${ordine}" th:text="${ordine.totale + (ordine.totale > 500 ? 0 : 49.00)}"></td>
                 
             </tr>
         </tfoot>
     </table>
     <a href="/utente/checkout"><button>Checkout</button></a>
-
-
-    
 </body>
 </html>
