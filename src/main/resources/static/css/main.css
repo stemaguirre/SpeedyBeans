@@ -377,6 +377,18 @@ body {
   background-color: #f4f4f4;
 }
 
+#message-modal{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(209, 166, 86);
+  padding: 15px;
+  border: 2px solid black;
+  border-radius: 5px;
+  z-index: 9999;
+}
+
 /* Stile per la sezione hero */
 .hero-text-about {
   display: flex;

@@ -403,3 +403,7 @@ border-radius: 5px; /* Add rounded corners */
 .pagament-menu .button-common:hover {
     background-color: var(--interaction-color);
 }
+
+table h2{
+    text-align: center; 
+}

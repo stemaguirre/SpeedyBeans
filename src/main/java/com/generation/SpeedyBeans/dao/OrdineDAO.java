@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
-
+import com.generation.SpeedyBeans.entities.Prodotto;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -28,6 +28,7 @@ public class OrdineDAO implements IDAO<Ordine> {
     private PersonaDAO personaDAO;
 
     private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale, data_ordine) VALUES (?, ?, ?, ?, ?)";
+    private final String insertOrdineProdotti = "INSERT INTO Ordini_Prodotti (id_ordine, id_ean) VALUES (?, ?)";
 
     private final String readAllOrdini = "SELECT id_ordine as id, id_persona, quantita, iva, totale, data_ordine FROM ordini";
 
@@ -66,6 +67,10 @@ public class OrdineDAO implements IDAO<Ordine> {
             o.getDataOrdine().toString()
         );
 
+        for (Prodotto p : o.getProdotti()){
+            database.executeUpdate(insertOrdineProdotti, String.valueOf(id), String.valueOf(p.getId()));
+        }
+ 
         return id;
     }
 
