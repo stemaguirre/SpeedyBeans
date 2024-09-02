@@ -8,6 +8,7 @@
     --bg-color: #DDD0AE;
 }
 
+
 /*Nav Menu Color*/
 :root {
     --nav-bg-color:#D4AB73;
@@ -256,3 +257,79 @@ td:first-child {
 .button-common:hover {
     background-color: var(--interaction-color);
 }
+
+
+
+/* Stile generale per la barra dei filtri */
+/* Impostazioni di base per l'elemento body per garantire il 100% della larghezza */
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Stile generale per la barra dei filtri */
+.filter-bar {
+    width: 100%; /* Occupa tutta la larghezza della pagina */
+    display: flex;
+    flex-wrap: nowrap; /* Evita il wrapping degli elementi su più righe */
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #BD8544; /* Usa il colore di sfondo definito nelle variabili */
+    border-radius: 5px;
+    align-items: center; /* Allinea verticalmente gli elementi al centro */
+    box-sizing: border-box; /* Assicura che il padding non ecceda la larghezza */
+}
+
+.filter-bar form {
+    display: flex;
+    flex-wrap: nowrap; /* Impedisce agli elementi di avvolgersi */
+    gap: 20px;
+    width: 100%; /* Assicura che il form occupi tutta la larghezza disponibile */
+    align-items: center; /* Allinea verticalmente gli elementi del form */
+    box-sizing: border-box; /* Garantisce che il padding non ecceda la larghezza */
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permette agli elementi di crescere uniformemente */
+    min-width: 150px; /* Imposta una larghezza minima per evitare che gli elementi si restringano troppo */
+    box-sizing: border-box; /* Assicura che il padding non ecceda la larghezza */
+}
+
+.filter-item label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.filter-item input, .filter-item select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%; /* Assicura che l'input prenda tutta la larghezza del contenitore */
+    box-sizing: border-box; /* Garantisce che il padding non ecceda la larghezza dell'elemento */
+}
+
+.filter-bar button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #723C1A; /* Usa il colore del bottone definito nelle variabili */
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    height: fit-content; /* Assicura che il pulsante si adatti al contenuto */
+    align-self: flex-end; /* Allinea il pulsante alla fine del form */
+    margin-left: 20px; /* Distanza tra il pulsante e gli input */
+    white-space: nowrap; /* Impedisce che il testo del pulsante vada a capo */
+}
+
+.filter-bar button:hover {
+    background-color: #0056b3;
+}
+
+
+
