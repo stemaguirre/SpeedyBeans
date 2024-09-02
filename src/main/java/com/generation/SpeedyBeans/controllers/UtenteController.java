@@ -64,11 +64,11 @@ public class UtenteController {
 
         if(role != null && role.equals("A") && p != null){
             Utente u = context.getBean(Utente.class, params);
-            List<Ordine> ordini = ordineService.findByIdPersona(Integer.parseInt(params.get("id")));
+            List<Ordine> ordini = ordineService.findByIdPersona(u.getId());
             u.setOrdini(ordini);
             utenteService.create(u);
             as.setMessage("Utente inserito correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/utente/tutti-gli-utenti";
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "homepage.html";
@@ -101,7 +101,7 @@ public class UtenteController {
             u.setOrdini(ordini);
             utenteService.update(u);
             as.setMessage("Utente modificato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/utente/tutti-gli-utenti";
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "homepage.html";
@@ -119,7 +119,7 @@ public class UtenteController {
             String password = "1234";
             utenteService.createOrUpdateUser(idUtente, username, password);
             as.setMessage("User creato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/utente/tutti-gli-utenti";
         }
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
@@ -312,7 +312,7 @@ public class UtenteController {
             carrello = (List<Prodotto>)session.getAttribute("carrello");
             if(carrello == null){
                 as.setMessage("Carrello vuoto");
-                return "redirect:prodotto/tutti-i-prodotti";
+                return "carrello.html";
             }
             for(Prodotto prodotto : carrello){
                 o.setTotale(o.getTotale() + prodotto.getPrezzo());
@@ -340,8 +340,10 @@ public class UtenteController {
         if(role != null && (role.equals("U") || role.equals("A")) && p != null){
             List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             Ordine o = (Ordine)session.getAttribute("ordine");
-            o.setTotale(o.getTotale() + (o.getTotale() > 500 ? 0 : 49.00));
-
+            if(o != null){
+                o.setTotale(o.getTotale() + (o.getTotale() > 500 ? 0 : 49.00));
+            }
+            
             model.addAttribute("ordine", o);
             return "checkout.html";
         }

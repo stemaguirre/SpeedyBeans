@@ -8,12 +8,64 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <div>
-        <button onclick="toggleInsert()">Inserisci</button>
-    </div>
     <a href="/ordine/tutti-gli-ordini">Indietro</a>
+    <br>
+    <br>
+    <div>
+        <button onclick="toggleInsertCaffe()">Inserisci Caffè</button>
+        <button onclick="toggleInsertMacchinetta()">Inserisci Macchinetta</button>
+    </div>
+    <!-- Form inserimento caffe -->
+    <div id="insert-caffe" hidden>
+        <form action="/caffe/insert" method="post">
+            
+            <label for="brand">Brand</label>
+            <input type="text" name="brand" id="insert-caffe-brand">
+            <label for="prezzo">Prezzo</label>
+            <input type="number" name="prezzo" id="insert-caffe-prezzo">
+            <label for="disponibilita">Disponibilità</label>
+            <input type="number" name="disponibilita" id="insert-caffe-disponibilita">
+            <label for="peso">Peso</label>
+            <input type="number" name="peso" id="insert-caffe-peso">
+            <label for="tipologia">Tipologia</label>
+            <input type="text" name="tipologia" id="insert-caffe-tipologia">
+            <label for="dataproduzione">Data Produzione</label>
+            <input type="date" name="dataproduzione" id="insert-caffe-dataproduzione">
+            <label for="datascadenza">Data Scadenza</label>
+            <input type="date" name="datascadenza" id="insert-caffe-datascadenza">
+            <label for="formato">Formato</label>
+            <input type="text" name="formato" id="insert-caffe-formato">
+            <button type="submit">Invia</button>
+        </form>
+    </div>
+    <!-- Form inserimento macchinetta -->
+    <div id="insert-macchinetta" hidden> 
+        <form action="/macchinetta/insert" method="post">
+    
+            <label for="brand">Brand</label>
+            <input type="text" name="brand" id="insert-macchinetta-brand">
+            <label for="prezzo">Prezzo</label>
+            <input type="number" name="prezzo" id="insert-macchinetta-prezzo">
+            <label for="disponibilita">Disponibilità</label>
+            <input type="number" name="disponibilita" id="insert-macchinetta-disponibilita">
+            <label for="peso">Peso</label>
+            <input type="number" name="peso" id="insert-macchinetta-peso">
+            <label for="utilizzo">Utilizzo</label>
+            <input type="text" name="utilizzo" id="insert-macchinetta-utilizzo">
+            <label for="colore">Colore</label>
+            <input type="text" name="colore" id="insert-macchinetta-colore">
+            <label for="modello">Modello</label>
+            <input type="text" name="modello" id="insert-macchinetta-modello">
+            <label for="serbatoio">Serbatoio</label>
+            <input type="number" name="serbatoio" id="insert-macchinetta-serbatoio">
+            <button type="submit">Invia</button>
+        </form>
+    </div>
     <table>
         <thead>
+            <tr>
+                <th colspan="13">Ordini</th>
+            </tr>
             <tr>
                 <th>Genere</th>
                 <th>Brand</th>
@@ -28,7 +80,7 @@
                 <th>Colore</th>
                 <th>Modello</th>
                 <th>Serbatoio</th>
-                <th>Modifica</th>
+                <th>Elimina</th>
             </tr>
         </thead>
         <tbody>   
@@ -63,55 +115,7 @@
         </tfoot>
         
     </table>
-    <div id="insert" hidden>
-        <p>Cosa vuoi inserire?</p>
-        <button onclick="openInsertCaffe()">Caffe</button>
-        <button onclick="openInsertMacchinetta()">Macchinetta</button>
-    </div>
-    <div id="insert-caffe" hidden>
-        <form action="/caffe/insert" method="post">
-            
-            <label for="brand">Brand</label>
-            <input type="text" name="brand" id="insert-caffe-brand">
-            <label for="prezzo">Prezzo</label>
-            <input type="number" name="prezzo" id="insert-caffe-prezzo">
-            <label for="disponibilita">Disponibilità</label>
-            <input type="number" name="disponibilita" id="insert-caffe-disponibilita">
-            <label for="peso">Peso</label>
-            <input type="number" name="peso" id="insert-caffe-peso">
-            <label for="tipologia">Tipologia</label>
-            <input type="text" name="tipologia" id="insert-caffe-tipologia">
-            <label for="dataproduzione">Data Produzione</label>
-            <input type="date" name="dataproduzione" id="insert-caffe-dataproduzione">
-            <label for="datascadenza">Data Scadenza</label>
-            <input type="date" name="datascadenza" id="insert-caffe-datascadenza">
-            <label for="formato">Formato</label>
-            <input type="text" name="formato" id="insert-caffe-formato">
-            <button type="submit">Inserisci</button>
-        </form>
-    </div>
-    <div id="insert-macchinetta" hidden> 
-        <form action="/macchinetta/insert" method="post">
     
-            <label for="brand">Brand</label>
-            <input type="text" name="brand" id="insert-macchinetta-brand">
-            <label for="prezzo">Prezzo</label>
-            <input type="number" name="prezzo" id="insert-macchinetta-prezzo">
-            <label for="disponibilita">Disponibilità</label>
-            <input type="number" name="disponibilita" id="insert-macchinetta-disponibilita">
-            <label for="peso">Peso</label>
-            <input type="number" name="peso" id="insert-macchinetta-peso">
-            <label for="utilizzo">Utilizzo</label>
-            <input type="text" name="utilizzo" id="insert-macchinetta-utilizzo">
-            <label for="colore">Colore</label>
-            <input type="text" name="colore" id="insert-macchinetta-colore">
-            <label for="modello">Modello</label>
-            <input type="text" name="modello" id="insert-macchinetta-modello">
-            <label for="serbatoio">Serbatoio</label>
-            <input type="number" name="serbatoio" id="insert-macchinetta-serbatoio">
-            <button type="submit">Inserisci</button>
-        </form>
-    </div>
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
