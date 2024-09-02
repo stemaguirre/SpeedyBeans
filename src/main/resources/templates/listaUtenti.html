@@ -22,7 +22,7 @@
         </div>
         <div class="search-bar">
             <form action="/utente/cerca-utenti" method="get">
-                <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
+                <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti per nome, cognome o p.iva">
                 <input type="submit" value="Cerca" hidden>
             </form>
         </div>
@@ -46,11 +46,7 @@
                     </a>
                 </div>
             </div>
-
     </div><!-- ======= Chiusura Header ======= -->
-
-    
-
 
 
     <!-- Tabella di visualizzazione -->
@@ -58,7 +54,7 @@
         <thead>
             <tr>
                 <th colspan="5"><h2>Utenti</h2></th>
-                    <td><button onclick="toggleInsertUtente()">Inserisci</button></td>
+                    <td><button class="button-common" onclick="toggleInsertUtente()">Inserisci utente</button></td>
             </tr>
             <tr>
                 <th>Nome</th>
@@ -70,68 +66,94 @@
             </tr>
         </thead>
         <tbody>
-                <tr th:each="utente : ${listaUtenti}">
+            <tr th:each="utente : ${listaUtenti}">
                 <td th:text="${utente.nome}"></td>
                 <td th:text="${utente.cognome}"></td>
                 <td th:text="${utente.email}"></td>
-                <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|toggleUpdateUtente(`${utente.id}`,
-                    `${utente.nome}`,
-                    `${utente.cognome}`,
-                    `${utente.ragioneSociale}`,
-                    `${utente.partitaIva}`,
-                    `${utente.codiceSdi}`,
-                    `${utente.indirizzo}`,
-                    `${utente.citta}`,
-                    `${utente.cap}`,
-                    `${utente.provincia}`,
-                    `${utente.nazione}`,
-                    `${utente.telefono}`,
-                    `${utente.email}`)|">Modifica</button></td>
+                <div class="tb-buttons">
+                    
+                        <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button class="button-common">Dettaglio</button></a></td>
+                  
+                    
+                        <td><a th:href="|/utente/delete/${utente.id}|"><button class="button-common">Elimina</button></a></td>
+                 
+                   
+                            <td>
+                                <button class="button-common" th:attr="onclick=|toggleUpdateUtente(`${utente.id}`,
+                                    `${utente.nome}`,
+                                    `${utente.cognome}`,
+                                    `${utente.ragioneSociale}`,
+                                    `${utente.partitaIva}`,
+                                    `${utente.codiceSdi}`,
+                                    `${utente.indirizzo}`,
+                                    `${utente.citta}`,
+                                    `${utente.cap}`,
+                                    `${utente.provincia}`,
+                                    `${utente.nazione}`,
+                                    `${utente.telefono}`,
+                                    `${utente.email}`)|">Modifica</button>
+                            </td>
+                   
+            </div>
             </tr>
         </tbody>
     </table>
 
 
 
-
-
     <!-- Form di inserimento -->
-    <div id="insert-utente" hidden>
+    <div id="insert-utente" class="modal-form" hidden>
+        
+        
         <form action="/utente/insert" method="post">
+            
             <label for="nome">Nome</label>
             <input type="text" name="nome" id="insert-utente-nome">
+
             <label for="cognome">Cognome</label>
             <input type="text" name="cognome" id="insert-utente-cognome">
-            <label for="email">Ragione Sociale</label>
+            
+            <label for="ragione-sociale">Ragione Sociale</label>
             <input type="text" name="ragionesociale" id="insert-utente-ragionesociale">
-            <label for="email">Partita Iva</label>
-            <input type="text" name="partitaiva" id="insert-utente-partitaiva">
-            <label for="email">Codice SDI</label>
-            <input type="text" name="codicesdi" id="insert-utente-codicesdi">
-            <label for="email">Indirizzo</label>
+            
+            <label for="indirizzo">Indirizzo</label>
             <input type="text" name="indirizzo" id="insert-utente-indirizzo">
-            <label for="email">Città</label>
+            
+            <label for="citta">Città</label>
             <input type="text" name="citta" id="insert-utente-citta">
-            <label for="email">Cap</label>
+            
+            <label for="cap">Cap</label>
             <input type="text" name="cap" id="insert-utente-cap">
-            <label for="email">Provincia</label>
+
+            <label for="provincia">Provincia</label>
             <input type="text" name="provincia" id="insert-utente-provincia">
-            <label for="email">Nazione</label>
+            
+            <label for="nazione">Nazione</label>
             <input type="text" name="nazione" id="insert-utente-nazione">
-            <label for="email">Telefono</label>
+
+            <label for="p-iva">Partita Iva</label>
+            <input type="text" name="partitaiva" id="insert-utente-partitaiva">
+            
+            <label for="codice-sdi">Codice SDI</label>
+            <input type="text" name="codicesdi" id="insert-utente-codicesdi">            
+            
+            <label for="telefono">Telefono</label>
             <input type="text" name="telefono" id="insert-utente-telefono">
+            
             <label for="email">Email</label>
             <input type="email" name="email" id="insert-utente-email">
-            <input type="submit" value="Invia">
+            
+            <div class="button-container">
+                <button type="submit" value="Invia">INVIA</button>
+                <button type="button" onclick="document.querySelector('#insert-utente').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div>
     
     
     
     <!-- Form di modifica -->
-    <div id="update-utente" hidden>
+    <div id="update-utente" class="modal-form" hidden>
         <form action="/utente/update" method="post">
             <input type="hidden" name="id" id="update-utente-id">
             <label for="nome">Nome</label>
@@ -158,10 +180,12 @@
             <input type="text" name="telefono" id="update-utente-telefono">
             <label for="email">Email</label>
             <input type="email" name="email" id="update-utente-email">
-            <input type="submit" value="Invia">
+            <div class="button-container">
+            <button type="submit">INVIA</button>
+            <button type="button" onclick="document.querySelector('#update-utente').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div>
-   
    
     
     <div id="message-modal" th:if="${message} != null">
