@@ -35,29 +35,18 @@
     --interaction-botton-color: #36251E; 
 }
 
-.icon-button {
-    color: white;
-    font-family: var(--default-font);
-    font-size: 18px;
-    border: none;
-    padding: 10px 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    background-color: var(--interaction-button-color);
-}
-
-.icon-button:hover {
-    background-color: var(--interaction-button-hover-color); /* Aggiungi una variabile per il colore di hover */
+.cart {
+    display: flex;
+    margin-right: 20px;
 }
 
 .cart img {
+    width: 87px;
     height: 55px;
-    width: 55px;
 }
 
 
 .logout-button {
-    flex-direction: linear ;
     background-color: var(--nav-botton-color);
     color: white;
     font-family: var(--default-font);
@@ -69,7 +58,23 @@
 }
 
 .logout-button:hover {
-    background-color: var(--interaction-button-color);
+    background-color: var(--interaction-color);
+}
+
+/* tasto indietro  */
+.back-button{
+    background-color: var(--nav-botton-color);
+    color: white;
+    font-family: var(--default-font);
+    font-size: 18px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: var(--interaction-color);
 }
 
 h1 {
