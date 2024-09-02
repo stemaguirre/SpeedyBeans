@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I miei dati</title>
+    <title>Lista Utenti</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/tabelle.css">
@@ -36,7 +36,7 @@
 
             <div class="auth-buttons">
                 <div>
-                    <a href="/utente/tutti-gli-utenti">
+                    <a href="/area-admin">
                         <button class="back-button">INDIETRO</button>
                     </a>
                 </div>
@@ -79,7 +79,8 @@
                  
                    
                             <td>
-                                <button class="button-common" th:attr="onclick=|toggleUpdateUtente(`${utente.id}`,
+                                <button class="button-common" th:attr="onclick=|toggleUpdateUtente(
+                                    `${utente.id}`,
                                     `${utente.nome}`,
                                     `${utente.cognome}`,
                                     `${utente.ragioneSociale}`,
@@ -91,7 +92,8 @@
                                     `${utente.provincia}`,
                                     `${utente.nazione}`,
                                     `${utente.telefono}`,
-                                    `${utente.email}`)|">Modifica</button>
+                                    `${utente.email}`
+                                    `${utente.password}`)|">Modifica</button>
                             </td>
                    
             </div>
@@ -142,6 +144,9 @@
             
             <label for="email">Email</label>
             <input type="email" name="email" id="insert-utente-email">
+
+            <label for="password">Password</label>
+            <input type="text" name="password" id="insert-utente-password">
             
             <div class="button-container">
                 <button type="submit" value="Invia">INVIA</button>

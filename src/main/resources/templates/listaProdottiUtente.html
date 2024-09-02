@@ -5,20 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutti i Prodotti</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
 <body>
+
+ <!-- ======= Header ======= -->
+ <div class="header">
+    <div class="left-side">
+        <div class="logo">
+            <a href="/area-utente">
+                <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </a>
+        </div>
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/utente/ordini" class="">Ordini</a></li>
+            <li><a href="/utente/profile" class="">I mei dati</a></li>
+        </ul>
+    </nav>
+
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div>
+                    <a href="/area-utente">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout">
+                        <button class="logout-button">LOGOUT</button>
+                    </a>
+                </div>
+            </div>
+
+    </div><!-- ======= Chiusura Header ======= -->
+
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
         <p th:text="${message}"></p>
     </div>
-    <div class="search-bar">
+
+    <button onclick="apriRicerca()">Filtri</button>
+    
+    <a href="utente/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
+
+
+    <div class="drop-menu">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
+
             <div id="filtri-caffes" hidden>
                 <span>Caffè</span>
                 <!-- Dropdown for brand caffè -->
-                <select name="brand" id="src-utn-brand">
+                <select  name="brand" id="src-utn-brand">
                     <option value="" disabled selected>Brand caffè</option>
                     <option value="lavazza">Lavazza</option>
                     <option value="illy">Illy</option>
@@ -86,19 +130,9 @@
             </div>
         </form>      
     </div>
-    
-    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
-    <br>
-    <br>
 
-    <button onclick="apriRicerca()">Filtri</button>
-    
-    <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
-    <br>
-    <br>
-    <a href="/area-utente">Indietro</a>
-    <br>
-    <br>
+   
+
     <div id="tabella-caffes">
         <table>
             <thead>
@@ -154,6 +188,5 @@
             </tbody>
         </table>
     </div>  
-    
 </body>
 </html>

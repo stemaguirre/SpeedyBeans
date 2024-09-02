@@ -15,6 +15,10 @@
     --interaction-botton-color: #36251E; 
 }
 
+.section-no-bg {
+    background-size: cover;
+    background-color: var(--bg-color);
+}
 
 /* Stile della tabella dettagli*/
 
@@ -55,51 +59,6 @@ td:first-child {
     padding-left: 100px;
 }
 
-/* modal form */
-
-
-
-
-.modal-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.modal-form input[type="text"],
-.modal-form input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.modal-form .button-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.modal-form button {
-    padding: 5px 10px; /* Riduce il padding dei bottoni */
-    background-color: var(--nav-botton-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px; /* Riduce la dimensione del font */
-    width: 48%;
-}
-
-.modal-form .button-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.modal-form button[type="button"]:hover {
-    background-color: var(--interaction-color);
-}
 
 .tb-users td:first-child {
     font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
@@ -125,8 +84,8 @@ td:first-child {
 
 
 
-
 /* Stile generale per il form modale */
+
 .modal-form {
     position: fixed;
     top: 50%;
