@@ -11,102 +11,48 @@
 </head>
 
 <body>
-
- <!-- ======= Header ======= -->
- <div class="header">
-    <div class="left-side">
-        <div class="logo">
-            <a href="/area-admin">
-                <img src="/img/logo/logo-speedybeans.png" alt="Logo">
-            </a>
-        </div>
-        <div class="search-bar">
-            <form action="/utente/cerca-utenti" method="get">
-                <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti per nome, cognome o p.iva">
-                <input type="submit" value="Cerca" hidden>
-            </form>
-        </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
     </div>
-    <nav class="navbar">
-        <ul>
-            <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
-            <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
-        </ul>
-    </nav>
-
-            <div class="auth-buttons">
-                <div>
-                    <a href="/area-admin">
-                        <button class="back-button">INDIETRO</button>
-                    </a>
-                </div>
-                <div>
-                    <a href="/logout">
-                        <button class="logout-button">LOGOUT</button>
-                    </a>
-                </div>
+ <!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+                <a href="/area-admin">
+                    <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+                </a>
             </div>
+            <div class="search-bar">
+                <form action="/utente/cerca-utenti" method="get">
+                    <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti per nome, cognome o p.iva">
+                    <input type="submit" value="Cerca" hidden>
+                </form>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
+            </ul>
+        </nav>
+
+        <div class="auth-buttons">
+            <div>
+                <a href="/area-admin">
+                    <button class="back-button">INDIETRO</button>
+                </a>
+            </div>
+            <div>
+                <a href="/logout">
+                    <button class="logout-button">LOGOUT</button>
+                </a>
+            </div>
+        </div>
     </div><!-- ======= Chiusura Header ======= -->
-
-
-    <!-- Tabella di visualizzazione -->
-    <table class="tb-oriz">
-        <thead>
-            <tr>
-                <th colspan="5"><h2>Utenti</h2></th>
-                    <td><button class="button-common" onclick="toggleInsertUtente()">Inserisci utente</button></td>
-            </tr>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Email</th>
-                <th>Dettaglio</th>
-                <th>Elimina</th>
-                <th>Modifica</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="utente : ${listaUtenti}">
-                <td th:text="${utente.nome}"></td>
-                <td th:text="${utente.cognome}"></td>
-                <td th:text="${utente.email}"></td>
-                <div class="tb-buttons">
-                    
-                        <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button class="button-common">Dettaglio</button></a></td>
-                  
-                    
-                        <td><a th:href="|/utente/delete/${utente.id}|"><button class="button-common">Elimina</button></a></td>
-                 
-                   
-                            <td>
-                                <button class="button-common" th:attr="onclick=|toggleUpdateUtente(
-                                    `${utente.id}`,
-                                    `${utente.nome}`,
-                                    `${utente.cognome}`,
-                                    `${utente.ragioneSociale}`,
-                                    `${utente.partitaIva}`,
-                                    `${utente.codiceSdi}`,
-                                    `${utente.indirizzo}`,
-                                    `${utente.citta}`,
-                                    `${utente.cap}`,
-                                    `${utente.provincia}`,
-                                    `${utente.nazione}`,
-                                    `${utente.telefono}`,
-                                    `${utente.email}`
-                                    `${utente.password}`)|">Modifica</button>
-                            </td>
-                   
-            </div>
-            </tr>
-        </tbody>
-    </table>
-
-
-
     <!-- Form di inserimento -->
     <div id="insert-utente" class="modal-form" hidden>
-        
-        
         <form action="/utente/insert" method="post">
             
             <label for="nome">Nome</label>
@@ -150,10 +96,10 @@
             
             <div class="button-container">
                 <button type="submit" value="Invia">INVIA</button>
-                <button type="button" onclick="document.querySelector('#insert-utente').hidden=true">CHIUDI</button>
+                <button onclick="document.querySelector('#insert-utente').hidden=true">CHIUDI</button>
             </div>
         </form>
-    </div>
+    </div> 
     <!-- Form di modifica -->
     <div id="update-utente" class="modal-form" hidden>
         <form action="/utente/update" method="post">
@@ -183,17 +129,54 @@
             <label for="email">Email</label>
             <input type="email" name="email" id="update-utente-email">
             <div class="button-container">
-            <button type="submit">INVIA</button>
-            <button type="button" onclick="document.querySelector('#update-utente').hidden=true">CHIUDI</button>
+                <button type="submit">INVIA</button>
+                <button onclick="document.querySelector('#update-utente').hidden=true">CHIUDI</button>
             </div>
         </form>
     </div>
-   
-    
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
+    <!-- Tabella di visualizzazione -->
+    <table class="tb-oriz">
+        <thead>
+            <tr>
+                <th colspan="5"><h2>Utenti</h2></th>
+                <th><button class="button-common" onclick="toggleInsertUtente()">Inserisci</button></th>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Dettaglio</th>
+                <th>Elimina</th>
+                <th>Modifica</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="utente : ${listaUtenti}">
+                <td th:text="${utente.nome}"></td>
+                <td th:text="${utente.cognome}"></td>
+                <td th:text="${utente.email}"></td>
+                <div class="tb-buttons">   
+                <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button class="button-common">Dettaglio</button></a></td>
+                <td><a th:href="|/utente/delete/${utente.id}|"><button class="button-common">Elimina</button></a></td>
+                <td>
+                    <button class="button-common" th:attr="onclick=|toggleUpdateUtente(
+                                    `${utente.id}`,
+                                    `${utente.nome}`,
+                                    `${utente.cognome}`,
+                                    `${utente.ragioneSociale}`,
+                                    `${utente.partitaIva}`,
+                                    `${utente.codiceSdi}`,
+                                    `${utente.indirizzo}`,
+                                    `${utente.citta}`,
+                                    `${utente.cap}`,
+                                    `${utente.provincia}`,
+                                    `${utente.nazione}`,
+                                    `${utente.telefono}`,
+                                    `${utente.email}`)|">Modifica
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
