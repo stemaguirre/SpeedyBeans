@@ -33,5 +33,10 @@
         <br>
         <a href="/">Torna all'homepage</a>
     </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
 </body>
 </html>

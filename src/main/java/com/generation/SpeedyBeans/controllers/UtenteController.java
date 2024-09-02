@@ -2,6 +2,7 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.DateUtils;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
@@ -354,9 +358,14 @@ public class UtenteController {
         if(role != null && (role.equals("U") || role.equals("A")) && p != null){
             List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             Ordine o = (Ordine)session.getAttribute("ordine");
+            o.setIdPersona(p.getId());
+            o.setPersona(p);
+            o.setProdotti(carrello);
+            LocalDate localDate = LocalDate.now();
+            o.setDataOrdine(Date.valueOf(localDate));
             model.addAttribute("ordine", o);
             model.addAttribute("carrello", carrello);
-            o.setPersona((Utente)p);
+            
             ordineService.create(o);
             as.setMessage("Pagamento effettuato con successo");
             model.addAttribute("messagge", as.getMessage());
@@ -365,9 +374,6 @@ public class UtenteController {
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
         return "redirect:/loginpage";
-    }
-    
-    
-    
+    }  
     
 }

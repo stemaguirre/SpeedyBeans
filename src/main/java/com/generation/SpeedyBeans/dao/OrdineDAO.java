@@ -27,7 +27,7 @@ public class OrdineDAO implements IDAO<Ordine> {
     @Autowired
     private PersonaDAO personaDAO;
 
-    private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale, data_ordine) VALUES (?, ?, ?, ?)";
+    private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale, data_ordine) VALUES (?, ?, ?, ?, ?)";
 
     private final String readAllOrdini = "SELECT id_ordine as id, id_persona, quantita, iva, totale, data_ordine FROM ordini";
 
@@ -62,7 +62,8 @@ public class OrdineDAO implements IDAO<Ordine> {
             String.valueOf(o.getPersona().getId()), 
             String.valueOf(o.getQuantita()), 
             o.isIva() ? "1" : "0", 
-            String.valueOf(o.getTotale())
+            String.valueOf(o.getTotale()),
+            o.getDataOrdine().toString()
         );
 
         return id;
@@ -95,7 +96,8 @@ public class OrdineDAO implements IDAO<Ordine> {
             String.valueOf(o.getQuantita()),
             o.isIva() ? "1" : "0", 
             String.valueOf(o.getTotale()),
-            String.valueOf(o.getId())
+            String.valueOf(o.getId()),
+            o.getDataOrdine().toString()
         );
 
     }
