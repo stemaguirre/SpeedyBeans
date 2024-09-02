@@ -265,6 +265,29 @@ td:first-child {
     background-color: var(--interaction-color);
 }
 
+.ck-button{
+    width: 100%;
+    padding: 10px;
+    background-color: var(--nav-botton-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-style: bold;
+    text-align: center;
+    
+}
+.ck-button button{
+    widht: 300px;
+    height: 50px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.ck-button:hover {
+    background-color: var(--interaction-color);
+}
+
 .search-bar {
     display: flex;
     align-items: center; /* Center items horizontally */
@@ -301,3 +324,4 @@ color: white; /* Set text color for the submit button */
 border: none; /* Remove border */
 border-radius: 5px; /* Add rounded corners */
 }
+

@@ -6,6 +6,7 @@
     <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
     <script src="/js/carousel.js"></script>
 </head>
@@ -48,11 +49,12 @@
     </div> <!-- ======= Chiusura Header ======= -->
     <h1>Checkout</h1>
     <p>Scegli la modalità di pagamento: </p>
-    <p><button class="button-common"  onclick="document.querySelector('#carta-di-credito').hidden=false">Carta di Credito</button></p>
-    <br>
-    <p><button class="button-common" >Bonifico Bancario</button></p>
-    <br>
-    <p><button class="button-common" >Contrassegno</button></p>
+    <div class="ck-button">
+        <button class="button-common"  onclick="document.querySelector('#carta-di-credito').hidden=false">Carta di Credito</button>
+        <button class="button-common" >Bonifico Bancario</button>
+        <button class="button-common" >Contrassegno</button>
+    </div>
+    
 
     <div id="carta-di-credito" hidden>
         <form action="/pagamento" th:object="${ordine}" method="post">
