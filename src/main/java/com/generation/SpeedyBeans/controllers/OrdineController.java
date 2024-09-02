@@ -140,6 +140,7 @@ public class OrdineController {
             if(a != null){
                 o.setPersona(a);
             }
+            o.setProdotti(prodotti);
            
             model.addAttribute("listaProdotti", prodotti);
             model.addAttribute("ordine", o);
@@ -156,6 +157,7 @@ public class OrdineController {
             prodotti.addAll(macchinette);
 
             Ordine o = ordineService.readById(idOrdine);
+            o.setProdotti(prodotti);
 
             model.addAttribute("listaProdotti", prodotti);
             model.addAttribute("ordine", o);

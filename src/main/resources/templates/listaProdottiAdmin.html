@@ -28,6 +28,7 @@
     </div>
     <nav class="navbar">
         <ul>
+            <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
             <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
             <li><a href="/utente/tutti-gli-utenti" class="">Utenti</a></li>
         </ul>
@@ -197,50 +198,6 @@
             </div>
         </form>
     </div>
-    <!-- Tabella caffes -->
-    <div id="tabella-caffes">
-        <br>
-        <table class="tb-oriz">
-            <thead>
-                <tr>
-                    <th colspan="7">Caffè</th>
-                    <th> <button class="button-common" onclick="toggleInsertCaffe()">Inserisci</button></th>
-                </tr>
-                <tr>
-                    <th>Brand</th>
-                    <th>Prezzo</th>
-                    <th>Tipologia</th>
-                    <th>Formato</th>
-                    <th>Dettaglio</th>
-                    <th>Carrello</th>
-                    <th>Modifica</th>
-                    <th>Elimina</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'C'">
-                    <td th:text="${prodotto.brand}"></td>
-                    <td th:text="${prodotto.prezzo}"></td>
-                    <td th:text="${prodotto.tipologia}"></td>
-                    <td th:text="${prodotto.formato}"></td>
-                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button class="button-common">Dettaglio</button></a></td>
-                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button class="button-common">Aggiungi</button></a></td>
-                    <td><button class="button-common" onclick="toggleUpdateCaffe()" th:attr="onclick=|toggleUpdateCaffe(`${prodotto.id}`,
-                        `${prodotto.genere}`,
-                        `${prodotto.brand}`,
-                        `${prodotto.prezzo}`,
-                        `${prodotto.disponibilita}`,
-                        `${prodotto.peso}`,
-                        `${prodotto.tipologia}`,
-                        `${prodotto.dataProduzione}`,
-                        `${prodotto.dataScadenza}`,
-                        `${prodotto.formato}`)|">Modifica</button>
-                    </td>
-                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button class="button-common">Elimina</button></a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
     <br>
     <br>
     <!-- Form per inserire Macchinetta -->
@@ -297,12 +254,14 @@
     </div> 
     <!-- Tabella caffes -->
     <div id="tabella-caffes">
-        
+        <br>
         <table class="tb-oriz">
             <thead>
                 <tr>
-                    <th colspan="7">Caffè</th>
-                    <td><button class="button-common" onclick="toggleInsertCaffe()">Inserisci</button></td>
+                    <th colspan="7">
+                        <h2>Caffè</h2>
+                    </th>
+                    <th> <button class="button-common" onclick="toggleInsertCaffe()">Inserisci</button></th>
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -323,7 +282,7 @@
                     <td th:text="${prodotto.formato}"></td>
                     <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button class="button-common">Dettaglio</button></a></td>
                     <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button class="button-common">Aggiungi</button></a></td>
-                    <td><button class="button-common" onclick="toggleUpdateCaffe()" th:attr="onclick=|openUpdateCaffe(`${prodotto.id}`,
+                    <td><button class="button-common" onclick="toggleUpdateCaffe()" th:attr="onclick=|toggleUpdateCaffe(`${prodotto.id}`,
                         `${prodotto.genere}`,
                         `${prodotto.brand}`,
                         `${prodotto.prezzo}`,
@@ -348,7 +307,9 @@
         <table class="tb-oriz">
             <thead>
                 <tr>
-                    <th colspan="7">Macchinette</th>
+                    <th colspan="7">
+                        <h2>Macchinette</h2>
+                    </th>
                 <td><button class="button-common" onclick="toggleInsertMacchinetta()">Inserisci</button></td>
                 </tr>
                 <tr>

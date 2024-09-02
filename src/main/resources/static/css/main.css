@@ -23,7 +23,8 @@
     --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
     --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
     --interaction-color: #A1450B; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
-    --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
+    --contrast-color: #ffffff;
+    --bg-color: #DDD0AE;
 }
 
 /*Nav Menu Color*/
@@ -60,7 +61,8 @@ nav a:hover {
 
 body {
   font-family: var(--default-font), sans-serif;
-  color: var(--nav-bg-color);
+  color: var(--defoult-text-color);
+  background-color: var(--bg-color);
 }
 
 
@@ -205,33 +207,6 @@ body {
     padding: 50px;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-.hero-text-about{
-  font: var(--default-font);
-  color: var(--heading-color);
-  font-size: 30px;
-  font-style: bold;
-  font-style: italic;
-  align-items: left;
-  margin-top: 30px;
-  margin-left: 50px;
-}
-
-.hero-text-about h2{
-  font: var(--default-font);
-  color: var(--heading-color);
-  font-size: 50px;
-  align-items: left;
-  margin-top: 20px;
-}
-
-.hero-text-about p{
-  font: var(--default-font);
-  color: var(--heading-color);
-  font-size: 30px;
-  align-items: left;
-  margin-top: 20px;
 }
 
 .hero-text {
@@ -400,4 +375,71 @@ body {
 .order-detail-table tfoot td {
   font-weight: bold;
   background-color: #f4f4f4;
+}
+
+#message-modal{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(209, 166, 86);
+  padding: 15px;
+  border: 2px solid black;
+  border-radius: 5px;
+  z-index: 9999;
+}
+
+/* Stile per la sezione hero */
+.hero-text-about {
+  display: flex;
+  font-family: var(--default-font);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 50px 20px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+/* Stile per il contenitore principale del testo */
+.paragrafo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Stile per il titolo */
+.paragrafo h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: var(--defoult-text-color);
+}
+
+/* Stile per il paragrafo principale */
+.paragrafo p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  font-family: var(--default-font);
+  color: var(--defoult-text-color);
+  margin-bottom: 20px;
+}
+
+/* Stile per il secondo paragrafo */
+.paragrafo2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.paragrafo2 p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  font-family: var(--default-font);
+  color: var(--defoult-text-color);
+  margin-bottom: 20px;
 }

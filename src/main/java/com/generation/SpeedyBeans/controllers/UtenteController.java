@@ -310,6 +310,8 @@ public class UtenteController {
                 o.setTotale(o.getTotale() + prodotto.getPrezzo());
             }
             o.setTotale(Math.round(o.getTotale() * 100.0) / 100.0);
+            o.setQuantita(carrello.size());
+            o.setProdotti(carrello);
 
             model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);
@@ -367,8 +369,7 @@ public class UtenteController {
             model.addAttribute("carrello", carrello);
             
             ordineService.create(o);
-            as.setMessage("Pagamento effettuato con successo");
-            model.addAttribute("messagge", as.getMessage());
+        
             return "confermaAcquisto.html";
         }
         as.setMessage("Errore richiesta non autorizzata");
