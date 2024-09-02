@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 
+
 @Controller
 public class AppController {
     
@@ -12,5 +13,13 @@ public class AppController {
     public String root() {
         return "homepage.html";
     }
+
+    @GetMapping("/chi-siamo")
+    public String chiSiamo() {
+        return "chiSiamo.html";
+    }
+    
     
 }
+
+

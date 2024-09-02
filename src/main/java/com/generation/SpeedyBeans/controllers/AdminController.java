@@ -1,21 +1,12 @@
 package com.generation.SpeedyBeans.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.entities.Utente;
-import com.generation.SpeedyBeans.services.AppService;
-import com.generation.SpeedyBeans.services.UtenteService;
 
-import jakarta.servlet.http.HttpSession;
+import com.generation.SpeedyBeans.services.UtenteService;
 
 @Controller
 @RequestMapping("/admin")

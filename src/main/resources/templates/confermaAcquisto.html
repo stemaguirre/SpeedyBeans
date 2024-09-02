@@ -11,6 +11,7 @@
     <div>
         <h2>Grazie per il tuo acquisto! Ecco il riepilogo del tuo ordine:</h2>
         <p>Totale: <span th:text="${ordine.totale}"></span></p>
+        <p>Spedizione: <span th:text="${ordine.totale > 500} ? 0 : 49.00"></span></p>
         <table>
             <thead>
                 <tr>
