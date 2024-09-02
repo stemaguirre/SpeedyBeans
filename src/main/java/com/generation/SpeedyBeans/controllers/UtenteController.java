@@ -230,28 +230,17 @@ public class UtenteController {
 
     @GetMapping("/cerca-utenti")
     public String cercaProdotto(Model model,
-        @RequestParam(name = "cognome", defaultValue = "") String cognome,
-        @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,
-        @RequestParam(name = "username", defaultValue = "") String username,
+        @RequestParam(name = "query", defaultValue = "") String query,
         HttpSession session
         ){
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
         
-        List<Utente> utenti = new ArrayList<>();
-        Utente u = null;
+        List<Utente> utenti = utenteService.findByQuery(query);
 
-        if(cognome != "" || partitaIva != "" || username != ""){
-            utenti = utenteService.findByFilters(partitaIva, cognome);
-            u = utenteService.findByUsername(username);
-            if(u != null){
-                utenti.add(u);
-            }
-        }
-       
         if(utenti.isEmpty()){
-            as.setMessage("Nessun prodotto trovato");
+            as.setMessage("Nessun utente trovate");
         }
 
         model.addAttribute("listaUtenti", utenti);
@@ -261,7 +250,7 @@ public class UtenteController {
         } else {
             as.setMessage("Errore richiesta non autorizzata");
             session.invalidate();
-            return "loginpage.html";
+            return "redirect:/loginpage";
         }
     }
 
@@ -310,8 +299,7 @@ public class UtenteController {
             Ordine o = new Ordine();
             carrello = (List<Prodotto>)session.getAttribute("carrello");
             if(carrello == null){
-                // as.setMessage("Carrello vuoto");
-                // model.addAttribute("message", as.getMessage());
+                model.addAttribute("message", as.getMessage());
                 return "carrello.html";
             }
             for(Prodotto prodotto : carrello){
@@ -321,6 +309,7 @@ public class UtenteController {
 
             model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);
+            model.addAttribute("message", as.getMessage());
             session.setAttribute("carrello", carrello);
             session.setAttribute("ordine", o);
             return "carrello.html";
@@ -345,6 +334,7 @@ public class UtenteController {
             }else{
                 as.setMessage("Carrello vuoto");
                 model.addAttribute("message", as.getMessage());
+                return "redirect:/utente/vai-al-carrello";
             }
             model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);

@@ -33,17 +33,10 @@ public class UtenteService extends GenericService<Utente, UtenteDAO> {
         return u;
     }
 
-    // public List<Utente> utentiRegistrati(){
-    //     List<Utente> ris = new ArrayList<>();
+    public List<Utente> findByQuery(String query){
 
-    //     Map<Integer, Entity> utenti = getRepository().readRegistrati();
-
-    //     for (Entity e : utenti.values()) {
-    //         ris.add((Utente) e);
-    //     }
-
-    //     return ris;
-    // }
+        return getRepository().findByQuery(query);
+    }
 
 }
 
