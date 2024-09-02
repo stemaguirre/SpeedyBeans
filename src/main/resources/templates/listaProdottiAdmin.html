@@ -5,10 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutti i Prodotti</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <div class="search-bar">
+
+    <!-- ======= Header ======= -->
+ <div class="header">
+    <div class="left-side">
+        <div class="logo">
+            <a href="/area-utente">
+                <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </a>
+        </div>
+        <div class="search-bar">
+            <form action="/prodotto/tutti-i-prodotti" method="get">
+                <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti perodotti">
+                <input type="submit" value="Cerca" hidden>
+            </form>
+        </div>
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
+            <li><a href="/utente/tutti-gli-utenti" class="">Utenti</a></li>
+        </ul>
+    </nav>
+
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div>
+                    <a href="/area-admin">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout">
+                        <button class="logout-button">LOGOUT</button>
+                    </a>
+                </div>
+            </div>
+
+    </div><!-- ======= Chiusura Header ======= -->
+
+    <div id="message-modal" th:if="${message} != null">
+        <button type="submit" onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
+
+    <div class="button-menu">
+        <button class="back-button" onclick="apriRicerca()">Filtri</button>
+        <a href="/prodotto/tutti-i-prodotti"><button class="back-button">Annulla ricerca</button></a>
+    </div>
+
+<div class="flex-container">
+    <div class="filter-menu">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
             <div id="filtri-caffes" hidden>
                 <span>Caffè</span>
@@ -82,26 +137,12 @@
             </div>
         </form>      
     </div>
-    
-    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
-    <br>
-    <br>
-    
-    <div id="message-modal" th:if="${message} != null">
-        <p th:text="${message}"></p>
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-    </div>
+</div>  
+   
 
-    <button onclick="apriRicerca()">Filtri</button>
 
-    <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
-    <br>
-    <br>
-    <a href="/area-admin">Indietro</a>
-    <br>
-    <br>
     <!-- Form per inserire Caffè -->
-    <div id="insert-caffe" hidden>
+    <div id="insert-caffe" class="modal-form" hidden>
         <form action="/caffe/insert" method="post">
             <label for="brand">Brand</label>
             <input type="text" name="brand" id="insert-caffe-brand">
@@ -120,15 +161,19 @@
             <label for="formato">Formato</label>
             <input type="text" name="formato" id="insert-caffe-formato">
 
-            <button type="submit">Invia</button>
+            <div class="button-container">
+                <button type="submit" value="Invia">INVIA</button>
+                <button type="button" onclick="document.querySelector('#insert-caffe').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div>
+
+
     <!-- Form per modificare caffè -->
-    <div id="update-caffe" hidden>
+    <div id="update-caffe" class="modal-form" hidden>
         <form action="/caffe/update" method="post">
             <input type="hidden" name="id" id="update-caffe-id">
             <input type="hidden" name="genere" id="update-caffe-genere">
-
             <label for="brand">Brand</label>
             <input type="text" name="brand" id="update-caffe-brand">
             <label for="prezzo">Prezzo</label>
@@ -146,11 +191,14 @@
             <label for="formato">Formato</label>
             <input type="text" name="formato" id="update-caffe-formato">
             
-            <button type="submit">Invia</button>
+            <div class="button-container">
+                <button type="submit" value="Invia">INVIA</button>
+                <button type="button" onclick="document.querySelector('#update-caffe').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div>
     <!-- Form per inserire Macchinetta -->
-    <div id="insert-macchinetta" hidden> 
+    <div id="insert-macchinetta" class="modal-form" hidden> 
         <form action="/macchinetta/insert" method="post">
             <label for="brand">Brand</label>
             <input type="text" name="brand" id="insert-macchinetta-brand">
@@ -168,15 +216,17 @@
             <input type="text" name="modello" id="insert-macchinetta-modello">
             <label for="serbatoio">Serbatoio</label>
             <input type="number" name="serbatoio" id="insert-macchinetta-serbatoio">
-            <button type="submit">Invia</button>
+            <div class="button-container">
+                <button type="submit" value="Invia">INVIA</button>
+                <button type="button" onclick="document.querySelector('#insert-macchinetta').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div>
     <!-- Form per modificare macchinetta -->
-    <div id="update-macchinetta" hidden>
+    <div id="update-macchinetta" class="modal-form" hidden>
         <form action="/macchinetta/update" method="post">
             <input type="hidden" name="id" id="update-macchinetta-id">
             <input type="hidden" name="genere" id="update-macchinetta-genere">
-
             <label for="brand">Brand</label>
             <input type="text" name="brand" id="update-macchinetta-brand">
             <label for="prezzo">Prezzo</label>
@@ -185,7 +235,6 @@
             <input type="number" name="disponibilita" id="update-macchinetta-disponibilita">
             <label for="peso">Peso</label>
             <input type="number" name="peso" id="update-macchinetta-peso">
-
             <label for="utilizzo">Utilizzo</label>
             <input type="text" name="utilizzo" id="update-macchinetta-utilizzo">
             <label for="colore">Colore</label>
@@ -194,17 +243,20 @@
             <input type="text" name="modello" id="update-macchinetta-modello">
             <label for="serbatoio">Serbatoio</label>
             <input type="number" name="serbatoio" id="update-macchinetta-serbatoio">
-            <button type="submit">Invia</button>
+            <div class="button-container">
+                <button type="submit" value="Invia">INVIA</button>
+                <button type="button" onclick="document.querySelector('#update-macchinetta').hidden=true">CHIUDI</button>
+            </div>
         </form>
     </div> 
     <!-- Tabella caffes -->
     <div id="tabella-caffes">
-        <button onclick="toggleInsertCaffe()">Inserisci</button>
-        <br>
-        <table>
+        
+        <table class="tb-oriz">
             <thead>
                 <tr>
-                    <th colspan="6">Caffè</th>
+                    <th colspan="7">Caffè</th>
+                    <td><button class="button-common" onclick="toggleInsertCaffe()">Inserisci</button></td>
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -223,9 +275,9 @@
                     <td th:text="${prodotto.prezzo}"></td>
                     <td th:text="${prodotto.tipologia}"></td>
                     <td th:text="${prodotto.formato}"></td>
-                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
-                    <td><button onclick="toggleUpdateCaffe()" th:attr="onclick=|openUpdateCaffe(`${prodotto.id}`,
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button class="button-common">Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button class="button-common">Aggiungi</button></a></td>
+                    <td><button class="button-common" onclick="toggleUpdateCaffe()" th:attr="onclick=|openUpdateCaffe(`${prodotto.id}`,
                         `${prodotto.genere}`,
                         `${prodotto.brand}`,
                         `${prodotto.prezzo}`,
@@ -236,7 +288,7 @@
                         `${prodotto.dataScadenza}`,
                         `${prodotto.formato}`)|">Modifica</button>
                     </td>
-                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button>Elimina</button></a></td>
+                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button class="button-common">Elimina</button></a></td>
                 </tr>
             </tbody>
         </table>
@@ -245,12 +297,13 @@
     <br>
     <!-- Tabella macchinette -->
     <div id="tabella-macchinette">
-        <button onclick="toggleInsertMacchinetta()">Inserisci</button>
+        
         <br>
-        <table>
+        <table class="tb-oriz">
             <thead>
                 <tr>
-                    <th colspan="6">Macchinette</th>
+                    <th colspan="7">Macchinette</th>
+                <td><button class="button-common" onclick="toggleInsertMacchinetta()">Inserisci</button></td>
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -269,9 +322,9 @@
                     <td th:text="${prodotto.prezzo}"></td>
                     <td th:text="${prodotto.utilizzo}"></td>
                     <td th:text="${prodotto.colore}"></td>
-                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
-                    <td><button onclick="toggleUpdateMacchinetta()" th:attr="onclick=|openUpdateMacchinetta(`${prodotto.id}`,
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button class="button-common">Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button class="button-common">Aggiungi</button></a></td>
+                    <td><button class="button-common" onclick="toggleUpdateMacchinetta()" th:attr="onclick=|openUpdateMacchinetta(`${prodotto.id}`,
                         `${prodotto.genere}`,
                         `${prodotto.brand}`,
                         `${prodotto.prezzo}`,
@@ -282,7 +335,7 @@
                         `${prodotto.modello}`,
                         `${prodotto.serbatoio}`)|">Modifica</button>
                     </td>
-                    <td><a th:href="|/macchinetta/delete/${prodotto.id}|"><button>Elimina</button></a></td>
+                    <td><a th:href="|/macchinetta/delete/${prodotto.id}|"><button class="button-common">Elimina</button></a></td>
 
                 </tr>
             </tbody>

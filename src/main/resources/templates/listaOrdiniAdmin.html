@@ -76,26 +76,17 @@
                 <input type="date" name="data_fine" id="data_fine">
             </div>
 
-            <button type="submit">Applica Filtri</button>
+            <button class="button-common" type="submit">Applica Filtri</button>
         </form>
     </div>
-
-    <a href="/area-admin">Indietro</a>
-    <br>
-    <br>
-
-    <div>
-        <button onclick="toggleInsert()">Inserisci</button>
-    </div>
-    
-
     <table class="tb-oriz">
         <thead>
             <tr>
                 <th colspan="8">
                     Ordini
                 </th>
-            </tr>
+                   <td><button class="button-common" onclick="toggleInsert()">Inserisci</button></td>
+                </tr>
             <tr>
                 <th>ID</th>
                 <th>Committente</th>
@@ -116,11 +107,14 @@
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva ? 'Sì' : 'No'}"></td>
                 <td th:text="${ordine.dataOrdine}"></td> <!-- Mostra la data dell'ordine -->
-                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/ordine/delete/${ordine.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|openUpdateOrdine(${ordine.id}, ${ordine.idPersona}, ${ordine.totale}, ${ordine.quantita}, ${ordine.iva ? 'Sì' : 'No'})|">Modifica</button></td>
+                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button class="button-common">Dettaglio</button></a></td>
+                <td><a th:href="|/ordine/delete/${ordine.id}|"><button class="button-common">Elimina</button></a></td>
+                <td><button class="button-common" th:attr="onclick=|openUpdateOrdine(${ordine.id}, 
+                    ${ordine.idPersona}, 
+                    ${ordine.totale}, 
+                    ${ordine.quantita}, 
+                    ${ordine.iva ? 'Sì' : 'No'})|">Modifica</button></td>
             </tr>
-            
         </tbody>
     </table>
 
