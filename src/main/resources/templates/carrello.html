@@ -8,6 +8,11 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     <a href="/area-utente">Indietro</a>
     <table>
         <thead>
@@ -16,6 +21,7 @@
                 <th>Brand</th>
                 <th>Prezzo</th>
                 <th>Iva</th>
+                <th>Rimuovi</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +30,7 @@
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${#numbers.formatDecimal(prodotto.prezzo * 22 /100, 1, 2)}"></td>
+                <td><a th:href="|/ordine/rimuovi/${prodotto.id}|"><button>Rimuovi</button></a></td>></td>
             </tr>
         </tbody>
         <tfoot>
@@ -38,10 +45,6 @@
         </tfoot>
     </table>
     <a href="/utente/checkout"><button>Checkout</button></a>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
+    
 </body>
 </html>

@@ -22,7 +22,7 @@
         </div>
         <div class="search-bar">
             <form action="/utente/cerca-utenti" method="get">
-                <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
+                <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti per nome, cognome o p.iva">
                 <input type="submit" value="Cerca" hidden>
             </form>
         </div>
@@ -63,6 +63,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Cognome</th>
+                <th>Partita Iva</th>
                 <th>Email</th>
                 <th>Dettaglio</th>
                 <th>Elimina</th>
@@ -73,6 +74,7 @@
                 <tr th:each="utente : ${listaUtenti}">
                 <td th:text="${utente.nome}"></td>
                 <td th:text="${utente.cognome}"></td>
+                <td th:text="${utente.partitaIva}"></td>
                 <td th:text="${utente.email}"></td>
                 <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>

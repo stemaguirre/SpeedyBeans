@@ -1,10 +1,7 @@
 package com.generation.SpeedyBeans.dao;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -239,6 +236,8 @@ public class OrdineDAO implements IDAO<Ordine> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'readById'");
     }
+
+    
     
 
 
