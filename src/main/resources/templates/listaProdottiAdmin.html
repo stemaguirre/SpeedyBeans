@@ -8,7 +8,42 @@
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
-<body>
+<body><!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+                <a href="/area-admin">
+                    <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+                </a>
+            </div>
+            <div class="search-bar">
+                <form action="/utente/cerca-utenti" method="get">
+                    <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti per nome, cognome o p.iva">
+                    <input type="submit" value="Cerca" hidden>
+                </form>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
+                <li><a href="/utente/tutti-gli-utenti" class="">Utenti</a></li>
+            </ul>
+        </nav>
+
+        <div class="auth-buttons">
+            <div>
+                <a href="/area-admin">
+                    <button class="button-common">INDIETRO</button>
+                </a>
+            </div>
+            <div>
+                <a href="/logout">
+                    <button class="button-common">LOGOUT</button>
+                </a>
+            </div>
+        </div>
+    </div><!-- ======= Chiusura Header ======= -->
+    <!-- Sezione ricerca con filtri -->
     <div class="search-bar">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
             <div id="filtri-caffes" hidden>
@@ -98,9 +133,6 @@
     <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
     <br>
     <br>
-    <a href="/area-admin">Indietro</a>
-    <br>
-    <br>
     <!-- Form per inserire Caffè -->
     <div id="insert-caffe" hidden>
         <form action="/caffe/insert" method="post">
@@ -154,7 +186,7 @@
     <div id="tabella-caffes">
         <button onclick="toggleInsertCaffe()">Inserisci</button>
         <br>
-        <table>
+        <table class="tb-oriz">
             <thead>
                 <tr>
                     <th colspan="6">Caffè</th>
@@ -248,7 +280,7 @@
     <div id="tabella-macchinette">
         <button onclick="toggleInsertMacchinetta()">Inserisci</button>
         <br>
-        <table>
+        <table class="tb-oriz">
             <thead>
                 <tr>
                     <th colspan="6">Macchinette</th>
