@@ -5,11 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettaglio Ordine</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <table class="order-detail-table">
+
+<!-- ======= Header ======= -->
+<div class="header">
+    <div class="left-side">
+        <div class="logo">
+         <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+        </div>
+        <div class="search-bar">
+            <form action="/prodotto/cerca-prodotti" method="get">
+                <input type="text" name="brand" id="src-utn-brand" placeholder="Cerca prodotti per brand">
+            </form>
+        </div>
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+            <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+            <li><a href="/utente/profile" class="">I miei dati</a></li>
+        </ul>
+    </nav>
+
+    <div class="right-side">
+        <div class="auth-buttons">
+            <div class="cart">
+                <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+            </div>
+            <div>
+                <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+            </div>
+        </div>
+    </div> 
+</div> <!-- ======= Chiusura Header ======= -->
+
+<div class="tb-container">
+    <table class="tb-oriz">
         <thead>
             <tr>
                 <th>Genere</th>
@@ -44,13 +79,18 @@
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? prodotto.serbatoio : '-'}"></td>
             </tr>
         </tbody>
-        <tfoot>
+    </table>
+</div>
+    <table class="tb-oriz">
+        <tbody>
             <tr>
-                <td colspan="12" style="text-align: right;">Totale</td>
+                <th>Totale</th>
                 <td th:text="${ordine.totale}"></td>
             </tr>
-        </tfoot>
+        </tbody>
     </table>
+
+
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>

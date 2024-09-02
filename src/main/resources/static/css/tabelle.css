@@ -33,6 +33,12 @@ td:first-child {
     padding-left: 200px;
 }
 
+/* Contenitore per la tabella */
+.tb-container {
+    width: 1536px; /* Imposta una larghezza fissa per il contenitore */
+    max-width: 100%; /* Imposta una larghezza massima per il contenitore */
+    overflow-x: auto; /* Aggiunge lo scorrimento orizzontale se necessario */
+}
 
 /* Stile specifico per la tabella tb-oriz */
 .tb-oriz {
@@ -272,56 +278,39 @@ td:first-child {
     background-color: var(--interaction-color);
 }
 
-.ck-button{
-    width: 100%;
-    padding: 10px;
-    background-color: var(--nav-botton-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-style: bold;
-    text-align: center;
-    
-}
-.ck-button button{
-    width: 300px;
-    height: 50px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-.ck-button:hover {
-    background-color: var(--interaction-color);
+/* Stile per il div ck-button */
+.ck-contanier h1 {
+    text-align: left; /* Allinea il testo al centro */
+    margin-left: 50px;
 }
 
-.search-bar {
+.ck-contanier p {
     display: flex;
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
-    gap: 20px; /* Add some space between the forms */
-    width: 100%; /* Make the search bar take up full width */
-    padding: 20px; /* Add some padding for spacing */
-  }
-  
-.search-bar form {
-display: flex;
-flex-direction: column; /* Stack form elements vertically */
-align-items: center; /* Center form elements horizontally */
-gap: 10px; /* Space between form elements */
+    margin-left: 50px;
+    font-size: 20px; /* Dimensione del font */
 }
 
-.search-bar select, 
-.search-bar input[type="submit"] {
-width: 200px; /* Set a fixed width for dropdowns and buttons */
-padding: 8px; /* Add some padding for a better appearance */
-text-align: center; /* Center the text inside the buttons and selects */
+.ck-button {
+    display: flex; /* Utilizza flexbox per allineare i bottoni */;
+    margin-top:20px;
+    flex-direction: column;
+    align-items: left;
+    gap: 10px; /* Spazio tra i bottoni */
 }
 
-.search-bar span {
-font-size: 18px; /* Increase the font size of the section title */
-font-weight: bold; /* Make the section title bold */
-margin-bottom: 10px; /* Add some space below the title */
+/* Stile per i bottoni all'interno del div ck-button */
+.ck-button button {
+    margin-left: 50px;;
+    padding: 10px 20px; /* Spazio interno per i bottoni */
+    font-size: 16px; /* Dimensione del font */
+    background-color: var(--nav-botton-color); /* Colore di sfondo */
+    color: white; /* Colore del testo */
+    border: none; /* Nessun bordo */
+    border-radius: 5px; /* Bordi arrotondati */
+    cursor: pointer; /* Puntatore a mano */
+    width: 300px; /* Larghezza dei bottoni */
+    height: 50px; /* Altezza dei bottoni */
+    transition: background-color 0.3s; /* Transizione per il cambio di colore */
 }
 
 .search-bar form input[type="submit"] {
@@ -332,7 +321,89 @@ border: none; /* Remove border */
 border-radius: 5px; /* Add rounded corners */
 }
 
+/* Stile per il contenitore principale del checkout */
+.ck-container {
+    display: flex; /* Utilizza flexbox per allineare gli elementi orizzontalmente */
+    gap: 20px; /* Spazio tra i pulsanti e il menu di pagamento */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px; /* Imposta una larghezza massima per il contenitore */
+    margin: 0 auto; /* Centra il contenitore orizzontalmente */
+}
+
+/* Stile per i bottoni di scelta del pagamento */
+.ck-button {
+    display: flex;
+    flex-direction: column; /* Dispone i bottoni in colonna */
+    gap: 10px;
+}
+
+.ck-button .button-common {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: var(--nav-botton-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.ck-button .button-common:hover {
+    background-color: --;
+}
+
+/* Stile per il menu di pagamento */
+.pagament-menu {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    text-align: left;
+}
+
+/* Stile per i campi del form */
+.pagament-menu form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.pagament-menu label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.pagament-menu input[type="text"],
+.pagament-menu input[type="date"],
+.pagament-menu input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Stile per il pulsante di pagamento */
+.pagament-menu .button-common {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: var(--nav-botton-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.pagament-menu .button-common:hover {
+    background-color: var(--interaction-color);
+}
+
 table h2{
     text-align: center; 
 }
-
