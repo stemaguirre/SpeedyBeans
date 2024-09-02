@@ -17,11 +17,6 @@
             <div class="logo">
              <img src="/img/logo/logo-speedybeans.png" alt="Logo">
             </div>
-            <div class="search-bar">
-                <form action="/prodotto/cerca-prodotti" method="get">
-                    <input type="text" name="brand" id="src-utn-brand" placeholder="Cerca prodotti per brand">
-                </form>
-            </div>
         </div>
         <nav class="navbar">
             <ul>
@@ -47,37 +42,36 @@
             </div>
         </div> 
     </div> <!-- ======= Chiusura Header ======= -->
-    <h1>Checkout</h1>
-    <p>Scegli la modalità di pagamento: </p>
-    <div class="ck-button">
-        <button class="button-common"  onclick="document.querySelector('#carta-di-credito').hidden=false">Carta di Credito</button>
-        <button class="button-common" >Bonifico Bancario</button>
-        <button class="button-common" >Contrassegno</button>
-    </div>
-    
+    <div class="ck-contanier">
+        <h1>Checkout</h1>
+        <p>Scegli la modalità di pagamento:</p>
+        <div class="ck-button">
+            <button class="button-common"  onclick="document.querySelector('#carta-di-credito').hidden=false">Carta di Credito</button>
+            <button class="button-common" >Bonifico Bancario</button>
+            <button class="button-common" >Contrassegno</button>
+        </div>
 
-    <div id="carta-di-credito" hidden>
-        <form action="/pagamento" th:object="${ordine}" method="post">
-            <label for="cardNumber">Numero Carta:</label>
-            <input type="text" id="cardNumber" name="cardNumber"><br>
-    
-            <label for="cardHolder">Titolare Carta:</label>
-            <input type="text" id="cardHolder" name="cardHolder"><br>
-    
-            <label for="expiryDate">Data di Scadenza:</label>
-            <input type="date" id="expiryDate" name="expiryDate"><br>
-    
-            <label for="cvv">CVV:</label>
-            <input type="text" id="cvv" name="cvv"><br>
-    
-            <label for="totalAmount">Importo Totale:</label>
-            <input type="number" id="totalAmount" name="totalAmount" th:field="*{totale}" readonly><br>
-            
-        </form>
-        <a href="/utente/pagamento"><button class="button-common">Paga Ora</button></a>
-        <br>
+        <div class="pagament-menu" id="carta-di-credito" hidden>
+            <form action="/pagamento" th:object="${ordine}" method="post">
+                <label for="cardNumber">Numero Carta:</label>
+                <input type="text" id="cardNumber" name="cardNumber"><br>
+        
+                <label for="cardHolder">Titolare Carta:</label>
+                <input type="text" id="cardHolder" name="cardHolder"><br>
+        
+                <label for="expiryDate">Data di Scadenza:</label>
+                <input type="date" id="expiryDate" name="expiryDate"><br>
+        
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv"><br>
+        
+                <label for="totalAmount">Importo Totale:</label>
+                <input type="number" id="totalAmount" name="totalAmount" th:field="*{totale}" readonly><br>
+                
+            </form>
+            <a href="/utente/pagamento"><button class="button-common">Paga Ora</button></a>
+        </div>
     </div>
-   
-    
+
 </body>
 </html>
