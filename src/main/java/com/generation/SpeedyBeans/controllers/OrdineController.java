@@ -1,12 +1,14 @@
 package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -192,51 +194,95 @@ public class OrdineController {
     }
 
     @GetMapping("/cerca-ordini")
-    public String cercaProdotto(Model model,
+    public String cercaOrdini(Model model,
         @RequestParam(name = "nome", defaultValue = "") String nome,
         @RequestParam(name = "cognome", defaultValue = "") String cognome,
         @RequestParam(name = "minTotale", defaultValue = "0") int minTotale,
         @RequestParam(name = "maxTotale", defaultValue = "0") int maxTotale,
+        @RequestParam(name = "data_inizio", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInizio,
+        @RequestParam(name = "data_fine", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFine,
         HttpSession session
-        ){
-        Persona p = (Persona)session.getAttribute("persona");
-        String role = (String)session.getAttribute("role");
+    ) {
+        Persona p = (Persona) session.getAttribute("persona");
+        String role = (String) session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
         List<Ordine> ordini = new ArrayList<>();
-        
-        if(nome != "" || cognome != "" || (minTotale != 0 || maxTotale != 0)){
-            ordini = ordineService.findByNomeCognomePersona(nome, cognome);
-            ordini.addAll(ordineService.findByRangeTotale(minTotale, maxTotale));
+
+        // Logica per l'admin: filtra per nome, cognome, totale e date
+        if ("A".equals(role)) {
+            if (!nome.isEmpty() || !cognome.isEmpty()) {
+                ordini = ordineService.findByNomeCognomePersona(nome, cognome);
+            }
+
+            if (minTotale > 0 || maxTotale > 0) {
+                ordini.addAll(ordineService.findByRangeTotale(minTotale, maxTotale));
+            }
+
+            if (dataInizio != null && dataFine != null) {
+                java.sql.Date startDate = java.sql.Date.valueOf(dataInizio);
+                java.sql.Date endDate = java.sql.Date.valueOf(dataFine);
+                ordini.addAll(ordineService.findByDateRange(startDate, endDate));
+            }else if(dataInizio != null && dataFine == null){
+                java.sql.Date startDate = java.sql.Date.valueOf(dataInizio);
+                ordini.addAll(ordineService.findByDateInizio(startDate));
+            }else if(dataInizio == null && dataFine != null){
+                java.sql.Date endDate = java.sql.Date.valueOf(dataFine);
+                ordini.addAll(ordineService.findByDateFine(endDate));
+            }
+
+            // Se nessun filtro è applicato, carica tutti gli ordini
+            if (ordini.isEmpty()) {
+                ordini = ordineService.readAll();
+            }
+        } 
+        // Logica per l'utente normale: carica solo i suoi ordini
+        else if ("U".equals(role)) {
+            ordini = ordineService.findByIdPersona(p.getId());
+
+            // Filtro per range di totale
+            if (minTotale > 0 || maxTotale > 0) {
+                ordini = ordini.stream()
+                    .filter(o -> o.getTotale() >= minTotale && (maxTotale == 0 || o.getTotale() <= maxTotale))
+                    .collect(Collectors.toList());
+            }
+
+            // Filtro per range di date
+            if (dataInizio != null && dataFine != null) {
+                ordini = ordini.stream()
+                    .filter(o -> !o.getDataOrdine().toLocalDate().isBefore(dataInizio) && !o.getDataOrdine().toLocalDate().isAfter(dataFine))
+                    .collect(Collectors.toList());
+            }
         }
 
-        for(Ordine o : ordini){
+        // Evitare duplicati nella lista ordini
+        ordini = ordini.stream().distinct().collect(Collectors.toList());
+
+        // Associa di nuovo la persona a ciascun ordine dopo il filtraggio
+        for (Ordine o : ordini) {
             Persona u = utenteService.readById(o.getIdPersona());
             Persona a = adminService.readById(o.getIdPersona());
-            if(u != null){
+            if (u != null) {
                 o.setPersona(u);
-            }
-            if(a != null){
+            } else if (a != null) {
                 o.setPersona(a);
             }
         }
-        
-        if(ordini.isEmpty()){
-            as.setMessage("Nessun prodotto trovato");
+
+        if (ordini.isEmpty()) {
+            as.setMessage("Nessun ordine trovato");
         }
 
         model.addAttribute("listaOrdini", ordini);
 
-        if(role != null && role.equals("A") && p != null){
+        if ("A".equals(role)) {
             return "listaOrdiniAdmin.html";
-        } else if(role != null && role.equals("U") && p != null){
+        } else if ("U".equals(role)) {
             return "listaOrdiniUtente.html";
-        } else{
-            as.setMessage("accesso non autorizzato");
+        } else {
+            as.setMessage("Accesso non autorizzato");
             return "listaProdottiHomepage.html";
         }
     }
-
-    
     
 }
