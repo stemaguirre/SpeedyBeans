@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
+    
 </head>
 <body>
 
@@ -130,10 +131,20 @@
             </div>
         </form>      
     </div>
+    
+    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
+    <br>
+    <br>
 
-   
-
-    <div id="tabella-caffes">
+    <button onclick="apriRicerca()">Filtri</button>
+    
+    <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
+    <br>
+    <br>
+    <a href="/area-utente">Indietro</a>
+    <br>
+    <br>
+    <div id="tabella-caffes" th:if="${not listaProdotti.?[genere == 'C'].isEmpty()}">
         <table>
             <thead>
                 <tr>
@@ -161,7 +172,7 @@
         </table>
     </div>
     <br>
-    <div id="tabella-macchinette">
+    <div id="tabella-macchinette" th:if="${not listaProdotti.?[genere == 'M'].isEmpty()}">
         <table>
             <thead>
                 <tr>

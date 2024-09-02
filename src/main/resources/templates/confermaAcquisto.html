@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
 <body>
@@ -32,6 +33,11 @@
         <a href="/area-utente">Torna all'area personale</a>
         <br>
         <a href="/">Torna all'homepage</a>
+    </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
     </div>
 </body>
 </html>
