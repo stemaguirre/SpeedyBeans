@@ -6,57 +6,12 @@
     <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
     <script src="/js/carousel.js"></script>
 
-    <style>
-        .filter-bar {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            flex-wrap: wrap; /* Allows items to wrap if there isn't enough space */
-        }
 
-        .filter-item {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-right: 20px;
-            flex-grow: 1; /* Allows items to take equal space */
-        }
-
-        .filter-item label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .filter-item input, .filter-item select {
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 100%; /* Makes the input take the full width of its container */
-            box-sizing: border-box; /* Ensures padding doesn't exceed the element's width */
-        }
-
-        .filter-bar button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #884c07;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            align-self: center;
-            margin-top: auto; /* Pushes the button to align with other inputs */
-        }
-
-        .filter-bar button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+   
 </head>
 <body>
     <div class="header">
@@ -124,7 +79,7 @@
     <br>
     <br>
     
-    <table>
+    <table class="tb-oriz">
         <thead>
             <tr>
                 <th colspan="6">
@@ -147,7 +102,7 @@
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva ? 'Sì' : 'No'}"></td>
                 <td th:text="${ordine.dataOrdine}"></td>
-                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
+                <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button class="button-common">Dettaglio</button></a></td>
             </tr>
         </tbody>
     </table>
