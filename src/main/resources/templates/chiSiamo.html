@@ -1,25 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SPEEDY·BEANS</title>
+    <meta name="description" content="Rifornisci il tuo negozio di caffè con SPEEDY·BEANS: l'e-commerce che garantisce spedizioni veloci e affidabili. Scopri di più!">
+    <meta name="keywords" content="caffè, rifornimento caffè, spedizione veloce, negozio caffè, e-commerce caffè">
+    
+    <!-- Favicons -->
+    <link href="src/main/resources/static/img/favicon-speedybeans.png" rel="icon">
+    <link href="src/main/resources/static/img/apple-touch-icon-speedbeans.png" rel="apple-touch-icon">
+    
+    <!-- Fonts -->
+    <link href="https://db.onlinewebfonts.com/c/066ce24dae3730ed6c648b09efaea93a?family=Acumin+Variable+Concept" rel="stylesheet">
+
+     <!-- Main CSS File -->
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/main.js"></script>
+  
+
 </head>
 <body>
+    <div>
+        <div class="header">
+            <div class="left-side" >
+                <div class="logo">
+                    <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+                </div>
+                <div class="search-bar">
+                    <form action="/prodotto/cerca-prodotti" method="get">
+                        <input type="text" name="brand" id="src-hmp-brand" placeholder="Cerca prodotti per brand">
+                        <input type="submit" value="Cerca" hidden>
+                    </form>
+                </div>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="/prodotto/tutti-i-prodotti/caffes">Caffè</a></li>
+                    <li><a href="/prodotto/tutti-i-prodotti/macchinette">Macchinette</a></li>
+                    <li><a href="/chi-siamo">Chi siamo</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+            <a href="/loginpage" class="button login">LOGIN</a>
+            <a href="/signuppage" class="button signin">SIGN IN</a>
+                <div id="login-modal" class="modal-form" hidden>
+                    <form action="/login" method="post">
+                                <label for="username">Username</label>
+                                <input type="text"  name="username" id="username">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" id="password">
+                                <input type="submit" value="Accedi">
+                    </form>
+                </div>
+                <div id="sign-in" class="modal-form" hidden>
+                    <form action="/register" method="post">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                
+                    <label for="cognome">Cognome</label>
+                    <input type="text" id="cognome" name="cognome" placeholder="Cognome" required>
+                
+                    <label for="ragione_sociale">Ragione sociale</label>
+                    <input type="text" id="ragione_sociale" name="ragione_sociale" placeholder="Ragione sociale" required>
+                
+                    <label for="indirizzo">Indirizzo di fatturazione</label>
+                    <input type="text" id="indirizzo" name="indirizzo" placeholder="Indirizzo di fatturazione" required>
+                
+                    <div class="city-province">
+                        <label for="citta">Città</label>
+                        <input type="text" id="citta" name="citta" placeholder="Città" required>
+                
+                        <label for="provincia">Provincia</label>
+                        <input type="text" id="provincia" name="provincia" placeholder="Provincia" required>
+                    </div>
+                
+                    <div class="cap-country">
+                        <label for="cap">CAP</label>
+                        <input type="text" id="cap" name="cap" placeholder="CAP" required>
+                
+                        <label for="nazione">Nazione</label>
+                        <input type="text" id="nazione" name="nazione" placeholder="Nazione" required>
+                    </div>
+                </form>
+                
+                <div class="form-right">
+                    <form>
+                        <label for="partita-iva">Partita IVA</label>
+                        <input type="text" id="partita-iva" name="partita-iva" placeholder="Partita IVA" required>
+                
+                        <label for="codice-sdi">Codice SDI</label>
+                        <input type="text" id="codice-sdi" name="codice-sdi" placeholder="Codice SDI" required>
+                
+                        <label for="numero-telefono">Numero di telefono</label>
+                        <input type="text" id="numero-telefono" name="numero-telefono" placeholder="Numero di telefono" required>
+                
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                
+                        <label for="conferma-password">Conferma Password</label>
+                        <input type="password" id="conferma-password" name="conferma-password" placeholder="Conferma Password" required>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    </div>
+   <section class="section-bg">
     <div class="hero-text-about">
-        <h2>CHI SIAMO:</h2>
-        <p>Benvenuti su Speedy · Beans, il vostro partner di fiducia per l'approvvigionamento di caffè di alta qualità e macchine da caffè professionali. Siamo un'azienda specializzata nella fornitura esclusiva ai negozi, dedicata a soddisfare le esigenze dei rivenditori con una selezione accurata di prodotti delle migliori marche.
+        <div class="paragrafo">
+            <h2>CHI SIAMO:</h2>
+        <p>Benvenuti su Speedy · Beans, il vostro partner di fiducia per l'approvvigionamento di caffè di alta qualità e macchine da caffè professionali. 
+            Siamo un'azienda specializzata nella fornitura esclusiva ai negozi, dedicata a soddisfare le esigenze dei rivenditori con una selezione accurata di prodotti delle migliori marche.
 
             La nostra missione è semplice: offrire soluzioni veloci, affidabili e su misura per il vostro business. </p>
-        <p>Siamo un'azienda italiana nata dalla passione per il caffè,
-            con l’obiettivo di offrire prodotti di qualità alle aziende.
-            La nostra missione è fornire un caffè eccellente,
-            supportato da un servizio su misura.
-            I nostri valori fondamentali sono
-            QUALITÀ, SOSTENIBILITÀ E INNOVAZIONE</p>
-                
+            <div class="paragrafo2">
+                <p>Siamo un'azienda italiana nata dalla passione per il caffè,
+                    con l’obiettivo di offrire prodotti di qualità alle aziende.
+                    La nostra missione è fornire un caffè eccellente,
+                    supportato da un servizio su misura.
+                    I nostri valori fondamentali sono
+                    QUALITÀ, SOSTENIBILITÀ E INNOVAZIONE
+                <br>
+                <br>
+                <br>
+                    Speedy Beans&trade;
+                    <br>
+                    <br>
+                    Telefono: 800900313
+                    <br>
+                    Email: speedy@gmail.com
+                    P.IVA: 62097621725
+                    <br>
+                    SEDE LEGALE: Via Tararughina Rugosa 23
+                    <br>
+                    09012 Isole Cayman
+        </p>
+                </div>
+        </div>
+        
+        
+            
+            </div>
     </div>
+</section>
+    <!-- ======= FOOTER ======= -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="left-sides">
+            <div class="footer-logo">
+                <img src="/img/logo/nome-inconrniciato.png" alt="Logo-nome">
+            </div>
+        </div>
+        <div class="footer-links">
+            <ul>
+
+                <a href="#">Termini e condizioni</a>
+                <a href="#">Cookie e privacy</a>
+                <a href="#">Contatti</a>
+            </ul>
+        </div>
+        <div class="footer-social">
+            <span>Social</span>
+            <div class="footer-social-icons">
+                <a href="#"><img class="social-icon" src="/img/social/instagram fill.png" alt="Instagram"></a>
+                <a href="#"><img class="social-icon" src="/img/social/linkedin fill.png" alt="LinkedIn"></a>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
