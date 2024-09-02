@@ -71,7 +71,7 @@ public class OrdineController {
                 return "redirect:/area-admin";
             }
             if(role.equals("U")){
-                return "redirect:/area-utente";
+                return "redirect:/ordine/tutti-gli-ordini";
             }
         }
         as.setMessage("Errore richiesta non autorizzata");
@@ -89,7 +89,7 @@ public class OrdineController {
         if(role != null && role.equals("A") && p != null){
             ordineService.delete(idOrdine);
             as.setMessage("Ordine eliminato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/ordine/tutti-gli-ordini";
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "homepage.html";
@@ -107,7 +107,7 @@ public class OrdineController {
             o.setProdotti(prodotti);
             ordineService.update(o);
             as.setMessage("Ordine modificato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/ordine/tutti-gli-ordini";
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "loginpage.html";
@@ -183,6 +183,7 @@ public class OrdineController {
                 }
             }
             model.addAttribute("listaOrdini", ordini);
+            model.addAttribute("message", as.getMessage());
             return "listaOrdiniAdmin.html";
         }
         as.setMessage("Errore richiesta non autorizzata");
