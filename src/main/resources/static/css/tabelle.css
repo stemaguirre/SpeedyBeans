@@ -33,6 +33,12 @@ td:first-child {
     padding-left: 200px;
 }
 
+/* Contenitore per la tabella */
+.tb-container {
+    width: 1536px; /* Imposta una larghezza fissa per il contenitore */
+    max-width: 100%; /* Imposta una larghezza massima per il contenitore */
+    overflow-x: auto; /* Aggiunge lo scorrimento orizzontale se necessario */
+}
 
 /* Stile specifico per la tabella tb-oriz */
 .tb-oriz {
