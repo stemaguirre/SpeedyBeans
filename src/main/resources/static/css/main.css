@@ -113,6 +113,7 @@ body {
 
 .auth-buttons {
   display: flex;
+  margin-right: 50px;
   gap: 10px;
 }
 
@@ -212,7 +213,7 @@ body {
   font-style: bold;
   font-style: italic;
   align-items: left;
-  margin-top: 15px;
+  margin-top: 30px;
   margin-left: 50px;
 }
 
@@ -221,9 +222,16 @@ body {
   color: var(--heading-color);
   font-size: 50px;
   align-items: left;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
+.hero-text-about p{
+  font: var(--default-font);
+  color: var(--heading-color);
+  font-size: 30px;
+  align-items: left;
+  margin-top: 20px;
+}
 
 .hero-text {
     flex: 1;
@@ -238,12 +246,14 @@ body {
     font-size: 3.5rem;
     font-weight: bold;
     margin-bottom: 10px;
+    margin-right: 40px;
     font-style: italic;
 }
 
 .hero-text p {
     font-size: 2rem;
     margin-bottom: 30px;
+    margin-right: 40px;
     font-style: italic;
 }
 
