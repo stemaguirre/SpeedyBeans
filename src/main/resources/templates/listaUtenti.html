@@ -78,7 +78,7 @@
             <input type="text" name="telefono" id="update-utente-telefono">
             <label for="email">Email</label>
             <input type="email" name="email" id="update-utente-email">
-            <input type="submit" value="Modifica">
+            <input type="submit" value="Invia">
         </form>
     </div>
     <!-- Tabella di visualizzazione -->
@@ -103,7 +103,7 @@
                 <td th:text="${utente.email}"></td>
                 <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|openUpdateUtente(`${utente.id}`,
+                <td><button th:attr="onclick=|toggleUpdateUtente(`${utente.id}`,
                     `${utente.nome}`,
                     `${utente.cognome}`,
                     `${utente.ragioneSociale}`,
