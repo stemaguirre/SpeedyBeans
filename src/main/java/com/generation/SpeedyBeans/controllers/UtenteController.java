@@ -83,7 +83,7 @@ public class UtenteController {
         if(role != null && role.equals("A") && p != null){
             utenteService.delete(idUtente);
             as.setMessage("Utente eliminato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/utente/tutti-gli-utenti";
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "homepage.html";
@@ -218,11 +218,14 @@ public class UtenteController {
             List<Utente> utenti = utenteService.readAll();
             persone.addAll(utenti);
             model.addAttribute("listaUtenti", persone);
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
             return "listaUtenti.html";
         }
-        as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
-        return "homepage.html";
+        return "redirect:/loginpage";
     }
 
     @GetMapping("/cerca-utenti")

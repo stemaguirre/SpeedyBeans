@@ -140,7 +140,7 @@ public class LoginController {
         utenteService.create(u);
 
         as.setMessage("User registrato correttamente");
-        return "loginpage.html";
+        return "redirect:/loginpage";
         
     }
 

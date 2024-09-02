@@ -33,21 +33,26 @@ function openInsertMacchinetta() {
     document.querySelector("#insert-caffe").hidden = true;
 }
 
-function openUpdateCaffe(id, genere, brand, prezzo, disponibilita, peso,
+function toggleInsertUtente(){
+    var insert = document.querySelector("#insert-utente");
+    insert.hidden = !insert.hidden;
+}
+
+function toggleUpdateCaffe(id, genere, brand, prezzo, disponibilita, peso,
     tipologia, dataProduzione, dataScadenza, formato)
 {
     document.getElementById('update-caffe').hidden = false;
-        document.getElementById('update-macchinetta').hidden = true;
-        document.getElementById('update-caffe-id').value = id;
-        document.getElementById('update-caffe-genere').value = genere;
-        document.getElementById('update-caffe-brand').value = brand;
-        document.getElementById('update-caffe-prezzo').value = prezzo;
-        document.getElementById('update-caffe-disponibilita').value = disponibilita;
-        document.getElementById('update-caffe-peso').value = peso;
-        document.getElementById('update-caffe-tipologia').value = tipologia;
-        document.getElementById('update-caffe-dataproduzione').value = dataProduzione;
-        document.getElementById('update-caffe-datascadenza').value = dataScadenza;
-        document.getElementById('update-caffe-formato').value = formato;
+    document.getElementById('update-macchinetta').hidden = true;
+    document.getElementById('update-caffe-id').value = id;
+    document.getElementById('update-caffe-genere').value = genere;
+    document.getElementById('update-caffe-brand').value = brand;
+    document.getElementById('update-caffe-prezzo').value = prezzo;
+    document.getElementById('update-caffe-disponibilita').value = disponibilita;
+    document.getElementById('update-caffe-peso').value = peso;
+    document.getElementById('update-caffe-tipologia').value = tipologia;
+    document.getElementById('update-caffe-dataproduzione').value = dataProduzione;
+    document.getElementById('update-caffe-datascadenza').value = dataScadenza;
+    document.getElementById('update-caffe-formato').value = formato;
 }
 
 function openUpdateMacchinetta(id, genere, brand, prezzo, disponibilita, peso,

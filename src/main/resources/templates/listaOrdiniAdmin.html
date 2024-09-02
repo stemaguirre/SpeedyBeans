@@ -23,6 +23,7 @@
     <table>
         <thead>
             <tr>
+                <th>ID Ordine</th>
                 <th>Committente</th>
                 <th>Totale</th>
                 <th>Quantita'</th>
@@ -34,6 +35,7 @@
         </thead>
         <tbody>
             <tr th:each="ordine : ${listaOrdini}">
+                <td th:text="${ordine.id}"></td>
                 <td th:text="${ordine.persona.nome} + ' ' + ${ordine.persona.cognome}"></td>
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
