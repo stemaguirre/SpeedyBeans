@@ -1,0 +1,62 @@
+/*Colori globali*/
+:root{
+    --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
+    --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
+    --interaction-color: #A1450B; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
+    --active-color: #A1450B; /*Colore attivo. Viene utilizzato per evidenziare gli elementi attivi o selezionati*/
+    --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
+    --bg-color: #DDD0AE;
+}
+
+/*Nav Menu Color*/
+:root {
+    --nav-bg-color:#D4AB73;
+    --nav-botton-color: #723C1A;
+    --interaction-botton-color: #36251E; 
+}
+
+
+/* Stile della tabella */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 2px solid black;
+}
+
+td:first-child {
+    font-weight: bold;
+    padding-left: 200px;
+}
+
+/* Stile specifico per la tabella tb-users */
+.tb-users {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+.tb-users th, .tb-users td {
+    padding: 15px;
+    border: 1px solid black;
+    text-align: left; /* Allinea il testo a sinistra */
+}
+
+.tb-users th {
+    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
+    font-weight: bold;
+    padding-left: 100px;
+
+}
+
+.tb-users td:first-child {
+    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
+    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+}

@@ -3,23 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Utenti</title>
+    <title>I miei dati</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
+
 <body>
-    <div class="search-bar">
-        <form action="/utente/cerca-utenti" method="get">
-            <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
-            <input type="submit" value="Cerca" hidden>
-        </form>
+
+ <!-- ======= Header ======= -->
+ <div class="header">
+    <div class="left-side">
+        <div class="logo">
+            <a href="/area-admin">
+                <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </a>
+        </div>
+        <div class="search-bar">
+            <form action="/utente/cerca-utenti" method="get">
+                <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
+                <input type="submit" value="Cerca" hidden>
+            </form>
+        </div>
     </div>
-    <a href="/area-admin">Indietro</a>
-    <br>
-    <br>
-    <div>
-        <button onclick="toggleInsertUtente()">Inserisci</button>
-    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+            <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
+        </ul>
+    </nav>
+
+            <div class="auth-buttons">
+                <div>
+                    <a href="/utente/tutti-gli-utenti">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout">
+                        <button class="logout-button">LOGOUT</button>
+                    </a>
+                </div>
+            </div>
+
+    </div><!-- ======= Chiusura Header ======= -->
+
+    
+
+
+
+    <!-- Tabella di visualizzazione -->
+    <table class="tb-users">
+        <thead>
+            <tr>
+                <th colspan="5"><h2>Utenti</h2></th>
+                    <td><button onclick="toggleInsertUtente()">Inserisci</button></td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Dettaglio</th>
+                <th>Elimina</th>
+                <th>Modifica</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr th:each="utente : ${listaUtenti}">
+                <td th:text="${utente.nome}"></td>
+                <td th:text="${utente.cognome}"></td>
+                <td th:text="${utente.email}"></td>
+                <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
+                <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
+                <td><button th:attr="onclick=|toggleUpdateUtente(`${utente.id}`,
+                    `${utente.nome}`,
+                    `${utente.cognome}`,
+                    `${utente.ragioneSociale}`,
+                    `${utente.partitaIva}`,
+                    `${utente.codiceSdi}`,
+                    `${utente.indirizzo}`,
+                    `${utente.citta}`,
+                    `${utente.cap}`,
+                    `${utente.provincia}`,
+                    `${utente.nazione}`,
+                    `${utente.telefono}`,
+                    `${utente.email}`)|">Modifica</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+
     <!-- Form di inserimento -->
     <div id="insert-utente" hidden>
         <form action="/utente/insert" method="post">
@@ -50,6 +127,9 @@
             <input type="submit" value="Invia">
         </form>
     </div>
+    
+    
+    
     <!-- Form di modifica -->
     <div id="update-utente" hidden>
         <form action="/utente/update" method="post">
@@ -81,44 +161,8 @@
             <input type="submit" value="Invia">
         </form>
     </div>
-    <!-- Tabella di visualizzazione -->
-    <table>
-        <thead>
-            <tr>
-                <th colspan="6">Utenti</th>
-            </tr>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Email</th>
-                <th>Dettaglio</th>
-                <th>Elimina</th>
-                <th>Modifica</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="utente : ${listaUtenti}">
-                <td th:text="${utente.nome}"></td>
-                <td th:text="${utente.cognome}"></td>
-                <td th:text="${utente.email}"></td>
-                <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|toggleUpdateUtente(`${utente.id}`,
-                    `${utente.nome}`,
-                    `${utente.cognome}`,
-                    `${utente.ragioneSociale}`,
-                    `${utente.partitaIva}`,
-                    `${utente.codiceSdi}`,
-                    `${utente.indirizzo}`,
-                    `${utente.citta}`,
-                    `${utente.cap}`,
-                    `${utente.provincia}`,
-                    `${utente.nazione}`,
-                    `${utente.telefono}`,
-                    `${utente.email}`)|">Modifica</button></td>
-            </tr>
-        </tbody>
-    </table>
+   
+   
     
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>

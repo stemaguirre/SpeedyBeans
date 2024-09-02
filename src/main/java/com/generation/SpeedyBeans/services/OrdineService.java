@@ -1,6 +1,8 @@
 package com.generation.SpeedyBeans.services;
 
-
+import java.util.logging.Logger;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +100,38 @@ public class OrdineService extends GenericService<Ordine, OrdineDAO> {
         return listaOrdini;
     }
 
+    public List<Ordine> findByTotaleMinimo(int min) {
+        Map<Integer, Entity> ordini = getRepository().readByTotaleMinimo(min);
+        List<Ordine> listaOrdini = new ArrayList<>();
+        for (Entity e : ordini.values()) {
+            Ordine o = (Ordine) e;
+            Map<Integer, Entity> prodotti = prodottoDAO.readByIdOrdine(o.getId());
+            List<Prodotto> listaProdotti = new ArrayList<>();
+            for (Entity p : prodotti.values()) {
+                listaProdotti.add((Prodotto) p);
+            }
+            o.setProdotti(listaProdotti);
+            listaOrdini.add(o);
+        }
+        return listaOrdini;
+    }
+
+    public List<Ordine> findByTotaleMassimo(int max) {
+        Map<Integer, Entity> ordini = getRepository().readByTotaleMassimo(max);
+        List<Ordine> listaOrdini = new ArrayList<>();
+        for (Entity e : ordini.values()) {
+            Ordine o = (Ordine) e;
+            Map<Integer, Entity> prodotti = prodottoDAO.readByIdOrdine(o.getId());
+            List<Prodotto> listaProdotti = new ArrayList<>();
+            for (Entity p : prodotti.values()) {
+                listaProdotti.add((Prodotto) p);
+            }
+            o.setProdotti(listaProdotti);
+            listaOrdini.add(o);
+        }
+        return listaOrdini;
+    }
+
     public List<Ordine> findByNomeCognomePersona(String nome, String cognome) {
         Map<Integer, Entity> ordini = getRepository().readByNomeCognomePersona(nome, cognome);
         List<Ordine> listaOrdini = new ArrayList<>();
@@ -128,6 +162,60 @@ public class OrdineService extends GenericService<Ordine, OrdineDAO> {
             o.setProdotti(listaProdotti);
             listaOrdini.add(o);
         }
+        return listaOrdini;
+    }
+
+    public List<Ordine> findByDateRange(Date startDate, Date endDate) {
+        Map<Integer, Entity> ordini = getRepository().findByDateRange(startDate, endDate);
+        List<Ordine> listaOrdini = new ArrayList<>();
+        
+        for (Entity e : ordini.values()) {
+            Ordine o = (Ordine) e;
+            Map<Integer, Entity> prodotti = prodottoDAO.readByIdOrdine(o.getId());
+            List<Prodotto> listaProdotti = new ArrayList<>();
+            for (Entity p : prodotti.values()) {
+                listaProdotti.add((Prodotto) p);
+            }
+            o.setProdotti(listaProdotti);
+            listaOrdini.add(o);
+        }
+        
+        return listaOrdini;
+    }
+
+    public List<Ordine> findByDateInizio(Date startDate) {
+        Map<Integer, Entity> ordini = getRepository().findByDateInizio(startDate);
+        List<Ordine> listaOrdini = new ArrayList<>();
+        
+        for (Entity e : ordini.values()) {
+            Ordine o = (Ordine) e;
+            Map<Integer, Entity> prodotti = prodottoDAO.readByIdOrdine(o.getId());
+            List<Prodotto> listaProdotti = new ArrayList<>();
+            for (Entity p : prodotti.values()) {
+                listaProdotti.add((Prodotto) p);
+            }
+            o.setProdotti(listaProdotti);
+            listaOrdini.add(o);
+        }
+        
+        return listaOrdini;
+    }
+
+    public List<Ordine> findByDateFine(Date endDate) {
+        Map<Integer, Entity> ordini = getRepository().findByDateFine(endDate);
+        List<Ordine> listaOrdini = new ArrayList<>();
+        
+        for (Entity e : ordini.values()) {
+            Ordine o = (Ordine) e;
+            Map<Integer, Entity> prodotti = prodottoDAO.readByIdOrdine(o.getId());
+            List<Prodotto> listaProdotti = new ArrayList<>();
+            for (Entity p : prodotti.values()) {
+                listaProdotti.add((Prodotto) p);
+            }
+            o.setProdotti(listaProdotti);
+            listaOrdini.add(o);
+        }
+        
         return listaOrdini;
     }
 }

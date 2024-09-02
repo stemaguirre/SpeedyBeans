@@ -156,27 +156,26 @@ document.getElementById('signup-form').addEventListener('submit', function(event
     }, 2000); // 2000 millisecondi = 2 secondi
 });
 
-function apriRicercaCaffes(){
-    document.querySelector('#tabella-macchinette').hidden=true;
-    var ricerca = document.querySelector("#tabella-caffes");
-    ricerca.hidden = !ricerca.hidden;
+function apriRicerca(){
+    
     var filtri = document.querySelector("#filtri-caffes");
     filtri.hidden = !filtri.hidden;
-    document.querySelector('#filtri-macchinette').hidden=true;
+    var filtri = document.querySelector("#filtri-macchinette");
+    filtri.hidden = !filtri.hidden;
+    
     var applica = document.querySelector("#applica-filtri");
     applica.hidden = !applica.hidden;
-    var insert = document.querySelector("#insert");
-    insert.hidden = !insert.hidden;
+    
     
 }
 
 function apriRicercaMacchinette(){
-    document.querySelector('#tabella-caffes').hidden=true;
+    
     var ricerca = document.querySelector("#tabella-macchinette");
     ricerca.hidden = !ricerca.hidden;
     var filtri = document.querySelector("#filtri-macchinette");
     filtri.hidden = !filtri.hidden;
-    document.querySelector('#filtri-caffes').hidden=true;
+    
     var applica = document.querySelector("#applica-filtri");
     applica.hidden = !applica.hidden;
     var insert = document.querySelector("#insert");
@@ -186,13 +185,11 @@ function apriRicercaMacchinette(){
 function mostraRisultati(){
     var tabellaCaffes = document.querySelector("#tabella-caffes");
     var tabellaMacchinette = document.querySelector("#tabella-macchinette");
-    var filtriCaffes = document.querySelector("#filtri-caffes");
-    var filtriMacchinette = document.querySelector("#filtri-macchinette");
-    if(filtriCaffes.hidden == true){
-        tabellaCaffes.hidden = true;
-        tabellaMacchinette.hidden  = false;
-    }else if(filtriMacchinette  == true){
-        tabellaMacchinette.hidden  = true;
-        tabellaCaffes.hidden = false;
-    }
+    
+    tabellaCaffes.hidden = false;
+    tabellaMacchinette.hidden  = false;
 }
+$(document).ready(function() {
+    $('#tabella-caffes > tbody > tr').has('td:empty').hide();
+    $('#tabella-macchinette > tbody > tr').has('td:empty').hide();
+  });

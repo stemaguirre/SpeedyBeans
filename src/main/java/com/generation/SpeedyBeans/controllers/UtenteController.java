@@ -292,7 +292,6 @@ public class UtenteController {
                 as.setMessage("Prodotto aggiunto al carrello");
             }
             
-            System.out.println(as.getMessage());
             session.setAttribute("carrello", carrello);
             return "redirect:/prodotto/tutti-i-prodotti";
         }
@@ -311,7 +310,8 @@ public class UtenteController {
             Ordine o = new Ordine();
             carrello = (List<Prodotto>)session.getAttribute("carrello");
             if(carrello == null){
-                as.setMessage("Carrello vuoto");
+                // as.setMessage("Carrello vuoto");
+                // model.addAttribute("message", as.getMessage());
                 return "carrello.html";
             }
             for(Prodotto prodotto : carrello){
@@ -342,8 +342,11 @@ public class UtenteController {
             Ordine o = (Ordine)session.getAttribute("ordine");
             if(o != null){
                 o.setTotale(o.getTotale() + (o.getTotale() > 500 ? 0 : 49.00));
+            }else{
+                as.setMessage("Carrello vuoto");
+                model.addAttribute("message", as.getMessage());
             }
-            
+            model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);
             return "checkout.html";
         }
@@ -366,6 +369,7 @@ public class UtenteController {
             o.setPersona((Utente)p);
             ordineService.create(o);
             as.setMessage("Pagamento effettuato con successo");
+            model.addAttribute("messagge", as.getMessage());
             return "confermaAcquisto.html";
         }
         as.setMessage("Errore richiesta non autorizzata");

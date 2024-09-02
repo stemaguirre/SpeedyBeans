@@ -8,9 +8,15 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     <div class="search-bar">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
             <div id="filtri-caffes" hidden>
+                <span>Caffè</span>
                 <!-- Dropdown for brand caffè -->
                 <select name="brand" id="src-utn-brand">
                     <option value="" disabled selected>Brand caffè</option>
@@ -39,13 +45,12 @@
                 <!-- Submit Button -->
                 <input type="submit" value="Applica filtri">
                 <br>
-                <div id="mostra-risultati">
-                    <button onclick="mostraRisultati()">Mostra Risultati</button>
-                </div>
             </div>
         </form>  
+        <br>
         <form action="/prodotto/cerca-prodotti/macchinette" method="get">
             <div id="filtri-macchinette" hidden>
+                <span>Macchinette</span>
                 <!-- Dropdown for brand macchinetta -->
                 <select name="brand" id="src-utn-brand">
                     <option value="" disabled selected>Brand macchinetta</option>
@@ -76,37 +81,29 @@
                     <option value="oro">Oro</option>
                 </select>
                 <!-- Submit Button -->
-                <input type="submit" value="Applica filtri">
+                <input onclick="document.querySelector('#tabella-caffes').hidden=true" type="submit" value="Applica filtri">
                 <br>
-                <div id="mostra-risultati">
-                    <button onclick="mostraRisultati()">Mostra Risultati</button>
-                </div>
             </div>
         </form>      
     </div>
-    <div id="mostra-risultati">
-        <button onclick="mostraRisultati()">Mostra Risultati</button>
-    </div>
+    
     <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
     <br>
-    <a href="/area-utente">Indietro</a>
-    <div id="message-modal" th:if="${message} != null">
-        <p th:text="${message}"></p>
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-    </div>
-    <button onclick="apriRicercaCaffes()">Mostra Caffè</button>
-    <button onclick="apriRicercaMacchinette()">Mostra Macchinette</button>
+    <br>
+
+    <button onclick="apriRicerca()">Filtri</button>
+    
     <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
     <br>
-    <div id="tabella-caffes" hidden>
+    <br>
+    <a href="/area-utente">Indietro</a>
+    <br>
+    <br>
+    <div id="tabella-caffes">
         <table>
             <thead>
                 <tr>
                     <th colspan="6">Caffè</th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <!-- <th><a href="/prodotto/ordina"><button>Ordina</button></a></th> -->
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -130,15 +127,11 @@
         </table>
     </div>
     <br>
-    <div id="tabella-macchinette" hidden>
+    <div id="tabella-macchinette">
         <table>
             <thead>
                 <tr>
                     <th colspan="6">Macchinette</th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <!-- <th><a href="/prodotto/ordina"><button>Ordina</button></a></th> -->
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -160,16 +153,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
-    
-    
-    
-    
+    </div>  
     
 </body>
 </html>

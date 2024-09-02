@@ -5,33 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei ordini</title>
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/main.js" defer></script>
+    <script src="/js/main.js"></script>
+    <style>
+        .filter-bar {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-right: 20px;
+        }
+
+        .filter-item label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-item input, .filter-item select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 150px;
+        }
+
+        .filter-bar button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            align-self: center;
+        }
+
+        .filter-bar button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="search-bar">
+    <div id="message-modal" th:if="${message} != null">
+        <p th:text="${message}"></p>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+    </div>
+    
+    <div class="filter-bar">
         <form action="/ordine/cerca-ordini" method="get">
-            <input type="text" name="minTotale" id="src-hmp-mintotale" placeholder="Minimo">
-            <input type="text" name="maxTotale" id="src-hmp-maxtotale" placeholder="Massimo">
-            <input type="submit" value="Cerca">
+            <div class="filter-item">
+                <label for="src-hmp-mintotale">Totale minimo:</label>
+                <input type="number" name="minTotale" id="src-hmp-mintotale" placeholder="Minimo">
+            </div>
+
+            <div class="filter-item">
+                <label for="src-hmp-maxtotale">Totale massimo:</label>
+                <input type="number" name="maxTotale" id="src-hmp-maxtotale" placeholder="Massimo">
+            </div>
+
+            <!-- Nuovi filtri per le date dell'ordine -->
+            <div class="filter-item">
+                <label for="data_inizio">Data Inizio:</label>
+                <input type="date" name="data_inizio" id="data_inizio">
+            </div>
+
+            <div class="filter-item">
+                <label for="data_fine">Data Fine:</label>
+                <input type="date" name="data_fine" id="data_fine">
+            </div>
+
+            <button type="submit">Applica Filtri</button>
         </form>
     </div>
-    <div class="order-controls">
-        <label for="sort-order">Ordina per:</label>
-        <select id="sort-order" name="sort-order">
-            <option value="totale">Totale</option>
-            <option value="quantita">Quantità</option>
-        </select>
-    </div>
-    <table class="orders-table">
+
+    <a href="/area-utente">Indietro</a>
+    <br>
+    <br>
+    
+    <table>
         <thead>
             <tr>
-                <th colspan="8">Ordini</th>
+                <th colspan="6">
+                    Ordini
+                </th>
             </tr>
             <tr>
-                <th>ID Ordine</th>
+                <th>ID</th>
                 <th>Totale</th>
-                <th>Quantità</th>
+                <th>Quantita'</th>
                 <th>Iva</th>
+                <th>Data Ordine</th> <!-- Aggiunta colonna per la data dell'ordine -->
                 <th>Dettaglio</th>
             </tr>
         </thead>
@@ -40,17 +109,14 @@
                 <td th:text="${ordine.id}"></td>
                 <td th:text="${ordine.totale}"></td>
                 <td th:text="${ordine.quantita}"></td>
-                <td th:text="${ordine.iva == true} ? 'Sì' : 'No'"></td>
+                <td th:text="${ordine.iva ? 'Sì' : 'No'}"></td>
+                <td th:text="${ordine.dataOrdine}"></td> <!-- Mostra la data dell'ordine -->
                 <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
             </tr>
         </tbody>
     </table>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
-    <a href="/area-utente">Indietro</a>
+
+    
+    
 </body>
 </html>
-
