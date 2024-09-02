@@ -21,7 +21,7 @@
         </div>
         <div class="search-bar">
             <form action="/prodotto/tutti-i-prodotti" method="get">
-                <input type="text" name="query" id="src-hmp-query" placeholder="Cerca utenti perodotti">
+                <input type="text" name="query" id="src-hmp-query" placeholder="Cerca prodotti">
                 <input type="submit" value="Cerca" hidden>
             </form>
         </div>
@@ -193,18 +193,18 @@
             
             <div class="button-container">
                 <button type="submit" value="Invia">INVIA</button>
-                <button type="button" onclick="document.querySelector('#update-caffe').hidden=true">CHIUDI</button>
+                <button onclick="document.querySelector('#update-caffe').hidden=true">CHIUDI</button>
             </div>
         </form>
     </div>
     <!-- Tabella caffes -->
     <div id="tabella-caffes">
-        <button onclick="toggleInsertCaffe()">Inserisci</button>
         <br>
         <table class="tb-oriz">
             <thead>
                 <tr>
-                    <th colspan="6">Caffè</th>
+                    <th colspan="7">Caffè</th>
+                    <th> <button class="button-common" onclick="toggleInsertCaffe()">Inserisci</button></th>
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -223,9 +223,9 @@
                     <td th:text="${prodotto.prezzo}"></td>
                     <td th:text="${prodotto.tipologia}"></td>
                     <td th:text="${prodotto.formato}"></td>
-                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
-                    <td><button onclick="toggleUpdateCaffe()" th:attr="onclick=|toggleUpdateCaffe(`${prodotto.id}`,
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button class="button-common">Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button class="button-common">Aggiungi</button></a></td>
+                    <td><button class="button-common" onclick="toggleUpdateCaffe()" th:attr="onclick=|toggleUpdateCaffe(`${prodotto.id}`,
                         `${prodotto.genere}`,
                         `${prodotto.brand}`,
                         `${prodotto.prezzo}`,
@@ -236,7 +236,7 @@
                         `${prodotto.dataScadenza}`,
                         `${prodotto.formato}`)|">Modifica</button>
                     </td>
-                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button>Elimina</button></a></td>
+                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button class="button-common">Elimina</button></a></td>
                 </tr>
             </tbody>
         </table>
