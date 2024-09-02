@@ -8,6 +8,11 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
     <div class="search-bar">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
             <div id="filtri-caffes" hidden>
@@ -86,11 +91,6 @@
     <br>
     <br>
 
-    <div id="message-modal" th:if="${message} != null">
-        <p th:text="${message}"></p>
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-    </div>
-
     <button onclick="apriRicerca()">Filtri</button>
     
     <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
@@ -153,16 +153,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
-    </div>
-    
-    
-    
-    
+    </div>  
     
 </body>
 </html>
