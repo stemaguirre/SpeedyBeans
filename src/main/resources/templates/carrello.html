@@ -60,7 +60,7 @@
             <tr th:each="prodotto : ${carrello}">
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
-                <td th:text="${prodotto.prezzo}"></td>
+                <td th:text="${prodotto.prezzo + '€'}"></td>
                 <td th:text="${#numbers.formatDecimal(prodotto.prezzo * 22 /100, 1, 2)}"></td>
                 <td><a th:href="|/ordine/rimuovi/${prodotto.id}|"><button class="button-common">Rimuovi</button></a></td>
             </tr>

@@ -253,7 +253,7 @@
         </form>
     </div> 
     <!-- Tabella caffes -->
-    <div id="tabella-caffes">
+    <div id="tabella-caffes" th:if="${not listaProdotti.?[genere == 'C'].isEmpty()}">
         <br>
         <table class="tb-oriz">
             <thead>
@@ -277,7 +277,7 @@
             <tbody>
                 <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'C'">
                     <td th:text="${prodotto.brand}"></td>
-                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.prezzo + '€'}"></td>
                     <td th:text="${prodotto.tipologia}"></td>
                     <td th:text="${prodotto.formato}"></td>
                     <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button class="button-common">Dettaglio</button></a></td>
@@ -304,7 +304,7 @@
     <div id="tabella-macchinette">
         
         <br>
-        <table class="tb-oriz">
+        <table class="tb-oriz" th:if="${not listaProdotti.?[genere == 'M'].isEmpty()}">
             <thead>
                 <tr>
                     <th colspan="7">

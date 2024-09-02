@@ -182,7 +182,7 @@
             <tbody>
                 <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'M'">
                     <td th:text="${prodotto.brand}"></td>
-                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.prezzo + '€'}"></td>
                     <td th:text="${prodotto.utilizzo}"></td>
                     <td th:text="${prodotto.colore}"></td>
                     <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"> <button class="button-common">Dettaglio</button></a></td>
