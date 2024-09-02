@@ -15,8 +15,12 @@
     --interaction-botton-color: #36251E; 
 }
 
+.section-no-bg {
+    background-size: cover;
+    background-color: var(--bg-color);
+}
 
-/* Stile della tabella */
+/* Stile della tabella dettagli*/
 
 table {
     width: 100%;
@@ -35,28 +39,228 @@ td:first-child {
     padding-left: 200px;
 }
 
-/* Stile specifico per la tabella tb-users */
-.tb-users {
+
+
+/* Stile specifico per la tabella tb-oriz */
+.tb-oriz {
     width: 100%;
     border-collapse: collapse;
     background-color: var(--bg-color);
     overflow: hidden;
 }
 
-.tb-users th, .tb-users td {
+.tb-oriz th, .tb-oriz td {
     padding: 15px;
     border: 1px solid black;
     text-align: left; /* Allinea il testo a sinistra */
 }
 
-.tb-users th {
+.tb-oriz th {
     background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
     font-weight: bold;
     padding-left: 100px;
-
 }
 
-.tb-users td:first-child {
+
+.tb-oriz td:first-child {
     font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
     padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+}
+
+.tb-oriz th, .tb-oriz td {
+    padding: 15px;
+    border: 1px solid black;
+    text-align: left; /* Allinea il testo a sinistra */
+}
+
+.tb-oriz th {
+    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
+    font-weight: bold;
+    padding-left: 100px;
+}
+
+.tb-oriz td:first-child {
+    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
+    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+}
+
+/* Stile specifico per la tabella tb-oriz  e tb-macchinette */
+.tb-oriz {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+.tb-oriz th, .tb-oriz td {
+    padding: 15px;
+    border: 1px solid black;
+    text-align: left; /* Allinea il testo a sinistra */
+}
+
+.tb-oriz th {
+    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
+    font-weight: bold;
+    padding-left: 100px;
+}
+
+
+.tb-oriz td:first-child {
+    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
+    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+}
+
+.tb-oriz th, .tb-oriz td {
+    padding: 15px;
+    border: 1px solid black;
+    text-align: left; /* Allinea il testo a sinistra */
+}
+
+.tb-oriz th {
+    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
+    font-weight: bold;
+    padding-left: 100px;
+}
+
+.tb-oriz td:first-child {
+    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
+    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+}
+
+/* -- Filtri di ricerca -- */
+.button-menu{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    gap: 20px; /* Add some space between the forms */
+    width: 100%; /* Make the search bar take up full width */
+    padding: 20px; /* Add some padding for spacing */
+  }
+  
+  .search-bar form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+  align-items: center; /* Center form elements horizontally */
+  gap: 10px; /* Space between form elements */
+  }
+  
+  .search-bar select, 
+  .search-bar input[type="submit"] {
+  width: 100px; /* Set a fixed width for dropdowns and buttons */
+  padding: 8px; /* Add some padding for a better appearance */
+  text-align: center; /* Center the text inside the buttons and selects */
+  }
+  
+  .search-bar span {
+  font-size: 18px; /* Increase the font size of the section title */
+  font-weight: bold; /* Make the section title bold */
+  margin-bottom: 10px; /* Add some space below the title */
+  }
+  
+  .search-bar form input[type="submit"] {
+  cursor: pointer; /* Change cursor to pointer on hover */
+  background-color: #007bff; /* Set background color for the submit button */
+  color: white; /* Set text color for the submit button */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Add rounded corners */
+  }
+
+/* Stile generale per il form modale */
+
+.modal-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--heading-color);
+    padding: 20px;
+    border: 2px solid rgb(50, 50, 50);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    width: 45%; 
+    height: 90%;
+    max-width: 500px;
+    overflow-y: auto; /* Aggiunto per gestire il contenuto eccedente */
+}
+
+.modal-form h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.modal-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.modal-form input[type="text"],
+.modal-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Stile per i bottoni "Chiudi" e "Invia" nei form modali */
+.modal-form .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 150px; /* Aggiunge spazio tra i bottoni */
+}
+
+.modal-form button {
+    padding: 10px 10px; /* Riduce il padding dei bottoni */
+    background-color: var(--nav-botton-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; /* Riduce la dimensione del font */
+    width: 48%;
+}
+
+.modal-form button:hover {
+    background-color: var(--interaction-color);
+}
+
+/* Stile per il bottone "Chiudi" nei form modali */
+.modal-form .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Stile comune per i bottoni "Dettagli", "Elimina" e "Modifica" */
+.button-common {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--nav-botton-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-style: bold;
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.button-common:hover {
+    background-color: var(--interaction-color);
 }

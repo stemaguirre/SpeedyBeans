@@ -3,18 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrello</title>
+    <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
+    <script src="/js/carousel.js"></script>
 </head>
 <body>
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+             <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+            <div class="search-bar">
+                <form action="/prodotto/cerca-prodotti" method="get">
+                    <input type="text" name="brand" id="src-utn-brand" placeholder="Cerca prodotti per brand">
+                </form>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+                <li><a href="/utente/profile" class="">I miei dati</a></li>
+            </ul>
+        </nav>
+
+        <div class="right-side">
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                <div>
+                    <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+                </div>
+            </div>
+        </div> 
+    </div> <!-- ======= Chiusura Header ======= -->
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
         <p th:text="${message}"></p>
     </div>
-    <a href="/area-utente">Indietro</a>
-    <table>
+    <table class="tb-oriz">
         <thead>
             <tr>
                 <th>Genere</th>
@@ -30,7 +62,7 @@
                 <td th:text="${prodotto.brand}"></td>
                 <td th:text="${prodotto.prezzo}"></td>
                 <td th:text="${#numbers.formatDecimal(prodotto.prezzo * 22 /100, 1, 2)}"></td>
-                <td><a th:href="|/ordine/rimuovi/${prodotto.id}|"><button>Rimuovi</button></a></td>></td>
+                <td><a th:href="|/ordine/rimuovi/${prodotto.id}|"><button class="button-common">Rimuovi</button></a></td>
             </tr>
         </tbody>
         <tfoot>
@@ -40,11 +72,12 @@
                 <td></td>
                 <td>Totale</td>
                 <td th:if="${ordine}" th:text="${ordine.totale + (ordine.totale > 500 ? 0 : 49.00)}"></td>
-                
             </tr>
         </tfoot>
     </table>
-    <a href="/utente/checkout"><button>Checkout</button></a>
-    
+    <div class="button-menu">
+    <a href="/utente/checkout"><button class="button-common">Checkout</button></a>
+    <a href="/area-utente"><button class="button-common">Indietro</button></a>
+    </div>
 </body>
 </html>
