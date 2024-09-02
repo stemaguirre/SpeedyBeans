@@ -1,10 +1,7 @@
 package com.generation.SpeedyBeans.dao;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -30,7 +27,7 @@ public class OrdineDAO implements IDAO<Ordine> {
     @Autowired
     private PersonaDAO personaDAO;
 
-    private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale, data_ordine) VALUES (?, ?, ?, ?)";
+    private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale, data_ordine) VALUES (?, ?, ?, ?, ?)";
 
     private final String readAllOrdini = "SELECT id_ordine as id, id_persona, quantita, iva, totale, data_ordine FROM ordini";
 
@@ -65,7 +62,8 @@ public class OrdineDAO implements IDAO<Ordine> {
             String.valueOf(o.getPersona().getId()), 
             String.valueOf(o.getQuantita()), 
             o.isIva() ? "1" : "0", 
-            String.valueOf(o.getTotale())
+            String.valueOf(o.getTotale()),
+            o.getDataOrdine().toString()
         );
 
         return id;
@@ -98,7 +96,8 @@ public class OrdineDAO implements IDAO<Ordine> {
             String.valueOf(o.getQuantita()),
             o.isIva() ? "1" : "0", 
             String.valueOf(o.getTotale()),
-            String.valueOf(o.getId())
+            String.valueOf(o.getId()),
+            o.getDataOrdine().toString()
         );
 
     }
@@ -239,6 +238,8 @@ public class OrdineDAO implements IDAO<Ordine> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'readById'");
     }
+
+    
     
 
 

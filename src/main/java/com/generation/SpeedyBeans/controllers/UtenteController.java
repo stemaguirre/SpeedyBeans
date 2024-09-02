@@ -2,6 +2,7 @@ package com.generation.SpeedyBeans.controllers;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.DateUtils;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
@@ -230,28 +234,17 @@ public class UtenteController {
 
     @GetMapping("/cerca-utenti")
     public String cercaProdotto(Model model,
-        @RequestParam(name = "cognome", defaultValue = "") String cognome,
-        @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,
-        @RequestParam(name = "username", defaultValue = "") String username,
+        @RequestParam(name = "query", defaultValue = "") String query,
         HttpSession session
         ){
         Persona p = (Persona)session.getAttribute("persona");
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
         
-        List<Utente> utenti = new ArrayList<>();
-        Utente u = null;
+        List<Utente> utenti = utenteService.findByQuery(query);
 
-        if(cognome != "" || partitaIva != "" || username != ""){
-            utenti = utenteService.findByFilters(partitaIva, cognome);
-            u = utenteService.findByUsername(username);
-            if(u != null){
-                utenti.add(u);
-            }
-        }
-       
         if(utenti.isEmpty()){
-            as.setMessage("Nessun prodotto trovato");
+            as.setMessage("Nessun utente trovate");
         }
 
         model.addAttribute("listaUtenti", utenti);
@@ -261,7 +254,7 @@ public class UtenteController {
         } else {
             as.setMessage("Errore richiesta non autorizzata");
             session.invalidate();
-            return "loginpage.html";
+            return "redirect:/loginpage";
         }
     }
 
@@ -310,8 +303,7 @@ public class UtenteController {
             Ordine o = new Ordine();
             carrello = (List<Prodotto>)session.getAttribute("carrello");
             if(carrello == null){
-                // as.setMessage("Carrello vuoto");
-                // model.addAttribute("message", as.getMessage());
+                model.addAttribute("message", as.getMessage());
                 return "carrello.html";
             }
             for(Prodotto prodotto : carrello){
@@ -321,6 +313,7 @@ public class UtenteController {
 
             model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);
+            model.addAttribute("message", as.getMessage());
             session.setAttribute("carrello", carrello);
             session.setAttribute("ordine", o);
             return "carrello.html";
@@ -345,6 +338,7 @@ public class UtenteController {
             }else{
                 as.setMessage("Carrello vuoto");
                 model.addAttribute("message", as.getMessage());
+                return "redirect:/utente/vai-al-carrello";
             }
             model.addAttribute("carrello", carrello);
             model.addAttribute("ordine", o);
@@ -364,9 +358,14 @@ public class UtenteController {
         if(role != null && (role.equals("U") || role.equals("A")) && p != null){
             List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             Ordine o = (Ordine)session.getAttribute("ordine");
+            o.setIdPersona(p.getId());
+            o.setPersona(p);
+            o.setProdotti(carrello);
+            LocalDate localDate = LocalDate.now();
+            o.setDataOrdine(Date.valueOf(localDate));
             model.addAttribute("ordine", o);
             model.addAttribute("carrello", carrello);
-            o.setPersona((Utente)p);
+            
             ordineService.create(o);
             as.setMessage("Pagamento effettuato con successo");
             model.addAttribute("messagge", as.getMessage());
@@ -375,9 +374,6 @@ public class UtenteController {
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
         return "redirect:/loginpage";
-    }
-    
-    
-    
+    }  
     
 }
