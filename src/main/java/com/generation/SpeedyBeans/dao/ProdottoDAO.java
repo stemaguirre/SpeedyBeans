@@ -105,33 +105,21 @@ public class ProdottoDAO implements IDAO<Prodotto>
     public Map<Integer, Entity> findByFilters(String genere, String brand) {
         Map<Integer, Entity> ris = new LinkedHashMap<>();
         Map<Integer, Map<String, String>> result = null;
-    
-        if (brand == null || brand.isEmpty()) {
+
+        if(brand == null) {
             result = database.executeQuery(findByGenereLike, genere);
-        } else if (genere == null || genere.isEmpty()) {
-            result = database.executeQuery(findByBrandLike, brand);
-        } else {
+        } else if (genere == null) {
+            result = database.executeQuery(findByBrandLike, brand); 
+        }else {
             result = database.executeQuery(findByFilters, genere, brand);
         }
-    
-        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-            Prodotto p = (Prodotto) context.getBean("newProdotto", coppia.getValue());
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Prodotto p = (Prodotto)context.getBean("newProdotto", coppia.getValue());
             ris.put(p.getId(), p);
         }
-    
+
         return ris;
+
     }
-    
-    public Map<Integer, Entity> findByFilters(String utilizzo, String colore, String brand) {
-        Map<Integer, Entity> ris = new LinkedHashMap<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(findByFilters, utilizzo, colore, brand);
-    
-        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-            Prodotto p = (Prodotto) context.getBean("newProdotto", coppia.getValue());
-            ris.put(p.getId(), p);
-        }
-    
-        return ris;
-    }
-    
 }

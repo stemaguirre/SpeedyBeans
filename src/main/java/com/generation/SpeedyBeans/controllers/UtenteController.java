@@ -83,7 +83,7 @@ public class UtenteController {
         if(role != null && role.equals("A") && p != null){
             utenteService.delete(idUtente);
             as.setMessage("Utente eliminato correttamente");
-            return "redirect:/area-admin";
+            return "redirect:/utente/tutti-gli-utenti";
         }
         as.setMessage("Errore richiesta non autorizzata");
         return "homepage.html";
@@ -218,43 +218,52 @@ public class UtenteController {
             List<Utente> utenti = utenteService.readAll();
             persone.addAll(utenti);
             model.addAttribute("listaUtenti", persone);
+            if(as.getMessage() != null){
+                model.addAttribute("message", as.getMessage());
+                as.setMessage(null);
+            }
             return "listaUtenti.html";
         }
-        as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
-        return "homepage.html";
+        return "redirect:/loginpage";
     }
 
     @GetMapping("/cerca-utenti")
-public String cercaUtenti(Model model,
-    @RequestParam(name = "query", defaultValue = "") String query,
-    HttpSession session
-    ){
-    Persona p = (Persona)session.getAttribute("persona");
-    String role = (String)session.getAttribute("role");
-    AppService as = context.getBean(AppService.class);
+    public String cercaProdotto(Model model,
+        @RequestParam(name = "cognome", defaultValue = "") String cognome,
+        @RequestParam(name = "partitaIva", defaultValue = "") String partitaIva,
+        @RequestParam(name = "username", defaultValue = "") String username,
+        HttpSession session
+        ){
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+        
+        List<Utente> utenti = new ArrayList<>();
+        Utente u = null;
 
-    List<Utente> utenti = utenteService.findByQuery(query);
+        if(cognome != "" || partitaIva != "" || username != ""){
+            utenti = utenteService.findByFilters(partitaIva, cognome);
+            u = utenteService.findByUsername(username);
+            if(u != null){
+                utenti.add(u);
+            }
+        }
+       
+        if(utenti.isEmpty()){
+            as.setMessage("Nessun prodotto trovato");
+        }
 
-    if(utenti.isEmpty()){
-        as.setMessage("Nessun utente trovato");
+        model.addAttribute("listaUtenti", utenti);
+
+        if(role != null && role.equals("A") && p != null){
+            return "listaUtenti.html";
+        } else {
+            as.setMessage("Errore richiesta non autorizzata");
+            session.invalidate();
+            return "loginpage.html";
+        }
     }
-
-    model.addAttribute("listaUtenti", utenti);
-
-    if(role != null && role.equals("A") && p != null){
-        return "listaUtenti.html";
-    } else {
-        as.setMessage("Errore richiesta non autorizzata");
-        session.invalidate();
-        return "loginpage.html";
-    }
-}
-
-
-
-
-
 
     @GetMapping("/aggiungi-al-carrello")
     public String aggiungiCarrello(HttpSession session, 
@@ -266,7 +275,7 @@ public String cercaUtenti(Model model,
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
-        if(role != null && role.equals("U") && p != null){
+        if(role != null && (role.equals("U") || role.equals("A")) && p != null){
             List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             if(carrello == null){
                 carrello = new ArrayList<>();
@@ -296,7 +305,7 @@ public String cercaUtenti(Model model,
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
-        if(role != null && role.equals("U") && p != null){
+        if(role != null && (role.equals("U") || role.equals("A")) && p != null){
             
             List<Prodotto> carrello = new ArrayList<>();
             Ordine o = new Ordine();
@@ -328,9 +337,11 @@ public String cercaUtenti(Model model,
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
-        if(role != null && role.equals("U") && p != null){
-            // List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
+        if(role != null && (role.equals("U") || role.equals("A")) && p != null){
+            List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             Ordine o = (Ordine)session.getAttribute("ordine");
+            o.setTotale(o.getTotale() + (o.getTotale() > 500 ? 0 : 49.00));
+
             model.addAttribute("ordine", o);
             return "checkout.html";
         }
@@ -345,7 +356,7 @@ public String cercaUtenti(Model model,
         String role = (String)session.getAttribute("role");
         AppService as = context.getBean(AppService.class);
 
-        if(role != null && role.equals("U") && p != null){
+        if(role != null && (role.equals("U") || role.equals("A")) && p != null){
             List<Prodotto> carrello = (List<Prodotto>)session.getAttribute("carrello");
             Ordine o = (Ordine)session.getAttribute("ordine");
             model.addAttribute("ordine", o);

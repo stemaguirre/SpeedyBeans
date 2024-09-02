@@ -23,7 +23,6 @@
     --defoult-text-color: #36251E; /*Colore predefinito utilizzato per la maggior parte del contenuto testuale su tutto il sito web */
     --heading-color: #BD8544; /*Colore per intestazioni, sottotitoli e titoli in tutto il sito web*/
     --interaction-color: #A1450B; /*Colore di interazione. Viene utilizzato per pulsanti, link e altri elementi con cui si interagisce*/
-    --active-color: #A1450B; /*Colore attivo. Viene utilizzato per evidenziare gli elementi attivi o selezionati*/
     --contrast-color: #ffffff; /*Per gli elementi quando il colore di sfondo è uno dei colori delle intestazioni, dell'interazione o predefinito. Il suo scopo è garantire il giusto contrasto e la leggibilità quando è posizionato su questi colori più dominanti*/
 }
 
@@ -208,7 +207,7 @@ body {
 
 .hero-text {
     flex: 1;
-    color: #8c5c2d; /* Similar color to the text in the image */
+    color: var(--heading-color); /* Similar color to the text in the image */
     line-height: 1.5;
     text-align: left;
     margin-top: 150px;
@@ -334,14 +333,139 @@ body {
   height: 56px;
 }
 
-#message-modal{
+
+/*La seguente porzione di codice modifica la pagina listaOrdiniUtente */
+
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.orders-table th, .orders-table td {
+  border: 1px solid #ddd; /* Bordi per creare la griglia */
+  padding: 12px; /* Aumenta il padding per migliorare la leggibilità */
+  text-align: left;
+  vertical-align: middle; /* Allineamento verticale al centro */
+}
+
+.orders-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-transform: uppercase; /* Testo in maiuscolo per l'intestazione */
+  border-bottom: 2px solid #ccc; /* Bordo inferiore più marcato per l'intestazione */
+}
+
+.orders-table td {
+  background-color: #ffffff;
+}
+
+.orders-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Riga di sfondo alternata per migliorare la leggibilità */
+}
+
+.orders-table tr:hover {
+  background-color: #f1f1f1; /* Evidenzia la riga al passaggio del mouse */
+}
+
+/* Specifiche per la colonna ID */
+.orders-table td:nth-child(1),
+.orders-table th:nth-child(1) {
+  width: 10%; /* Larghezza della colonna ID */
+  text-align: center;
+}
+
+/* Larghezza delle altre colonne */
+.orders-table td:nth-child(2),
+.orders-table th:nth-child(2),
+.orders-table td:nth-child(3),
+.orders-table th:nth-child(3),
+.orders-table td:nth-child(4),
+.orders-table th:nth-child(4),
+.orders-table td:nth-child(5),
+.orders-table th:nth-child(5) {
+  width: 22.5%;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar form {
+  display: flex;
+  gap: 10px;
+}
+
+.search-bar input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-bar input[type="submit"] {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-bar input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+#message-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(0, 130, 236);
-  padding: 15px;
-  border: 2px solid rgb(50, 50, 50);
-  border-radius: 5px;
-  z-index: 9999;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
+
+/*La seguente porzione di codice modifica la pagina dettaglioOrdineUtente */
+.order-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.order-detail-table th, .order-detail-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.order-detail-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 2px solid #ccc;
+}
+
+.order-detail-table td {
+  background-color: #ffffff;
+}
+
+.order-detail-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.order-detail-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.order-detail-table tfoot td {
+  font-weight: bold;
+  background-color: #f4f4f4;
+}
+
+
+/*Ordinamento degli ordini su ListaOrdiniUtente*/
+

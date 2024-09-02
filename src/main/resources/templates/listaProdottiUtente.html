@@ -3,103 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutti i Prodotti - Admin</title>
+    <title>Tutti i Prodotti</title>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/main.js"></script>
-    
 </head>
 <body>
-    <div class="filter-bar">
-        <form action="/prodotto/filtra-prodotti" method="get">
-            <div class="filter-item">
-                <label for="formato">Formato caffè:</label>
-                <input type="text" name="formato" id="formato" placeholder="Formato caffè">
-            </div>
-
-            <div class="filter-item">
-                <label for="tipologia">Tipologia caffè:</label>
-                <input type="text" name="tipologia" id="tipologia" placeholder="Tipologia caffè">
-            </div>
-
-            <div class="filter-item">
-                <label for="utilizzo">Utilizzo macchinetta:</label>
-                <input type="text" name="utilizzo" id="utilizzo" placeholder="Utilizzo macchinetta">
-            </div>
-
-            <div class="filter-item">
-                <label for="colore">Colore macchinetta:</label>
-                <input type="text" name="colore" id="colore" placeholder="Colore macchinetta">
-            </div>
-
-            <div class="filter-item">
-                <label for="genere">Genere:</label>
-                <select name="genere" id="genere">
-                    <option value="">Tutti</option>
-                    <option value="M">Macchinetta</option>
-                    <option value="C">Caffè</option>
+    <div class="search-bar">
+        <form action="/prodotto/cerca-prodotti/caffes" method="get">
+            <div id="filtri-caffes" hidden>
+                <!-- Dropdown for brand caffè -->
+                <select name="brand" id="src-utn-brand">
+                    <option value="" disabled selected>Brand caffè</option>
+                    <option value="lavazza">Lavazza</option>
+                    <option value="illy">Illy</option>
+                    <option value="kimbo">Kimbo</option>
+                    <option value="segafredo">Segafredo</option>
+                    <option value="nescafé">Nescafé</option>
                 </select>
-            </div>
 
-            <div class="filter-item">
-                <label for="brand">Brand:</label>
-                <input type="text" name="brand" id="brand" placeholder="Brand">
+                <!-- Dropdown for Formato caffè -->
+                <select name="formato" id="src-utn-formato">
+                    <option value="" disabled selected>Formato caffè</option>
+                    <option value="macinato">Macinato</option>
+                    <option value="grani">Grani</option>
+                    <option value="capsule">Capsule</option>
+                    <option value="istantanep">Istantaneo</option>
+                </select>
+            
+                <!-- Dropdown for Tipologia caffè -->
+                <select name="tipologia" id="src-utn-tipologia">
+                    <option value="" disabled selected>Tipologia caffè</option>
+                    <option value="arabica">Arabica</option>
+                    <option value="robusta">Robusta</option>
+                </select>
+                <!-- Submit Button -->
+                <input type="submit" value="Applica filtri">
+                <br>
+                <div id="mostra-risultati">
+                    <button onclick="mostraRisultati()">Mostra Risultati</button>
+                </div>
             </div>
+        </form>  
+        <form action="/prodotto/cerca-prodotti/macchinette" method="get">
+            <div id="filtri-macchinette" hidden>
+                <!-- Dropdown for brand macchinetta -->
+                <select name="brand" id="src-utn-brand">
+                    <option value="" disabled selected>Brand macchinetta</option>
+                    <option value="nespresso">Nespresso</option>
+                    <option value="delonghi">DeLonghi</option>
+                    <option value="lavazza">Lavazza</option>
+                    <option value="philips">Philips</option>
+                    <option value="saeco">Saeco</option>
+                    <option value="krups">Krups</option>
+                    <option value="bosch">Bosch</option>
+                    <option value="breville">Breville</option>
+                </select>
 
-            <div class="filter-item">
-                <label for="minPrezzo">Prezzo Minimo:</label>
-                <input type="number" name="minPrezzo" id="minPrezzo" placeholder="Prezzo Minimo">
+                <!-- Dropdown for Utilizzo macchinetta -->
+                <select name="utilizzo" id="src-utn-utilizzo">
+                    <option value="" disabled selected>Utilizzo macchinetta</option>
+                    <option value="capsule">Capsule</option>
+                    <option value="grani">Grani</option>
+                    <option value="cialde">Cialde</option>
+                </select>
+                <!-- Dropdown for Colore macchinetta -->
+                <select name="colore" id="src-utn-colore">
+                    <option value="" disabled selected>Colore macchinetta</option>
+                    <option value="nero">Nero</option>
+                    <option value="argento">Argento</option>
+                    <option value="bianco">Bianco</option>
+                    <option value="acciaio inox">Acciaio Inox</option>
+                    <option value="oro">Oro</option>
+                </select>
+                <!-- Submit Button -->
+                <input type="submit" value="Applica filtri">
+                <br>
+                <div id="mostra-risultati">
+                    <button onclick="mostraRisultati()">Mostra Risultati</button>
+                </div>
             </div>
-
-            <div class="filter-item">
-                <label for="maxPrezzo">Prezzo Massimo:</label>
-                <input type="number" name="maxPrezzo" id="maxPrezzo" placeholder="Prezzo Massimo">
-            </div>
-
-            <div class="filter-item">
-                <label for="disponibilita">Disponibilità:</label>
-                <input type="number" name="disponibilita" id="disponibilita" placeholder="Disponibilità">
-            </div>
-
-            <div class="filter-item">
-                <label for="peso">Peso:</label>
-                <input type="number" name="peso" id="peso" placeholder="Peso">
-            </div>
-
-            <button type="submit">Applica Filtri</button>
-        </form>
+        </form>      
     </div>
-    
-    <a href="/area-admin">Indietro</a>
+    <div id="mostra-risultati">
+        <button onclick="mostraRisultati()">Mostra Risultati</button>
+    </div>
+    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
+    <br>
+    <a href="/area-utente">Indietro</a>
     <div id="message-modal" th:if="${message} != null">
         <p th:text="${message}"></p>
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Genere</th>
-                <th>Brand</th>
-                <th>Prezzo</th>
-                <th>Disponibilità</th>
-                <th>Peso</th>
-                <th>Dettaglio</th>
-                <th>Elimina</th>
-                <th>Modifica</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="prodotto : ${listaProdotti}">
-                <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
-                <td th:text="${prodotto.brand}"></td>
-                <td th:text="${prodotto.prezzo}"></td>
-                <td th:text="${prodotto.disponibilita}"></td>
-                <td th:text="${prodotto.peso}"></td>
-                <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/prodotto/delete?id=${prodotto.id}|"><button>Elimina</button></a></td>
-                <td><a th:href="|/prodotto/modifica?id=${prodotto.id}|"><button>Modifica</button></a></td>
-            </tr>
-        </tbody>
-    </table>
+    <button onclick="apriRicercaCaffes()">Mostra Caffè</button>
+    <button onclick="apriRicercaMacchinette()">Mostra Macchinette</button>
+    <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
+    <br>
+    <div id="tabella-caffes" hidden>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6">Caffè</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <!-- <th><a href="/prodotto/ordina"><button>Ordina</button></a></th> -->
+                </tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                    <th>Tipologia</th>
+                    <th>Formato</th>
+                    <th>Dettaglio</th>
+                    <th>Carrello</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'C'">
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.tipologia}"></td>
+                    <td th:text="${prodotto.formato}"></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div id="tabella-macchinette" hidden>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6">Macchinette</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <!-- <th><a href="/prodotto/ordina"><button>Ordina</button></a></th> -->
+                </tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                    <th>Utilizzo</th>
+                    <th>Colore</th>
+                    <th>Dettaglio</th>
+                    <th>Carrello</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'M'">
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.utilizzo}"></td>
+                    <td th:text="${prodotto.colore}"></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
+    
+    
+    
+    
+    
 </body>
 </html>

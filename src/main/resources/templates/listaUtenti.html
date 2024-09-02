@@ -10,51 +10,18 @@
 <body>
     <div class="search-bar">
         <form action="/utente/cerca-utenti" method="get">
-            <input type="text" name="query" id="src-hmp-query" placeholder="Cerca per nome, cognome o partita IVA">
-            <input type="submit" value="Cerca">
+            <input type="text" name="cognome" id="src-hmp-cognome" placeholder="Cerca utenti">
+            <input type="submit" value="Cerca" hidden>
         </form>
     </div>
-    <div>
-        <button onclick="toggleInsert()">Inserisci</button>
-    </div>
     <a href="/area-admin">Indietro</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Email</th>
-                <th>Partita Iva</th>
-                <th>Dettaglio</th>
-                <th>Elimina</th>
-                <th>Modifica</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="utente : ${listaUtenti}">
-                <td th:text="${utente.nome}"></td>
-                <td th:text="${utente.cognome}"></td>
-                <td th:text="${utente.email}"></td>
-                <td th:text="${utente.partitaIva}"></td>
-                <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|openUpdateUtente(`${utente.id}`,
-                    `${utente.nome}`,
-                    `${utente.cognome}`,
-                    `${utente.ragioneSociale}`,
-                    `${utente.partitaIva}`,
-                    `${utente.codiceSdi}`,
-                    `${utente.indirizzo}`,
-                    `${utente.citta}`,
-                    `${utente.cap}`,
-                    `${utente.provincia}`,
-                    `${utente.nazione}`,
-                    `${utente.telefono}`,
-                    `${utente.email}`)|">Modifica</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="insert" hidden>
+    <br>
+    <br>
+    <div>
+        <button onclick="toggleInsertUtente()">Inserisci</button>
+    </div>
+    <!-- Form di inserimento -->
+    <div id="insert-utente" hidden>
         <form action="/utente/insert" method="post">
             <label for="nome">Nome</label>
             <input type="text" name="nome" id="insert-utente-nome">
@@ -80,9 +47,10 @@
             <input type="text" name="telefono" id="insert-utente-telefono">
             <label for="email">Email</label>
             <input type="email" name="email" id="insert-utente-email">
-            <input type="submit" value="Inserisci">
+            <input type="submit" value="Invia">
         </form>
     </div>
+    <!-- Form di modifica -->
     <div id="update-utente" hidden>
         <form action="/utente/update" method="post">
             <input type="hidden" name="id" id="update-utente-id">
@@ -113,6 +81,45 @@
             <input type="submit" value="Modifica">
         </form>
     </div>
+    <!-- Tabella di visualizzazione -->
+    <table>
+        <thead>
+            <tr>
+                <th colspan="6">Utenti</th>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Dettaglio</th>
+                <th>Elimina</th>
+                <th>Modifica</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="utente : ${listaUtenti}">
+                <td th:text="${utente.nome}"></td>
+                <td th:text="${utente.cognome}"></td>
+                <td th:text="${utente.email}"></td>
+                <td><a th:href="|/utente/dettaglio?id=${utente.id}|"><button>Dettaglio</button></a></td>
+                <td><a th:href="|/utente/delete/${utente.id}|"><button>Elimina</button></a></td>
+                <td><button th:attr="onclick=|openUpdateUtente(`${utente.id}`,
+                    `${utente.nome}`,
+                    `${utente.cognome}`,
+                    `${utente.ragioneSociale}`,
+                    `${utente.partitaIva}`,
+                    `${utente.codiceSdi}`,
+                    `${utente.indirizzo}`,
+                    `${utente.citta}`,
+                    `${utente.cap}`,
+                    `${utente.provincia}`,
+                    `${utente.nazione}`,
+                    `${utente.telefono}`,
+                    `${utente.email}`)|">Modifica</button></td>
+            </tr>
+        </tbody>
+    </table>
+    
     <div id="message-modal" th:if="${message} != null">
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>

@@ -8,83 +8,98 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <div class="filter-bar">
-        <form action="/prodotto/cerca-prodotti" method="get">
-            <!-- Filtro per Genere -->
-            <label for="genere">Genere</label>
-            <select name="genere" id="filter-genere" onchange="toggleFilters()">
-                <option value="">-- Seleziona Genere --</option>
-                <option value="Caffe">Caffè</option>
-                <option value="Macchinetta">Macchinetta</option>
-            </select>
-    
-            <!-- Filtri per Caffè -->
-            <div id="filter-caffe" style="display: none;">
-                <label for="formato">Formato</label>
-                <input type="text" name="formato" id="filter-caffe-formato" placeholder="Grani, Capsule o Macinato">
-                <label for="tipologia">Tipologia</label>
-                <input type="text" name="tipologia" id="filter-caffe-tipologia" placeholder="Arabica o Robusta">
-                <label for="brand">Brand</label>
-                <input type="text" name="brand" id="filter-macchinetta-brand" placeholder="Lavazza, Illy, Segafredo..">
+    <div class="search-bar">
+        <form action="/prodotto/cerca-prodotti/caffes" method="get">
+            <div id="filtri-caffes" hidden>
+                <!-- Dropdown for brand caffè -->
+                <select name="brand" id="src-utn-brand">
+                    <option value="" disabled selected>Brand caffè</option>
+                    <option value="lavazza">Lavazza</option>
+                    <option value="illy">Illy</option>
+                    <option value="kimbo">Kimbo</option>
+                    <option value="segafredo">Segafredo</option>
+                    <option value="nescafé">Nescafé</option>
+                </select>
+
+                <!-- Dropdown for Formato caffè -->
+                <select name="formato" id="src-utn-formato">
+                    <option value="" disabled selected>Formato caffè</option>
+                    <option value="macinato">Macinato</option>
+                    <option value="grani">Grani</option>
+                    <option value="capsule">Capsule</option>
+                    <option value="istantanep">Istantaneo</option>
+                </select>
+            
+                <!-- Dropdown for Tipologia caffè -->
+                <select name="tipologia" id="src-utn-tipologia">
+                    <option value="" disabled selected>Tipologia caffè</option>
+                    <option value="arabica">Arabica</option>
+                    <option value="robusta">Robusta</option>
+                </select>
+                <!-- Submit Button -->
+                <input type="submit" value="Applica filtri">
+                <br>
+                <div id="mostra-risultati">
+                    <button onclick="mostraRisultati()">Mostra Risultati</button>
+                </div>
             </div>
-    
-            <!-- Filtri per Macchinetta -->
-            <div id="filter-macchinetta" style="display: none;">
-                <label for="utilizzo">Utilizzo</label>
-                <input type="text" name="utilizzo" id="filter-macchinetta-utilizzo" placeholder="Utilizzo macchinetta">
-                <label for="colore">Colore</label>
-                <input type="text" name="colore" id="filter-macchinetta-colore" placeholder="Colore macchinetta">
-                <label for="brand">Brand</label>
-                <input type="text" name="brand" id="filter-macchinetta-brand" placeholder="Brand macchinetta">
+        </form>  
+        <form action="/prodotto/cerca-prodotti/macchinette" method="get">
+            <div id="filtri-macchinette" hidden>
+                <!-- Dropdown for brand macchinetta -->
+                <select name="brand" id="src-utn-brand">
+                    <option value="" disabled selected>Brand macchinetta</option>
+                    <option value="nespresso">Nespresso</option>
+                    <option value="delonghi">DeLonghi</option>
+                    <option value="lavazza">Lavazza</option>
+                    <option value="philips">Philips</option>
+                    <option value="saeco">Saeco</option>
+                    <option value="krups">Krups</option>
+                    <option value="bosch">Bosch</option>
+                    <option value="breville">Breville</option>
+                </select>
+
+                <!-- Dropdown for Utilizzo macchinetta -->
+                <select name="utilizzo" id="src-utn-utilizzo">
+                    <option value="" disabled selected>Utilizzo macchinetta</option>
+                    <option value="capsule">Capsule</option>
+                    <option value="grani">Grani</option>
+                    <option value="cialde">Cialde</option>
+                </select>
+                <!-- Dropdown for Colore macchinetta -->
+                <select name="colore" id="src-utn-colore">
+                    <option value="" disabled selected>Colore macchinetta</option>
+                    <option value="nero">Nero</option>
+                    <option value="argento">Argento</option>
+                    <option value="bianco">Bianco</option>
+                    <option value="acciaio inox">Acciaio Inox</option>
+                    <option value="oro">Oro</option>
+                </select>
+                <!-- Submit Button -->
+                <input type="submit" value="Applica filtri">
+                <br>
+                <div id="mostra-risultati">
+                    <button onclick="mostraRisultati()">Mostra Risultati</button>
+                </div>
             </div>
-    
-            <input type="submit" value="Filtra">
-        </form>
+        </form>      
     </div>
-    
-    <div>
-        <button onclick="toggleInsert()">Inserisci</button>
-    </div>
+    <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
+    <br>
     <a href="/area-admin">Indietro</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Genere</th>
-                <th>Brand</th>
-                <th>Prezzo</th>
-                <th>Disponibilità</th>
-                <th>Peso</th>
-                <th>Dettaglio</th>
-                <th>Elimina</th>
-                <th>Modifica</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="prodotto : ${listaProdotti}">
-                <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
-                <td th:text="${prodotto.brand}"></td>
-                <td th:text="${prodotto.prezzo}"></td>
-                <td th:text="${prodotto.disponibilita}"></td>
-                <td th:text="${prodotto.peso}"></td>
-                <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                <td><a th:href="|/prodotto/delete/${prodotto.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|openUpdateProdotto(`${prodotto.id}`, 
-                    `${#strings.equals(prodotto.genere, 'M') ? 1 : 0}`,
-                    `${prodotto.brand}`,
-                    `${prodotto.prezzo}`,
-                    `${prodotto.disponibilita}`,
-                    `${prodotto.peso}`)|">Modifica</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="insert" hidden>
-        <p>Cosa vuoi inserire?</p>
-        <button onclick="openInsertCaffe()">Caffe</button>
-        <button onclick="openInsertMacchinetta()">Macchinetta</button>
+    <div id="message-modal" th:if="${message} != null">
+        <p th:text="${message}"></p>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
+
+    <button onclick="apriRicercaCaffes()">Mostra Caffè</button>
+    <button onclick="apriRicercaMacchinette()">Mostra Macchinette</button>
+    <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
+    <br>
+    <br>
+    <!-- Form per inserire Caffè -->
     <div id="insert-caffe" hidden>
         <form action="/caffe/insert" method="post">
-            
             <label for="brand">Brand</label>
             <input type="text" name="brand" id="insert-caffe-brand">
             <label for="prezzo">Prezzo</label>
@@ -101,12 +116,39 @@
             <input type="date" name="datascadenza" id="insert-caffe-datascadenza">
             <label for="formato">Formato</label>
             <input type="text" name="formato" id="insert-caffe-formato">
-            <button type="submit">Inserisci</button>
+
+            <button type="submit">Invia</button>
         </form>
     </div>
+    <!-- Form per modificare caffè -->
+    <div id="update-caffe" hidden>
+        <form action="/caffe/update" method="post">
+            <input type="hidden" name="id" id="update-caffe-id">
+            <input type="hidden" name="genere" id="update-caffe-genere">
+
+            <label for="brand">Brand</label>
+            <input type="text" name="brand" id="update-caffe-brand">
+            <label for="prezzo">Prezzo</label>
+            <input type="number" name="prezzo" id="update-caffe-prezzo">
+            <label for="disponibilita">Disponibilità</label>
+            <input type="number" name="disponibilita" id="update-caffe-disponibilita">
+            <label for="peso">Peso</label>
+            <input type="number" name="peso" id="update-caffe-peso">
+            <label for="tipologia">Tipologia</label>
+            <input type="text" name="tipologia" id="update-caffe-tipologia">
+            <label for="dataproduzione">Data Produzione</label>
+            <input type="date" name="dataproduzione" id="update-caffe-dataproduzione">
+            <label for="datascadenza">Data Scadenza</label>
+            <input type="date" name="datascadenza" id="update-caffe-datascadenza">
+            <label for="formato">Formato</label>
+            <input type="text" name="formato" id="update-caffe-formato">
+            
+            <button type="submit">Invia</button>
+        </form>
+    </div>
+    <!-- Form per inserire Macchinetta -->
     <div id="insert-macchinetta" hidden> 
         <form action="/macchinetta/insert" method="post">
-    
             <label for="brand">Brand</label>
             <input type="text" name="brand" id="insert-macchinetta-brand">
             <label for="prezzo">Prezzo</label>
@@ -123,36 +165,10 @@
             <input type="text" name="modello" id="insert-macchinetta-modello">
             <label for="serbatoio">Serbatoio</label>
             <input type="number" name="serbatoio" id="insert-macchinetta-serbatoio">
-            <button type="submit">Inserisci</button>
+            <button type="submit">Invia</button>
         </form>
     </div>
-    <div id="update-caffe" hidden>
-        <form action="/caffe/update" method="post">
-
-            <input type="hidden" name="id" id="update-caffe-id">
-            <input type="hidden" name="genere" id="update-caffe-genere">
-
-            <label for="brand">Brand</label>
-            <input type="text" name="brand" id="update-caffe-brand">
-            <label for="prezzo">Prezzo</label>
-            <input type="number" name="prezzo" id="update-caffe-prezzo">
-            <label for="disponibilita">Disponibilità</label>
-            <input type="number" name="disponibilita" id="update-caffe-disponibilita">
-            <label for="peso">Peso</label>
-            <input type="number" name="peso" id="update-caffe-peso">
-
-            <label for="tipologia">Tipologia</label>
-            <input type="text" name="tipologia" id="update-caffe-tipologia">
-            <label for="dataproduzione">Data Produzione</label>
-            <input type="date" name="dataproduzione" id="update-caffe-dataproduzione">
-            <label for="datascadenza">Data Scadenza</label>
-            <input type="date" name="datascadenza" id="update-caffe-datascadenza">
-            <label for="formato">Formato</label>
-            <input type="text" name="formato" id="update-caffe-formato">
-            
-            <button type="submit">Modifica</button>
-        </form>
-    </div>
+    <!-- Form per modificare macchinetta -->
     <div id="update-macchinetta" hidden>
         <form action="/macchinetta/update" method="post">
             <input type="hidden" name="id" id="update-macchinetta-id">
@@ -175,37 +191,95 @@
             <input type="text" name="modello" id="update-macchinetta-modello">
             <label for="serbatoio">Serbatoio</label>
             <input type="number" name="serbatoio" id="update-macchinetta-serbatoio">
-            <button type="submit">Modifica</button>
+            <button type="submit">Invia</button>
         </form>
+    </div> 
+    <div id="tabella-caffes" hidden>
+        <button onclick="toggleInsertCaffe()">Inserisci</button>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6">Caffè</th>
+                </tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                    <th>Tipologia</th>
+                    <th>Formato</th>
+                    <th>Dettaglio</th>
+                    <th>Carrello</th>
+                    <th>Modifica</th>
+                    <th>Elimina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'C'">
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.tipologia}"></td>
+                    <td th:text="${prodotto.formato}"></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                    <td><button onclick="toggleUpdateCaffe()" th:attr="onclick=|openUpdateCaffe(`${prodotto.id}`,
+                        `${prodotto.genere}`,
+                        `${prodotto.brand}`,
+                        `${prodotto.prezzo}`,
+                        `${prodotto.disponibilita}`,
+                        `${prodotto.peso}`,
+                        `${prodotto.tipologia}`,
+                        `${prodotto.dataProduzione}`,
+                        `${prodotto.dataScadenza}`,
+                        `${prodotto.formato}`)|">Modifica</button>
+                    </td>
+                    <td><a th:href="|/caffe/delete/${prodotto.id}|"><button>Elimina</button></a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    
-    <div id="message-modal" th:if="${message} != null">
-        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
-        <hr>
-        <p th:text="${message}"></p>
+    <div id="tabella-macchinette" hidden>
+        <button onclick="toggleInsertMacchinetta()">Inserisci</button>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6">Macchinette</th>
+                </tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>Prezzo</th>
+                    <th>Utilizzo</th>
+                    <th>Colore</th>
+                    <th>Dettaglio</th>
+                    <th>Carrello</th>
+                    <th>Modifica</th>
+                    <th>Elimina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${listaProdotti}"  th:if="${prodotto.genere} == 'M'">
+                    <td th:text="${prodotto.brand}"></td>
+                    <td th:text="${prodotto.prezzo}"></td>
+                    <td th:text="${prodotto.utilizzo}"></td>
+                    <td th:text="${prodotto.colore}"></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                    <td><button onclick="toggleUpdateMacchinetta()" th:attr="onclick=|openUpdateMacchinetta(`${prodotto.id}`,
+                        `${prodotto.genere}`,
+                        `${prodotto.brand}`,
+                        `${prodotto.prezzo}`,
+                        `${prodotto.disponibilita}`,
+                        `${prodotto.peso}`,
+                        `${prodotto.utilizzo}`,
+                        `${prodotto.colore}`,
+                        `${prodotto.modello}`,
+                        `${prodotto.serbatoio}`)|">Modifica</button>
+                    </td>
+                    <td><a th:href="|/macchinetta/delete/${prodotto.id}|"><button>Elimina</button></a></td>
+
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    
-    <script>
-        function toggleFilters() {
-            var genere = document.getElementById("filter-genere").value;
-            var caffeFilters = document.getElementById("filter-caffe");
-            var macchinettaFilters = document.getElementById("filter-macchinetta");
-
-            if (genere === "Caffe") {
-                caffeFilters.style.display = "block";
-                macchinettaFilters.style.display = "none";
-            } else if (genere === "Macchinetta") {
-                caffeFilters.style.display = "none";
-                macchinettaFilters.style.display = "block";
-            } else {
-                caffeFilters.style.display = "none";
-                macchinettaFilters.style.display = "none";
-            }
-        }
-    </script>
-    
-    
 </body>
 </html>
-

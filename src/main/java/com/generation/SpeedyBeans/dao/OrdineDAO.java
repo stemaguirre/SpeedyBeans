@@ -1,10 +1,6 @@
 package com.generation.SpeedyBeans.dao;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -15,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Ordine;
 import com.generation.SpeedyBeans.entities.Persona;
-import com.generation.SpeedyBeans.services.OrdineService;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -30,25 +25,23 @@ public class OrdineDAO implements IDAO<Ordine> {
     @Autowired
     private PersonaDAO personaDAO;
 
-    private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale, data_ordine) VALUES (?, ?, ?, ?)";
+    private final String insertOrdine = "INSERT INTO ordini(id_persona, quantita, iva, totale) VALUES (?, ?, ?, ?)";
 
-    private final String readAllOrdini = "SELECT id_ordine as id, id_persona, quantita, iva, totale, data_ordine FROM ordini";
+    private final String readAllOrdini = "SELECT id_ordine as id, id_persona, quantita, iva, totale FROM ordini";
 
-    private final String updateOrdine = "UPDATE ordini SET id_persona = ?, quantita = ?, iva = ?, totale = ?, data_ordine = ? WHERE id_ordine = ?";
+    private final String updateOrdine = "UPDATE ordini SET id_persona = ?, quantita = ?, iva = ?, totale = ? WHERE id_ordine = ?";
 
     private final String deleteOrdine = "DELETE FROM ordini WHERE id_ordine = ?";
 
     private final String readByIdProdotto = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale from ordini o join ordini_prodotti op on o.id_ordine = od.id_ordine join prodotti p on od.id_ean = p.id_ean where p.id_ean = ?";
 
-    private final String readByRange = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE totale BETWEEN ? AND ?";
+    private final String readByRange = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale FROM ordini o WHERE totale BETWEEN ? AND ?";
     
     private final String findByNomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%'))";
     private final String findByCognomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.cognome like(concat('%', ?, '%'))";
     private final String findByNomeCognomeLike = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.nome like(concat('%', ?, '%')) AND p.cognome like(concat('%', ?, '%'))";
 
-    private final String readByIdPersona = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.id_persona = ?";
-
-    private final String findByDateRange = "SELECT o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, o.data_ordine FROM ordini o WHERE o.data_ordine BETWEEN ? AND ?";
+    private final String readByIdPersona = "select o.id_ordine as id, o.id_persona, o.quantita, o.iva, o.totale, p.* from Ordini o join Persone p on o.id_persona = p.id_persona where p.id_persona = ?";
 
     @Override//nuovo commit
     public int create(Ordine o) {
@@ -156,28 +149,12 @@ public class OrdineDAO implements IDAO<Ordine> {
 
     }
 
-    public Map<Integer, Entity> findByDateRange(Date startDate, Date endDate) {
-
-        Map<Integer, Entity> ris = new LinkedHashMap<>();
-        Map<Integer, Map<String, String>> result = database.executeQuery(findByDateRange, startDate.toString(), endDate.toString());
-        
-        for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-            Ordine o = context.getBean(Ordine.class, coppia.getValue());
-            if (coppia.getValue().get("data_ordine") != null) {
-                o.setDataOrdine(Date.valueOf(coppia.getValue().get("data_ordine")));
-            }
-            ris.put(o.getId(), o);
-        }
-        return ris;
-    }
 
     @Override
     public Ordine readById(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'readById'");
     }
-    
-
 
 
 }

@@ -1,8 +1,6 @@
 package com.generation.SpeedyBeans.dao;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.generation.SpeedyBeans.database.Database;
 import com.generation.SpeedyBeans.entities.Macchinetta;
+import com.generation.SpeedyBeans.entities.Caffe;
 import com.generation.SpeedyBeans.entities.Entity;
 
 @Service
@@ -35,11 +34,21 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
     private final String updateMacchinetta = "UPDATE macchinette SET utilizzo = ?, colore = ?, modello = ?, serbatoio = ? WHERE id_ean = ?";
     private final String deleteMacchinetta = "DELETE FROM macchinette WHERE id_ean = ?";
 
-    private final String findByUtilizzoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.utilizzo like(concat('%', ?, '%'))";
+    private final String findByUtilizzoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%'))";
 
     private final String findByColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.colore like(concat('%', ?, '%'))";
 
-    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
+    private final String findByBrandLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%'))";
+
+    private final String findByUtilizzoColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";
+
+    private final String findByBrandUtilizzoLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.utilizzo like(concat('%', ?, '%'))";;
+
+    private final String findByBrandColoreLike = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where p.brand like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%'))";;
+
+    private final String findByFilters = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where m.utilizzo like(concat('%', ?, '%')) AND m.colore like(concat('%', ?, '%')) AND p.brand like(concat('%', ?, '%'))";
+
+    private final String orderByPrezzo = "select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean order by p.prezzo";
 
 
 
@@ -100,38 +109,51 @@ public class MacchinettaDAO implements IDAO<Macchinetta> {
         database.executeUpdate(deleteMacchinetta, String.valueOf(id));
     }
 
-    public Map<Integer, Entity> findByFilters(String utilizzo, String colore, String brand) {
-    Map<Integer, Entity> ris = new LinkedHashMap<>();
-    Map<Integer, Map<String, String>> result = null;
+    public Map<Integer, Entity> findByFilters(String brand, String utilizzo, String colore) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
 
-    // Costruisci dinamicamente la query in base ai parametri presenti
-    StringBuilder queryBuilder = new StringBuilder("select p.id_ean as id, p.genere, p.brand, p.prezzo, p.disponibilita, p.peso, m.utilizzo, m.colore, m.modello, m.serbatoio from macchinette m join prodotti p on m.id_ean = p.id_ean where 1=1");
-    List<String> parameters = new ArrayList<>();
+        if(utilizzo.equals("") && colore.equals("") && brand.equals("")) {
+            result = database.executeQuery(readAllMacchinette);
+        } else if(colore.equals("") & !utilizzo.equals("") & brand.equals("")) {
+            result = database.executeQuery(findByUtilizzoLike, utilizzo);
+        } else if (utilizzo.equals("") & !colore.equals("") & brand.equals("")) {
+            result = database.executeQuery(findByColoreLike, colore);
+        } else if (utilizzo.equals("") & colore.equals("") & !brand.equals("")) {
+            result = database.executeQuery(findByBrandLike, brand);
+        } else if(utilizzo.equals("") && !colore.equals("") && !brand.equals("")){
+            result = database.executeQuery(findByBrandColoreLike, brand, colore);
+        } else if(!utilizzo.equals("") && !colore.equals("") && brand.equals("")){
+            result = database.executeQuery(findByUtilizzoColoreLike, utilizzo, colore);
+        } else if(!utilizzo.equals("") && colore.equals("") && !brand.equals("")){
+            result = database.executeQuery(findByBrandUtilizzoLike, brand, utilizzo);
+        } else if(!utilizzo.equals("") && !colore.equals("") && !brand.equals("")){
+            result = database.executeQuery(findByFilters, utilizzo, colore, brand);
+        }
 
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
+            ris.put(m.getId(), m);
+        }
 
-if (utilizzo != null && !utilizzo.isEmpty()) {
-    queryBuilder.append(" and m.utilizzo like(concat('%', ?, '%'))");
-    parameters.add(utilizzo);
-}
+        return ris;
 
-if (colore != null && !colore.isEmpty()) {
-    queryBuilder.append(" and m.colore like(concat('%', ?, '%'))");
-    parameters.add(colore);
-}
-
-
-
-    // Esegui la query con i parametri raccolti
-    result = database.executeQuery(queryBuilder.toString(), parameters.toArray(new String[0]));
-
-    for (Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
-        Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
-        ris.put(m.getId(), m);
     }
 
-    return ris;
-}
+    public Map<Integer, Entity> findByFilters(String brand) {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = null;
+        
+        result = database.executeQuery(findByBrandLike, brand);
+        
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
+            ris.put(m.getId(), m);
+        }
 
+        return ris;
+
+    }
 
     @Override
     public Macchinetta readById(int id) {
@@ -152,6 +174,18 @@ if (colore != null && !colore.isEmpty()) {
         for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
             Macchinetta m = context.getBean(Macchinetta.class, coppia.getValue());
             ris.put(m.getId(), m);
+        }
+
+        return ris;
+    }
+
+    public Map<Integer, Entity> orderByPrezzo() {
+        Map<Integer, Entity> ris = new LinkedHashMap<>();
+        Map<Integer, Map<String, String>> result = database.executeQuery(orderByPrezzo);
+
+        for(Entry<Integer, Map<String, String>> coppia : result.entrySet()) {
+            Macchinetta c = context.getBean(Macchinetta.class, coppia.getValue());
+            ris.put(c.getId(), c);
         }
 
         return ris;

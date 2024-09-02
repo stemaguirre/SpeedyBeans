@@ -32,21 +32,20 @@
             </div>
             <div class="search-bar">
                 <form action="/prodotto/cerca-prodotti" method="get">
-                    <input type="text" name="genere" id="src-hmp-genere" placeholder="Cerca prodotti">
+                    <input type="text" name="brand" id="src-hmp-brand" placeholder="Cerca prodotti per brand">
                     <input type="submit" value="Cerca" hidden>
                 </form>
             </div>
         </div>
         <nav class="navbar">
             <ul>
-                <li><a href="#home" class="">Home</a></li>
-                <li><a href="/prodotto/tutti-i-prodotti" name="caf">Caffè</a></li>
-                <li><a href="/prodotto/tutti-i-prodotti" name="mac">Macchinette</a></li>
+                <li><a href="/prodotto/tutti-i-prodotti/caffes">Caffè</a></li>
+                <li><a href="/prodotto/tutti-i-prodotti/macchinette">Macchinette</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
             <a href="/loginpage" class="button login">LOGIN</a>
-            <a href="/signuppage" class="button signin">SIGN UP</a>
+            <a href="/signuppage" class="button signin">SIGN IN</a>
                 <div id="login-modal" class="modal-form" hidden>
                     <form action="/login" method="post">
                                 <label for="username">Username</label>
@@ -116,6 +115,14 @@
 <!-- ======= Hero Section ======= -->
 <section class="section-bg">
     <div class="hero-text">
+        <h2>CHI SIAMO:</h2>
+        <p>Benvenuti su Speedy · Beans, il vostro partner di fiducia per l'approvvigionamento di caffè di alta qualità e macchine da caffè professionali. Siamo un'azienda specializzata nella fornitura esclusiva ai negozi, dedicata a soddisfare le esigenze dei rivenditori con una selezione accurata di prodotti delle migliori marche.
+
+            La nostra missione è semplice: offrire soluzioni veloci, affidabili e su misura per il vostro business. </p>
+        
+        
+    </div>
+    <div class="hero-text">
         <h2>TARIFFE:</h2>
         <p>Ordine minimo 200 € + iva</p>
         
@@ -152,8 +159,5 @@
         </div>
     </div>
 </footer>
-
- <!-- Main JS File -->
- <script src="/js/main.js"></script>
 </body>
 </html>
