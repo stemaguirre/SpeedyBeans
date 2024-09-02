@@ -39,50 +39,130 @@ td:first-child {
     padding-left: 200px;
 }
 
-/* Stile specifico per la tabella tb-users */
-.tb-users {
+
+
+/* Stile specifico per la tabella tb-oriz */
+.tb-oriz {
     width: 100%;
     border-collapse: collapse;
     background-color: var(--bg-color);
     overflow: hidden;
 }
 
-.tb-users th, .tb-users td {
+.tb-oriz th, .tb-oriz td {
     padding: 15px;
     border: 1px solid black;
     text-align: left; /* Allinea il testo a sinistra */
 }
 
-.tb-users th {
+.tb-oriz th {
     background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
     font-weight: bold;
     padding-left: 100px;
 }
 
 
-.tb-users td:first-child {
+.tb-oriz td:first-child {
     font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
     padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
 }
 
-.tb-users th, .tb-users td {
+.tb-oriz th, .tb-oriz td {
     padding: 15px;
     border: 1px solid black;
     text-align: left; /* Allinea il testo a sinistra */
 }
 
-.tb-users th {
+.tb-oriz th {
     background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
     font-weight: bold;
     padding-left: 100px;
 }
 
-.tb-users td:first-child {
+.tb-oriz td:first-child {
     font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
     padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
 }
 
+/* Stile specifico per la tabella tb-oriz  e tb-macchinette */
+.tb-oriz {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
 
+.tb-oriz th, .tb-oriz td {
+    padding: 15px;
+    border: 1px solid black;
+    text-align: left; /* Allinea il testo a sinistra */
+}
+
+.tb-oriz th {
+    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
+    font-weight: bold;
+    padding-left: 100px;
+}
+
+
+.tb-oriz td:first-child {
+    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
+    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+}
+
+.tb-oriz th, .tb-oriz td {
+    padding: 15px;
+    border: 1px solid black;
+    text-align: left; /* Allinea il testo a sinistra */
+}
+
+.tb-oriz th {
+    background-color: var(--bg-color); /* Colore di sfondo per le intestazioni */
+    font-weight: bold;
+    padding-left: 100px;
+}
+
+.tb-oriz td:first-child {
+    font-weight: normal; /* Rimuove il grassetto dalla prima colonna */
+    padding-left: 100px; /* Aggiunge padding a sinistra per allontanare il testo dal bordo */
+}
+
+.search-bar {
+    display: flex;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    gap: 20px; /* Add some space between the forms */
+    width: 100%; /* Make the search bar take up full width */
+    padding: 20px; /* Add some padding for spacing */
+  }
+  
+  .search-bar form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+  align-items: center; /* Center form elements horizontally */
+  gap: 10px; /* Space between form elements */
+  }
+  
+  .search-bar select, 
+  .search-bar input[type="submit"] {
+  width: 200px; /* Set a fixed width for dropdowns and buttons */
+  padding: 8px; /* Add some padding for a better appearance */
+  text-align: center; /* Center the text inside the buttons and selects */
+  }
+  
+  .search-bar span {
+  font-size: 18px; /* Increase the font size of the section title */
+  font-weight: bold; /* Make the section title bold */
+  margin-bottom: 10px; /* Add some space below the title */
+  }
+  
+  .search-bar form input[type="submit"] {
+  cursor: pointer; /* Change cursor to pointer on hover */
+  background-color: #007bff; /* Set background color for the submit button */
+  color: white; /* Set text color for the submit button */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Add rounded corners */
+  }
 
 /* Stile generale per il form modale */
 
