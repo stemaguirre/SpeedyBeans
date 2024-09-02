@@ -1,8 +1,5 @@
 package com.generation.SpeedyBeans.controllers;
 
-import java.util.Map;
-
-import javax.crypto.Mac;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;

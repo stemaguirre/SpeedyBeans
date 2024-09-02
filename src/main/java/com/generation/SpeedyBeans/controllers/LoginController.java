@@ -90,10 +90,8 @@ public class LoginController {
     @PostMapping("/register")
     public String registerUser(@RequestParam Map<String,String> params){
        
-        String capStr = params.get("cap");
         String nome = params.get("nome");
         String cognome = params.get("cognome");
-        String telefonoStr = params.get("telefono"); 
         String ragioneSociale = params.get("ragione-sociale");
         String indirizzo = params.get("indirizzo");
         String citta = params.get("citta");
