@@ -55,8 +55,8 @@
     
     <a href="utente/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
 
-
-    <div class="drop-menu">
+<div class="flex-container">
+    <div class="search-bar">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
 
             <div id="filtri-caffes" hidden>
@@ -92,6 +92,7 @@
             </div>
         </form>  
         <br>
+        
         <form action="/prodotto/cerca-prodotti/macchinette" method="get">
             <div id="filtri-macchinette" hidden>
                 <span>Macchinette</span>
@@ -130,14 +131,15 @@
             </div>
         </form>      
     </div>
+</div>
 
    
 
     <div id="tabella-caffes">
-        <table>
+        <table class="tb-oriz">
             <thead>
                 <tr>
-                    <th colspan="6">Caffè</th>
+                    <th colspan="6"><h2>Caffè</h2></th>
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -154,18 +156,18 @@
                     <td th:text="${prodotto.prezzo}"></td>
                     <td th:text="${prodotto.tipologia}"></td>
                     <td th:text="${prodotto.formato}"></td>
-                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"> <button class="button-common">Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"> <button class="button-common">Aggiungi</button></a></td>
                 </tr>
             </tbody>
         </table>
     </div>
     <br>
     <div id="tabella-macchinette">
-        <table>
+        <table class="tb-oriz">
             <thead>
                 <tr>
-                    <th colspan="6">Macchinette</th>
+                    <th colspan="6"><h2>Macchinette</h2></th>
                 </tr>
                 <tr>
                     <th>Brand</th>
@@ -182,8 +184,8 @@
                     <td th:text="${prodotto.prezzo}"></td>
                     <td th:text="${prodotto.utilizzo}"></td>
                     <td th:text="${prodotto.colore}"></td>
-                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"><button>Dettaglio</button></a></td>
-                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"><button>Aggiungi</button></a></td>
+                    <td><a th:href="|/prodotto/dettaglio?id=${prodotto.id}|"> <button class="button-common">Dettaglio</button></a></td>
+                    <td><a th:href="|/utente/aggiungi-al-carrello?id=${prodotto.id}|"> <button class="button-common">Aggiungi</button></a></td>
                 </tr>
             </tbody>
         </table>
