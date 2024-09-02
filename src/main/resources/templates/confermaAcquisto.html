@@ -3,11 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Area Utente</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
     <script src="/js/main.js"></script>
+    <script src="/js/carousel.js"></script>
 </head>
 <body>
+    <!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side">
+            <div class="logo">
+             <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+            <div class="search-bar">
+                <form action="/prodotto/cerca-prodotti" method="get">
+                    <input type="text" name="brand" id="src-utn-brand" placeholder="Cerca prodotti per brand">
+                </form>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+                <li><a href="/utente/ordini" class="">I miei ordini</a></li>
+                <li><a href="/utente/profile" class="">I miei dati</a></li>
+            </ul>
+        </nav>
+
+        <div class="right-side">
+            <div class="auth-buttons">
+                <div class="cart">
+                    <a href="/utente/vai-al-carrello"><img src="/img/cart.png" alt="Carrello"></a>
+                </div>
+                
+                <div>
+                    <a href="/logout"><button class="logout-button">LOGOUT</button></a>
+                </div>
+            </div>
+        </div> 
+    </div> <!-- ======= Chiusura Header ======= -->
     <div>
         <h2>Grazie per il tuo acquisto! Ecco il riepilogo del tuo ordine:</h2>
         <p>Totale: <span th:text="${ordine.totale}"></span></p>
@@ -29,9 +63,9 @@
             </tbody>
         </table>
         <br>
-        <a href="/area-utente">Torna all'area personale</a>
+        <a  href="/area-utente"><button class="common-button">Torna all'area personale</button></a>
         <br>
-        <a href="/">Torna all'homepage</a>
+        <a href="/"><button class="common-button">Torna all'homepage</button></a>
     </div>
 </body>
 </html>
