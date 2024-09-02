@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutti gli ordini</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
     <style>
         .filter-bar {
@@ -122,7 +123,7 @@
                 <td th:text="${ordine.dataOrdine}"></td> <!-- Mostra la data dell'ordine -->
                 <td><a th:href="|/ordine/dettaglio?id=${ordine.id}|"><button>Dettaglio</button></a></td>
                 <td><a th:href="|/ordine/delete/${ordine.id}|"><button>Elimina</button></a></td>
-                <td><button th:attr="onclick=|openUpdateOrdine(${ordine.id}, ${ordine.idPersona}, ${ordine.totale}, ${ordine.quantita}, ${ordine.iva ? 'Sì' : 'No'})|">Modifica</button></td>
+                <td><button th:attr="onclick=|openUpdateOrdine(${ordine.id}, ${ordine.idPersona}, ${ordine.totale}, ${ordine.quantita}, ${ordine.iva ? 'Sì' : 'No'}, ${ordine.dataOrdine})|">Modifica</button></td>
             </tr>
             
         </tbody>
@@ -136,6 +137,8 @@
             <input type="text" name="quantita" id="insert-ordine-quantita">
             <label for="iva">Iva</label>
             <input type="text" name="iva" id="insert-ordine-iva">
+            <label for="dataOrdine">Data ordine</label>
+            <input type="date" name="dataOrdine" id="insert-ordine-dataOrdine">
             <input type="submit" value="Inserisci">
         </form>
     </div>
@@ -150,6 +153,8 @@
             <input type="text" name="quantita" id="update-ordine-quantita">
             <label for="iva">Iva</label>
             <input type="text" name="iva" id="update-ordine-iva">
+            <label for="dataOrdine">Data ordine</label>
+            <input type="date" name="dataOrdine" id="update-ordine-dataOrdine">
             <input type="submit" value="Modifica">
         </form>
     </div>
