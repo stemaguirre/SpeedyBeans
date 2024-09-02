@@ -3,6 +3,7 @@ package com.generation.SpeedyBeans.controllers;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -193,6 +194,48 @@ public class OrdineController {
         return "loginpage";
     }
 
+    @GetMapping("/rimuovi/{idProdotto}")
+    public String rimuoviProdotto(@PathVariable ("idProdotto") int idProdotto, HttpSession session, Model model) {
+        Persona p = (Persona)session.getAttribute("persona");
+        String role = (String)session.getAttribute("role");
+        AppService as = context.getBean(AppService.class);
+
+        if(role != null && (role.equals("U") || role.equals("A")) && p != null){
+            
+            List<Prodotto> carrello = new ArrayList<>();
+            Ordine o = new Ordine();
+            carrello = (List<Prodotto>)session.getAttribute("carrello");
+            if(carrello == null){
+                model.addAttribute("message", as.getMessage());
+                return "carrello.html";
+            }
+
+            Iterator<Prodotto> iterator = carrello.iterator();
+            while (iterator.hasNext()) {
+            Prodotto pr = iterator.next();
+            if (pr.getId() == idProdotto) {
+                iterator.remove(); // Rimuove l'elemento in modo sicuro
+                break;
+                }
+            }
+
+            for(Prodotto prodotto : carrello){
+                o.setTotale(o.getTotale() + prodotto.getPrezzo());
+            }
+            o.setTotale(Math.round(o.getTotale() * 100.0) / 100.0);
+
+            model.addAttribute("carrello", carrello);
+            model.addAttribute("ordine", o);
+            model.addAttribute("message", as.getMessage());
+            session.setAttribute("carrello", carrello);
+            session.setAttribute("ordine", o);
+            return "carrello.html";
+        }
+        as.setMessage("Errore richiesta non autorizzata");
+        session.invalidate();
+        return "redirect:/loginpage";
+    }
+
     @GetMapping("/cerca-ordini")
     public String cercaOrdini(Model model,
         @RequestParam(name = "nome", defaultValue = "") String nome,
@@ -288,5 +331,7 @@ public class OrdineController {
             return "listaProdottiHomepage.html";
         }
     }
+
+
     
 }
