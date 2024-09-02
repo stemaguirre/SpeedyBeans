@@ -3,49 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dettaglio utente</title>
+    <title>I miei dati</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/tabelle.css">
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Ragione Sociale</th>
-                <th>Partita IVA</th>
-                <th>Codice SDI</th>
-                <th>Indirizzo</th>
-                <th>CAP</th>
-                <th>Città</th>
-                <th>Provincia</th>
-                <th>Nazione</th>
-                <th>Telefono</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td th:text="${utente.nome}"></td>
-                <td th:text="${utente.cognome}"></td>
-                <td th:text="${utente.username}"></td>
-                <td th:text="${utente.password}"></td>
-                <td th:text="${utente.ragioneSociale}"></td>
-                <td th:text="${utente.partitaIva}"></td>
-                <td th:text="${utente.codiceSdi}"></td>
-                <td th:text="${utente.indirizzo}"></td>
-                <td th:text="${utente.cap}"></td>
-                <td th:text="${utente.citta}"></td>
-                <td th:text="${utente.provincia}"></td>
-                <td th:text="${utente.nazione}"></td>
-                <td th:text="${utente.telefono}"></td>
-                <td th:text="${utente.email}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <a href="/utente/tutti-gli-utenti">Indietro</a>
+
+ <!-- ======= Header ======= -->
+ <div class="header">
+    <div class="left-side">
+        <div class="logo">
+            <a href="/area-admin">
+                <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </a>
+        </div>
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/prodotto/tutti-i-prodotti" class="">Prodotti</a></li>
+            <li><a href="/ordine/tutti-gli-ordini" class="">Ordini</a></li>
+        </ul>
+    </nav>
+
+            <div class="auth-buttons">
+                <div>
+                    <a href="/utente/tutti-gli-utenti">
+                        <button class="back-button">INDIETRO</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/logout">
+                        <button class="logout-button">LOGOUT</button>
+                    </a>
+                </div>
+            </div>
+
+    </div><!-- ======= Chiusura Header ======= -->
+
+
+<table>
+    <tr>
+        <td>Nome</td>
+        <td th:text="${utente.nome}"></td>          
+    </tr>
+    <tr>
+        <td>Cognome</td>
+        <td th:text="${utente.cognome}"></td>
+    </tr>
+    <tr>
+        <td>Ragione sociale</td>
+        <td th:text="${utente.ragioneSociale}"></td>
+    </tr>
+
+    
+    <tr>
+        <td>Partita IVA</td>
+        <td th:text="${utente.partitaIva}"></td>
+    </tr>
+    
+    <tr>
+        <td>Codice SDI</td>
+        <td th:text="${utente.codiceSdi}"></td>
+    </tr>
+    
+    <tr>
+        <td>Indirizzo</td>
+        <td th:text="${utente.indirizzo}"></td>
+    </tr>
+    <tr>
+        <td>Città e CAP</td>
+        <td>
+            <div>
+                <span th:text="${utente.citta}"></span>
+                <span>-</span>
+                <span th:text="${utente.cap}"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Provincia e Nazione</td>
+        <td>
+            <div>
+                <span th:text="${utente.provincia}"></span>
+                <span>-</span>
+                <span th:text="${utente.nazione}"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Telefono</td>
+        <td th:text="${utente.telefono}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="${utente.email}"></td>
+    </tr>
+</table>
+
+
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
+    
 </body>
 </html>

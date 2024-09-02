@@ -292,7 +292,6 @@ public class UtenteController {
                 as.setMessage("Prodotto aggiunto al carrello");
             }
             
-            System.out.println(as.getMessage());
             session.setAttribute("carrello", carrello);
             return "redirect:/prodotto/tutti-i-prodotti";
         }

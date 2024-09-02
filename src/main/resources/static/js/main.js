@@ -189,3 +189,7 @@ function mostraRisultati(){
     tabellaCaffes.hidden = false;
     tabellaMacchinette.hidden  = false;
 }
+$(document).ready(function() {
+    $('#tabella-caffes > tbody > tr').has('td:empty').hide();
+    $('#tabella-macchinette > tbody > tr').has('td:empty').hide();
+  });
