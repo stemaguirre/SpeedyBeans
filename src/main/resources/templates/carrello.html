@@ -38,5 +38,10 @@
         </tfoot>
     </table>
     <a href="/utente/checkout"><button>Checkout</button></a>
+    <div id="message-modal" th:if="${message} != null">
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <hr>
+        <p th:text="${message}"></p>
+    </div>
 </body>
 </html>

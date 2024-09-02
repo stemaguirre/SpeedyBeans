@@ -11,6 +11,7 @@
     <div class="search-bar">
         <form action="/prodotto/cerca-prodotti/caffes" method="get">
             <div id="filtri-caffes" hidden>
+                <span>Caffè</span>
                 <!-- Dropdown for brand caffè -->
                 <select name="brand" id="src-utn-brand">
                     <option value="" disabled selected>Brand caffè</option>
@@ -27,7 +28,7 @@
                     <option value="macinato">Macinato</option>
                     <option value="grani">Grani</option>
                     <option value="capsule">Capsule</option>
-                    <option value="istantanep">Istantaneo</option>
+                    <option value="istantaneo">Istantaneo</option>
                 </select>
             
                 <!-- Dropdown for Tipologia caffè -->
@@ -36,16 +37,16 @@
                     <option value="arabica">Arabica</option>
                     <option value="robusta">Robusta</option>
                 </select>
+                
                 <!-- Submit Button -->
                 <input type="submit" value="Applica filtri">
                 <br>
-                <div id="mostra-risultati">
-                    <button onclick="mostraRisultati()">Mostra Risultati</button>
-                </div>
             </div>
-        </form>  
+        </form>
+        <br> 
         <form action="/prodotto/cerca-prodotti/macchinette" method="get">
             <div id="filtri-macchinette" hidden>
+                <span>Macchinette</span>
                 <!-- Dropdown for brand macchinetta -->
                 <select name="brand" id="src-utn-brand">
                     <option value="" disabled selected>Brand macchinetta</option>
@@ -76,25 +77,27 @@
                     <option value="oro">Oro</option>
                 </select>
                 <!-- Submit Button -->
-                <input type="submit" value="Applica filtri">
+                <input onclick="document.querySelector('#tabella-caffes').hidden=true" type="submit" value="Applica filtri">
                 <br>
-                <div id="mostra-risultati">
-                    <button onclick="mostraRisultati()">Mostra Risultati</button>
-                </div>
             </div>
         </form>      
     </div>
+    
     <a href="/utente/vai-al-carrello"><button>Carrello</button></a>
     <br>
-    <a href="/area-admin">Indietro</a>
+    <br>
+    
     <div id="message-modal" th:if="${message} != null">
         <p th:text="${message}"></p>
         <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
     </div>
 
-    <button onclick="apriRicercaCaffes()">Mostra Caffè</button>
-    <button onclick="apriRicercaMacchinette()">Mostra Macchinette</button>
+    <button onclick="apriRicerca()">Filtri</button>
+
     <a href="/prodotto/tutti-i-prodotti"><button>Annulla ricerca</button></a>
+    <br>
+    <br>
+    <a href="/area-admin">Indietro</a>
     <br>
     <br>
     <!-- Form per inserire Caffè -->
@@ -194,7 +197,8 @@
             <button type="submit">Invia</button>
         </form>
     </div> 
-    <div id="tabella-caffes" hidden>
+    <!-- Tabella caffes -->
+    <div id="tabella-caffes">
         <button onclick="toggleInsertCaffe()">Inserisci</button>
         <br>
         <table>
@@ -237,7 +241,10 @@
             </tbody>
         </table>
     </div>
-    <div id="tabella-macchinette" hidden>
+    <br>
+    <br>
+    <!-- Tabella macchinette -->
+    <div id="tabella-macchinette">
         <button onclick="toggleInsertMacchinetta()">Inserisci</button>
         <br>
         <table>
