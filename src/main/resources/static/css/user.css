@@ -92,10 +92,7 @@ html, body {
     padding: 0;
     font-family: var(--default-font);
     color: var(--defoult-text-color); /*colore testo*/
-    background-image: url("/img/background-home-page.png"); /* Specifica il percorso dell'immagine */
-    background-size: cover; /* Rende l'immagine coprire tutto l'elemento */
-    background-position: center; /* Centra l'immagine all'interno dell'elemento */
-    background-repeat: no-repeat; /* Impedisce che l'immagine si ripeta */    
+    background-color: var(--bg-color);    
 }
 
 .carousel-container {
