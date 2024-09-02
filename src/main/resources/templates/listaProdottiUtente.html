@@ -8,82 +8,102 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-    <div class="search-bar">
-        <form action="/prodotto/cerca-prodotti/caffes" method="get">
-            <div id="filtri-caffes" hidden>
-                <!-- Dropdown for brand caffè -->
-                <select name="brand" id="src-utn-brand">
-                    <option value="" disabled selected>Brand caffè</option>
-                    <option value="lavazza">Lavazza</option>
-                    <option value="illy">Illy</option>
-                    <option value="kimbo">Kimbo</option>
-                    <option value="segafredo">Segafredo</option>
-                    <option value="nescafé">Nescafé</option>
-                </select>
-
-                <!-- Dropdown for Formato caffè -->
-                <select name="formato" id="src-utn-formato">
-                    <option value="" disabled selected>Formato caffè</option>
-                    <option value="macinato">Macinato</option>
-                    <option value="grani">Grani</option>
-                    <option value="capsule">Capsule</option>
-                    <option value="istantanep">Istantaneo</option>
-                </select>
+    
+    <!-- ======= Header ======= -->
+    <div class="header">
+        <div class="left-side" >
+            <div class="logo">
+                <img src="/img/logo/logo-speedybeans.png" alt="Logo">
+            </div>
+        </div>
+        <nav id="navbar" class="navbar">
+            <div class="dropdown">
+                <li class="dropdown"><a href="#"></li>
+                <form action="/prodotto/cerca-prodotti/caffes" method="get">
+                    <div id="filtri-caffes" hidden>
+                        <!-- Dropdown for brand caffè -->
+                        <select name="brand" id="src-utn-brand">
+                            <option value="" disabled selected>Brand caffè</option>
+                            <option value="lavazza">Lavazza</option>
+                            <option value="illy">Illy</option>
+                            <option value="kimbo">Kimbo</option>
+                            <option value="segafredo">Segafredo</option>
+                            <option value="nescafé">Nescafé</option>
+        
+        
+        
+                        </select>
+    
+                        <!-- Dropdown for Formato caffè -->
+                        <select name="formato" id="src-utn-formato">
+                            <option value="" disabled selected>Formato caffè</option>
+                            <option value="macinato">Macinato</option>
+                            <option value="grani">Grani</option>
+                            <option value="capsule">Capsule</option>
+                            <option value="istantanep">Istantaneo</option>
+                        </select>
+                    
+                        <!-- Dropdown for Tipologia caffè -->
+                        <select name="tipologia" id="src-utn-tipologia">
+                            <option value="" disabled selected>Tipologia caffè</option>
+                            <option value="arabica">Arabica</option>
+                            <option value="robusta">Robusta</option>
+                        </select>
+                        <!-- Submit Button -->
+                        <input type="submit" value="Applica filtri">
+                        <br>
+                        <div id="mostra-risultati">
+                            <button onclick="mostraRisultati()">Mostra Risultati</button>
+                        </div>
+                    </div>
+                </form>  
+                <form action="/prodotto/cerca-prodotti/macchinette" method="get">
+                    <div id="filtri-macchinette" hidden>
+                        <!-- Dropdown for brand macchinetta -->
+                        <select name="brand" id="src-utn-brand">
+                            <option value="" disabled selected>Brand macchinetta</option>
+                            <option value="nespresso">Nespresso</option>
+                            <option value="delonghi">DeLonghi</option>
+                            <option value="lavazza">Lavazza</option>
+                            <option value="philips">Philips</option>
+                            <option value="saeco">Saeco</option>
+                            <option value="krups">Krups</option>
+                            <option value="bosch">Bosch</option>
+                            <option value="breville">Breville</option>
+                        </select>
+    
+                        <!-- Dropdown for Utilizzo macchinetta -->
+                        <select name="utilizzo" id="src-utn-utilizzo">
+                            <option value="" disabled selected>Utilizzo macchinetta</option>
+                            <option value="capsule">Capsule</option>
+                            <option value="grani">Grani</option>
+                            <option value="cialde">Cialde</option>
+                        </select>
+                        <!-- Dropdown for Colore macchinetta -->
+                        <select name="colore" id="src-utn-colore">
+                            <option value="" disabled selected>Colore macchinetta</option>
+                            <option value="nero">Nero</option>
+                            <option value="argento">Argento</option>
+                            <option value="bianco">Bianco</option>
+                            <option value="acciaio inox">Acciaio Inox</option>
+                            <option value="oro">Oro</option>
+                        </select>
+                        <!-- Submit Button -->
+                        <input type="submit" value="Applica filtri">
+                        <br>
+                        <div id="mostra-risultati">
+                            <button onclick="mostraRisultati()">Mostra Risultati</button>
+                        </div>
+                    </div>
+                </form>      
+            </div>
             
-                <!-- Dropdown for Tipologia caffè -->
-                <select name="tipologia" id="src-utn-tipologia">
-                    <option value="" disabled selected>Tipologia caffè</option>
-                    <option value="arabica">Arabica</option>
-                    <option value="robusta">Robusta</option>
-                </select>
-                <!-- Submit Button -->
-                <input type="submit" value="Applica filtri">
-                <br>
-                <div id="mostra-risultati">
-                    <button onclick="mostraRisultati()">Mostra Risultati</button>
-                </div>
-            </div>
-        </form>  
-        <form action="/prodotto/cerca-prodotti/macchinette" method="get">
-            <div id="filtri-macchinette" hidden>
-                <!-- Dropdown for brand macchinetta -->
-                <select name="brand" id="src-utn-brand">
-                    <option value="" disabled selected>Brand macchinetta</option>
-                    <option value="nespresso">Nespresso</option>
-                    <option value="delonghi">DeLonghi</option>
-                    <option value="lavazza">Lavazza</option>
-                    <option value="philips">Philips</option>
-                    <option value="saeco">Saeco</option>
-                    <option value="krups">Krups</option>
-                    <option value="bosch">Bosch</option>
-                    <option value="breville">Breville</option>
-                </select>
-
-                <!-- Dropdown for Utilizzo macchinetta -->
-                <select name="utilizzo" id="src-utn-utilizzo">
-                    <option value="" disabled selected>Utilizzo macchinetta</option>
-                    <option value="capsule">Capsule</option>
-                    <option value="grani">Grani</option>
-                    <option value="cialde">Cialde</option>
-                </select>
-                <!-- Dropdown for Colore macchinetta -->
-                <select name="colore" id="src-utn-colore">
-                    <option value="" disabled selected>Colore macchinetta</option>
-                    <option value="nero">Nero</option>
-                    <option value="argento">Argento</option>
-                    <option value="bianco">Bianco</option>
-                    <option value="acciaio inox">Acciaio Inox</option>
-                    <option value="oro">Oro</option>
-                </select>
-                <!-- Submit Button -->
-                <input type="submit" value="Applica filtri">
-                <br>
-                <div id="mostra-risultati">
-                    <button onclick="mostraRisultati()">Mostra Risultati</button>
-                </div>
-            </div>
-        </form>      
+        </nav>
+    
     </div>
+
+
+
     <div id="mostra-risultati">
         <button onclick="mostraRisultati()">Mostra Risultati</button>
     </div>

@@ -58,7 +58,7 @@
 }
 
 .logout-button:hover {
-    background-color: var(--interaction-button-color);
+    background-color: var(--interaction-color);
 }
 
 h1 {
@@ -143,4 +143,24 @@ html, body {
 
 .next {
     right: 10px;
+}
+
+
+/* Stile della tabella */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 2px solid black;
+}
+
+td:first-child {
+    font-weight: bold;
+    padding-left: 300px;
 }
