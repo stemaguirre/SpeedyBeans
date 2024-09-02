@@ -97,7 +97,7 @@ function toggleInsertOrdine(){
     insert.hidden = !insert.hidden;
 } 
 
-function toggleUpdateOrdine(id, idPersona, totale, quantita, iva){
+function toggleUpdateOrdine(id, idPersona, totale, quantita, iva, dataOrdine){
     var update = document.querySelector("#update-ordine");
     update.hidden = !update.hidden;
     document.getElementById('update-ordine').hidden = false;
@@ -106,6 +106,7 @@ function toggleUpdateOrdine(id, idPersona, totale, quantita, iva){
     document.getElementById('update-ordine-totale').value = totale;
     document.getElementById('update-ordine-quantita').value = quantita;
     document.getElementById('update-ordine-iva').value = iva ? 'Sì' : 'No';
+    document.getElementById('update-ordine-dataOrdine').value = dataOrdine;
 } 
 
 // Questa porzione di codice implementa i controlli nel form di registrazione

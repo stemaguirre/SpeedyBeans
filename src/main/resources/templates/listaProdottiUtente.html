@@ -47,7 +47,7 @@
     </div><!-- ======= Chiusura Header ======= -->
 
     <div id="message-modal" th:if="${message} != null">
-        <button type="submit" onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
+        <button onclick="document.querySelector('#message-modal').hidden=true">Chiudi</button>
         <hr>
         <p th:text="${message}"></p>
     </div>
