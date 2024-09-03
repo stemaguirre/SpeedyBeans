@@ -71,13 +71,9 @@ public class OrdineController {
             o.setPersona(p);
             ordineService.create(o);
             as.setMessage("Ordine inserito correttamente");
-            if(role.equals("A")){
-                return "redirect:/area-admin";
+            return "redirect:/ordine/tutti-gli-ordini";
             }
-            if(role.equals("U")){
-                return "redirect:/ordine/tutti-gli-ordini";
-            }
-        }
+        
         as.setMessage("Errore richiesta non autorizzata");
         session.invalidate();
         return "homepage.html";
@@ -288,20 +284,28 @@ public class OrdineController {
         } 
         // Logica per l'utente normale: carica solo i suoi ordini
         else if ("U".equals(role)) {
-            ordini = ordineService.findByIdPersona(p.getId());
+            // ordini = ordineService.findByIdPersona(p.getId());
 
             // Filtro per range di totale
-            if (minTotale > 0 || maxTotale > 0) {
-                ordini = ordini.stream()
-                    .filter(o -> o.getTotale() >= minTotale && (maxTotale == 0 || o.getTotale() <= maxTotale))
-                    .collect(Collectors.toList());
+            if (minTotale > 0 && maxTotale > 0) {
+                ordini.addAll(ordineService.findByRangeTotale(minTotale, maxTotale));
+            } else if (minTotale > 0 && maxTotale == 0){
+                ordini.addAll(ordineService.findByTotaleMinimo(minTotale));
+            } else if(minTotale == 0 && maxTotale > 0){
+                ordini.addAll(ordineService.findByTotaleMassimo(maxTotale));
             }
 
             // Filtro per range di date
             if (dataInizio != null && dataFine != null) {
-                ordini = ordini.stream()
-                    .filter(o -> !o.getDataOrdine().toLocalDate().isBefore(dataInizio) && !o.getDataOrdine().toLocalDate().isAfter(dataFine))
-                    .collect(Collectors.toList());
+                java.sql.Date startDate = java.sql.Date.valueOf(dataInizio);
+                java.sql.Date endDate = java.sql.Date.valueOf(dataFine);
+                ordini.addAll(ordineService.findByDateRange(startDate, endDate));
+            }else if(dataInizio != null && dataFine == null){
+                java.sql.Date startDate = java.sql.Date.valueOf(dataInizio);
+                ordini.addAll(ordineService.findByDateInizio(startDate));
+            }else if(dataInizio == null && dataFine != null){
+                java.sql.Date endDate = java.sql.Date.valueOf(dataFine);
+                ordini.addAll(ordineService.findByDateFine(endDate));
             }
         }
 
