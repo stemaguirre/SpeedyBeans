@@ -136,7 +136,7 @@
 
    
 
-    <div id="tabella-caffes">
+    <div id="tabella-caffes" th:if="${not listaProdotti.?[genere == 'C'].isEmpty()}">
         <table class="tb-oriz">
             <thead>
                 <tr>
