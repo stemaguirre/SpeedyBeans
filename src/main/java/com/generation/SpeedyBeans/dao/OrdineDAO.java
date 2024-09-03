@@ -67,10 +67,12 @@ public class OrdineDAO implements IDAO<Ordine> {
             o.getDataOrdine().toString()
         );
 
-        for (Prodotto p : o.getProdotti()){
-            database.executeUpdate(insertOrdineProdotti, String.valueOf(id), String.valueOf(p.getId()));
+        if(o.getProdotti() != null){
+            for (Prodotto p : o.getProdotti()){
+                database.executeUpdate(insertOrdineProdotti, String.valueOf(id), String.valueOf(p.getId()));
+            }
         }
- 
+
         return id;
     }
 
@@ -101,8 +103,8 @@ public class OrdineDAO implements IDAO<Ordine> {
             String.valueOf(o.getQuantita()),
             o.isIva() ? "1" : "0", 
             String.valueOf(o.getTotale()),
-            String.valueOf(o.getId()),
-            o.getDataOrdine().toString()
+            o.getDataOrdine().toString(),
+            String.valueOf(o.getId())   
         );
 
     }

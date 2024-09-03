@@ -66,8 +66,9 @@ public class OrdineController {
 
         if(role != null && (role.equals("A") || role.equals("U")) && p != null){
             Ordine o = context.getBean(Ordine.class, params);
-            List<Prodotto> prodotti = prodottoService.findByIdOrdine(Integer.parseInt(params.get("id")));
-            o.setProdotti(prodotti);
+            // List<Prodotto> prodotti = prodottoService.findByIdOrdine(Integer.parseInt(params.get("id")));
+            // o.setProdotti(prodotti);
+            o.setPersona(p);
             ordineService.create(o);
             as.setMessage("Ordine inserito correttamente");
             if(role.equals("A")){

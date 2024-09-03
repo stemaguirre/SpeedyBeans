@@ -84,7 +84,7 @@ function toggleUpdateOrdine(id, idPersona, totale, quantita, iva, dataOrdine){
     document.getElementById('update-ordine-totale').value = totale;
     document.getElementById('update-ordine-quantita').value = quantita;
     document.getElementById('update-ordine-iva').value = iva ? 'Sì' : 'No';
-    document.getElementById('update-ordine-dataOrdine').value = dataOrdine;
+    document.getElementById('update-ordine-dataordine').value = dataOrdine;
 } 
 
 // Questa porzione di codice implementa i controlli nel form di registrazione

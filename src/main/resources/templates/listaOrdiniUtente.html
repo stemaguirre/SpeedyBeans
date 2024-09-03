@@ -96,7 +96,7 @@
         <tbody>
             <tr th:each="ordine : ${listaOrdini}">
                 <td th:text="${ordine.id}"></td>
-                <td th:text="${ordine.totale}"></td>
+                <td th:text="${ordine.totale + '€'}"></td>
                 <td th:text="${ordine.quantita}"></td>
                 <td th:text="${ordine.iva ? 'Sì' : 'No'}"></td>
                 <td th:text="${ordine.dataOrdine}"></td>

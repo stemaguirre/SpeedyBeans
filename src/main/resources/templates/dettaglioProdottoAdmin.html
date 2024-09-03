@@ -64,7 +64,7 @@
             <tr>
                 <td th:text="${#strings.equals(prodotto.genere, 'M') ? 'Macchinetta' : 'Caffè'}"></td>
                 <td th:text="${prodotto.brand}"></td>
-                <td th:text="${prodotto.prezzo}"></td>
+                <td th:text="${prodotto.prezzo + '€'}"></td>
                 <td th:text="${prodotto.disponibilita}"></td>
                 <td th:text="${prodotto.peso}"></td>
                 <td th:if="${#strings.equals(prodotto.genere, 'C')}"
